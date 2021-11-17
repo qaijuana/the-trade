@@ -6,6 +6,7 @@ const path = require("path");
 const app = express();
 const port = process.env.PORT
 const login_controller = require("./controllers/login_controller");
+const user_controller = require("./controllers/user_controller")
 
 //* Middleware
 app.use(express.static(path.join(__dirname, "./client")));
@@ -14,6 +15,7 @@ app.use(express.json()); //! req.body
 
 //* Controllers
 app.use("/api/login", login_controller);
+app.use("/api/user", user_controller);
 
 
 app.listen(port, () => {
