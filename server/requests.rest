@@ -16,8 +16,19 @@ POST http://localhost:3001/api/login
 Content-Type: application/json
 
 {
-    "username": "alan"
+    "username": "Max",
+    "password": "password",
 }
+
+# ###
+
+# POST http://localhost:3001/api/user/login
+# Content-Type: application/json
+
+# {
+#     "username": "Max",
+#     "password": "password"
+# }
 
 ###
 
@@ -34,16 +45,8 @@ POST http://localhost:3001/api/user/new
 Content-Type: application/json
 
 {
-    "username": "Max",
-    "password": "password"
+    "username": "NotMax",
+    "password": "password",
+    "email": "Notmax@max.max"
 }
 
-###
-
-POST http://localhost:3001/api/user/login
-Content-Type: application/json
-
-{
-    "username": "Max",
-    "password": "password"
-}

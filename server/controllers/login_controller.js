@@ -2,6 +2,7 @@ const bcrypt = require("bcrypt");
 const express = require("express");
 const router = express.Router();
 const jwt = require("jsonwebtoken");
+const pool = require("../database");
 
 const post = [{
     username: "max",
@@ -23,23 +24,45 @@ router.get("/", authenticateToken, (req, res) => {
 
 router.post("/", (req, res) => {
     //* authenticate user
-    console.log(req.body)
-    const username = req.body.username
-    const user = { name: username }
+    const username = req.body.username;
+    const password = req.body.password;
+    const email = req.body.email;
+    console.log(username, password, email)
 
-    const accessToken = generateAccessToken(user);
-    const refreshToken = jwt.sign(user, process.env.REFRESH_TOKEN_SECRET)
-    refreshTokens.push(refreshToken)
+    
 
-    res.json({ accessToken: accessToken, refreshToken: refreshToken })
+    // const findUser = await pool.query(
+    //     "SELECT username, email, password FROM users WHERE username = $1", [username]
+    // )
 
+    // console.log(findUser)
+    // res.json(findUser)
 
+    // if (!findUser) {
+    //     return res.status(400).send("Invalid Username/Password");
+    // }
+    // try {
+    //     if (await bcrypt.compare(password, findUser.password)) {
+    //         const accessToken = generateAccessToken(findUser);
+    //         const refreshToken = jwt.sign(user, process.env.REFRESH_TOKEN_SECRET)
+    //         //! Push token into database!!! 
+    //         // refreshTokens.push(refreshToken)
+    //         // res.send("Success");
+    //         res.json({ accessToken: accessToken, refreshToken: refreshToken })
+
+    //     } else {
+    //         res.send("You did an oopsie");
+    //     }
+    // } catch (error) {
+    //     res.sendStatus(400)
+    // }
 })
 
 router.post("/token", (req, res) => {
     const refreshToken = req.body.token
     if (refreshToken == null)
         return res.sendStatus(401);
+    //! Push refreshtoken into database
     if (!refreshTokens.includes(refreshToken))
         return res.sendStatus(403)
     jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET,
@@ -53,6 +76,7 @@ router.post("/token", (req, res) => {
 })
 
 router.delete("/logout", (req, res) => {
+    //! Delete refreshtoken from database here 
     refreshTokens = refreshTokens.filter(token => token !== req.body.token);
     res.sendStatus(204);
 })
