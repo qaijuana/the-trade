@@ -4,7 +4,7 @@ const express = require("express");
 const path = require("path");
 
 const app = express();
-const port = process.env.PORT
+const port = process.env.PORT;
 const login_controller = require("./controllers/login_controller");
 const user_controller = require("./controllers/user_controller");
 const list_controller = require("./controllers/list_controllers");

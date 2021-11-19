@@ -15,7 +15,7 @@ router.get("/", async (req, res) => {
     const allUsers = await pool.query(
         "SHOW username, password, id FROM users"
     )
-    res.json(allUsers)
+    res.json(allUsers.rows)
 })
 // show one
 
@@ -34,7 +34,7 @@ router.post("/new", async (req, res) => {
             "INSERT INTO users (username, password, email) VALUES ($1, $2, $3) RETURNING *",
             [req.body.username, hashedPassword, req.body.email]
         )
-        res.json(newUser)
+        res.json(newUser.rows[0])
         res.sendStatus(201);
     } catch (error) {
         res.sendStatus(500);
@@ -45,8 +45,11 @@ router.post("/new", async (req, res) => {
 
 // edit
 
-router.put("/edit/:id", (req, res) => {
+router.put("/edit/:id", async (req, res) => {
     const { id } = req.params;
+    const updateUser = await pool.query(
+        ""
+    )
     console.log(id);
     res.json("lol");
 })

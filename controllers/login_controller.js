@@ -24,34 +24,29 @@ router.get("/", authenticateToken, (req, res) => {
 
 router.post("/", async (req, res) => {
     //* authenticate user
-    console.log(json.Stringify(req.body))
-
     const username = req.body.username;
     const password = req.body.password;
     const email = req.body.email;
-    console.log(username, password, email)
     
-    
-
     const findUser = await pool.query(
         "SELECT username, email, password FROM users WHERE username = $1", [username]
     )
 
-    console.log(findUser)
-    res.json(findUser)
+     const results = findUser.rows[0] 
 
-    if (!findUser) {
+
+    if (!results) {
         return res.status(400).send("Invalid Username/Password");
     }
     try {
-        if (await bcrypt.compare(password, findUser.password)) {
-            const accessToken = generateAccessToken(findUser);
-            const refreshToken = jwt.sign(user, process.env.REFRESH_TOKEN_SECRET)
+        if (await bcrypt.compare(password, results.password)) {
+            const accessToken = generateAccessToken(results);
+            const refreshToken = jwt.sign(results, process.env.REFRESH_TOKEN_SECRET)
             //! Push token into database!!! 
             refreshTokens.push(refreshToken)
             console.log(refreshTokens)
-            res.send("Success");
-            // res.json({ accessToken: accessToken, refreshToken: refreshToken })
+            // res.send("Success");
+            res.json({ accessToken: accessToken, refreshToken: refreshToken })
 
         } else {
             res.send("You did an oopsie");
