@@ -50,3 +50,9 @@ Content-Type: application/json
     "email": "Notmax@max.max"
 }
 
+
+
+###
+
+GET http://localhost:3001/api/user
+

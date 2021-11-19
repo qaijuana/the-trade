@@ -1,11 +1,29 @@
 const bcrypt = require("bcrypt");
 const express = require("express");
 const router = express.Router();
-const pool = require("../database");
+const pool = require("../database")
 
 
 const users = [];
 
+
+
+
+// show 
+
+router.get("/", async (req, res) => {
+    const allUsers = await pool.query(
+        "SHOW username, password, id FROM users"
+    )
+    res.json(allUsers)
+})
+// show one
+
+router.get("/:id", (req, res) => {
+    const { id } = req.params;
+    console.log(id, res);
+    res.json("lol");
+})
 
 //! CREATE USER
 router.post("/new", async (req, res) => {
@@ -23,6 +41,21 @@ router.post("/new", async (req, res) => {
     }
 
 
+})
+
+// edit
+
+router.put("/edit/:id", (req, res) => {
+    const { id } = req.params;
+    console.log(id);
+    res.json("lol");
+})
+
+// delete
+
+router.delete("/:id", (req, res) => {
+    const { id } = req.params;
+    res.json("lol");
 })
 
 //! LOGIN
@@ -45,28 +78,5 @@ router.post("/new", async (req, res) => {
 //         res.sendStatus(400)
 //     }
 // })
-
-// show one
-
-router.get("/show/:id", (req, res) => {
-    const { id } = req.params;
-    console.log(id, res);
-    res.json("lol");
-})
-
-// edit
-
-router.put("/edit/:id", (req, res) => {
-    const { id } = req.params;
-    console.log(id);
-    res.json("lol");
-})
-
-// delete
-
-router.delete("/:id", (req, res) => {
-    const { id } = req.params;
-    res.json("lol");
-})
 
 module.exports = router;

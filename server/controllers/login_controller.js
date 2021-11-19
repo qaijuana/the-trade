@@ -22,40 +22,43 @@ router.get("/", authenticateToken, (req, res) => {
 })
 
 
-router.post("/", (req, res) => {
+router.post("/", async (req, res) => {
     //* authenticate user
+    console.log(json.Stringify(req.body))
+
     const username = req.body.username;
     const password = req.body.password;
     const email = req.body.email;
     console.log(username, password, email)
-
+    
     
 
-    // const findUser = await pool.query(
-    //     "SELECT username, email, password FROM users WHERE username = $1", [username]
-    // )
+    const findUser = await pool.query(
+        "SELECT username, email, password FROM users WHERE username = $1", [username]
+    )
 
-    // console.log(findUser)
-    // res.json(findUser)
+    console.log(findUser)
+    res.json(findUser)
 
-    // if (!findUser) {
-    //     return res.status(400).send("Invalid Username/Password");
-    // }
-    // try {
-    //     if (await bcrypt.compare(password, findUser.password)) {
-    //         const accessToken = generateAccessToken(findUser);
-    //         const refreshToken = jwt.sign(user, process.env.REFRESH_TOKEN_SECRET)
-    //         //! Push token into database!!! 
-    //         // refreshTokens.push(refreshToken)
-    //         // res.send("Success");
-    //         res.json({ accessToken: accessToken, refreshToken: refreshToken })
+    if (!findUser) {
+        return res.status(400).send("Invalid Username/Password");
+    }
+    try {
+        if (await bcrypt.compare(password, findUser.password)) {
+            const accessToken = generateAccessToken(findUser);
+            const refreshToken = jwt.sign(user, process.env.REFRESH_TOKEN_SECRET)
+            //! Push token into database!!! 
+            refreshTokens.push(refreshToken)
+            console.log(refreshTokens)
+            res.send("Success");
+            // res.json({ accessToken: accessToken, refreshToken: refreshToken })
 
-    //     } else {
-    //         res.send("You did an oopsie");
-    //     }
-    // } catch (error) {
-    //     res.sendStatus(400)
-    // }
+        } else {
+            res.send("You did an oopsie");
+        }
+    } catch (error) {
+        res.sendStatus(400)
+    }
 })
 
 router.post("/token", (req, res) => {
