@@ -20,9 +20,9 @@ app.use("/api/user", user_controller);
 app.use("/api/list", list_controller);
 
 
-app.get("/", (req, res) => {
-    res.send("test");
-})
+app.get("/*", (req, res) => {
+    res.sendFile(path.join(__dirname, "./client/build", "index.html"));
+});
 
 app.listen(port, () => {
     console.log("we are live on", port, "fm")
