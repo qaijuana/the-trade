@@ -15,17 +15,6 @@ const pool = new Pool({
     },
 });
 
-// const pool = new Pool({
-//     user: "qai",
-//     password: "imin ",
-//     database: "ecommerce",
-//     host: "ec2-34-202-54-225.compute-1.amazonaws.com",
-//     port: 5432,
-//     ssl: {
-//         required: true,
-//         rejectUnauthorized: false
-//     },
-// });
  
 module.exports = pool
 
