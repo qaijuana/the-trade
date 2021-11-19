@@ -24,9 +24,9 @@ router.get("/", authenticateToken, (req, res) => {
 
 router.post("/", async (req, res) => {
     //* authenticate user
-    const username = req.body.username;
+    const username = req.body.username.toLowerCase();
     const password = req.body.password;
-    const email = req.body.email;
+    const email = req.body.email.toLowerCase();
     
     const findUser = await pool.query(
         "SELECT username, email, password FROM users WHERE username = $1", [username]
@@ -95,7 +95,7 @@ function authenticateToken(req, res, next) {
 }
 
 function generateAccessToken(user) {
-    return (jwt.sign(user, process.env.ACCESS_TOKEN_SECRET, { expiresIn: "15s" }))
+    return (jwt.sign(user, process.env.ACCESS_TOKEN_SECRET, { expiresIn: "10000s" }))
 }
 
 module.exports = router

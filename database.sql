@@ -23,7 +23,7 @@ CREATE TABLE list (
 CREATE TABLE analytics (
     user_traffic,
     user_reviews,
-    user_ratings,
+    user_ratings,  
     list_likes,
     list_traffic,
     userID INT REFERENCES user(id),
