@@ -1,0 +1,47 @@
+@import "./variables.scss";
+
+.App {
+    text-align: center;
+}
+
+
+
+@keyframes App-logo-spin {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+}
+
+.header {
+    height: $headerHeight;
+    background-color: $bg;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0, 1.5rem;
+    display: flex;
+    
+
+    a {
+        text-decoration: none;
+        color: $dark;
+        margin: 10px;
+    }
+}
+
+body {
+    font-family: $Poppins;
+    width: 100%;
+    color: $dark;
+}
+
+#root {
+    height: 100%;
+}

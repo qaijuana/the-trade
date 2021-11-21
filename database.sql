@@ -15,7 +15,7 @@ CREATE TABLE list (
     title varchar(75) NOT NULL,
     description varchar(280),
     price MONEY NOT NULL,
-    list_images TEXT,z
+    list_images TEXT,
     userID INT REFERENCES user(id),
     upload_date DATE,
 );

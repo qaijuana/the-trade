@@ -1,0 +1,64 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap");
+.App {
+  text-align: center;
+}
+
+@-webkit-keyframes App-logo-spin {
+  from {
+    -webkit-transform: rotate(0deg);
+            transform: rotate(0deg);
+  }
+  to {
+    -webkit-transform: rotate(360deg);
+            transform: rotate(360deg);
+  }
+}
+
+@keyframes App-logo-spin {
+  from {
+    -webkit-transform: rotate(0deg);
+            transform: rotate(0deg);
+  }
+  to {
+    -webkit-transform: rotate(360deg);
+            transform: rotate(360deg);
+  }
+}
+
+* {
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  margin: 0;
+}
+
+.header {
+  height: 100px;
+  background-color: #f4f4ff;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  padding: 0, 1.5rem;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.header a {
+  text-decoration: none;
+  color: #1d1d1d;
+  margin: 10px;
+}
+
+body {
+  font-family: "Poppins", sans-serif;
+  width: 100%;
+  color: #1d1d1d;
+}
+
+#root {
+  height: 100%;
+}
+/*# sourceMappingURL=App.css.map */
