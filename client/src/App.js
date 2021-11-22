@@ -1,14 +1,17 @@
 import React, { useState } from "react";
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import LearnReact from "./components/LearnReact";
-// import './App.css';
+import { Image } from "cloudinary-react";
 import "./styles/App.css"
 
+
 function App() {
+  const url = `https://api.cloudinary.com/v1_1/${process.env.REACT_APP_CLOUD_NAME}/image/upload`
 
   const [logged, setLogged] = useState(false);
-  const [uploadInfo, setUploadInfo] = useState();
+  const [uploadInfo, setUploadInfo] = useState("");
   const [status, setStatus] = useState("pending");
+  const [displayImage, setDisplayImage] = useState("");
 
   function handleLogin(e) {
     e.preventDefault();
@@ -45,45 +48,34 @@ function App() {
       event.preventDefault();
       const formData = new FormData();
       formData.append("file", uploadInfo)
-      formData.append("upload_preset", "string")
+      formData.append("upload_preset", "ofd7rhpu")
 
       const sendCloudinary = async () => {
         setStatus("Loading");
-        const res = await fetch(
-          `https://api.cloudinary.com/v1_1/${process.env.REACT_APP_CLOUD_NAME}/image/upload`,
-          formData
-        )
-        const data = res.json();
-        console.log(data)
-        
+        try {
+          const res = await fetch(url, {
+            method: "POST",
+            body: formData
+          })
+          const data = await res.json();
+          console.log("Data", data)
+          setDisplayImage(data)
+          setStatus("resolved")
+        } catch (error) {
+          console.error(error)
+        }
       }
-
-
-
-      // const sendData = async () => {
-      //   setStatus("Loading...")
-      //   const res = await fetch("/api/users/new", {
-      //     method: "POST",
-      //     body: JSON.stringify(signUp),
-      //     headers: {
-      //       "Content-Type": "application/json"
-      //     },
-      //   })
-      //   const data = await res.json();
-      //   console.log(data)
-      // }
-      // sendData();
-
-
+      console.log(status)
+      sendCloudinary();
     }
 
     return (
       <>
         <h1>Create</h1>
-        <img src="" alt="" />
+        <Image cloudName={process.env.REACT_APP_CLOUD_NAME} publicId={displayImage ? displayImage?.public_id : ""} />
         <input type="file" onChange={(event) => { setUploadInfo(event.target.files[0]) }} />
         <button onClick={handleUpload}>Upload</button>
-        {uploadInfo ? <h6>{uploadInfo}MB</h6> : ""}
+        {uploadInfo ? <h6>{Math.round(uploadInfo.size / 1000000)}MB</h6> : ""}
       </>
     )
   }
