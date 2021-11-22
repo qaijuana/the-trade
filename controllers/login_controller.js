@@ -24,16 +24,14 @@ router.get("/", authenticateToken, (req, res) => {
 
 router.post("/", async (req, res) => {
     //* authenticate user
-    const username = req.body.username.toLowerCase();
-    const password = req.body.password;
-    const email = req.body.email.toLowerCase();
+    const { username, password } = req.body;
+    console.log(username, password)
     
+
     const findUser = await pool.query(
-        "SELECT username, email, password FROM users WHERE username = $1", [username]
+        "SELECT username, email, password FROM users WHERE username = $1", [(username)]
     )
-
-     const results = findUser.rows[0] 
-
+    const results = findUser.rows[0]
 
     if (!results) {
         return res.status(400).send("Invalid Username/Password");

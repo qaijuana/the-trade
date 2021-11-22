@@ -35,6 +35,28 @@
     }
 }
 
+.image {
+
+    &-card {
+        display: flex;
+        flex-direction: column;
+        height: 500px;
+        width: 300px;
+        margin: 0 auto;
+        background: $bg;
+        justify-content: space-between;
+    }
+
+
+}
+
+.profile {
+    &-form {
+        width: 700px;
+        align-items: center;
+    }
+}
+
 body {
     font-family: $Poppins;
     width: 100%;
