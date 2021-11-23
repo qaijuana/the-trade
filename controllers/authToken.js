@@ -4,12 +4,13 @@ const pool = require("../database")
 const jwt = require("jsonwebtoken")
 
 
-function authenticateToken(req, res, next) {
+function authToken(req, res, next) {
     // const authHeader = req.headers['authorization'];
     //! if authHeader is true (&&) then authHeader.split will be done
     // const token = authHeader && authHeader.split(" ")[1];
-    const token = req.cookies.token;
-    console.log(token)
+    const { cookies } = req
+    const token = cookies.token
+    console.log("token", token)
 
     if (token == null) return res.sendStatus(401)
     try {
@@ -26,4 +27,5 @@ function authenticateToken(req, res, next) {
 
 }
 
-module.exports = authenticateToken;
+module.exports =  authToken
+

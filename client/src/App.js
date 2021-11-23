@@ -13,7 +13,7 @@ function App() {
   const [currentUser, setCurrentUser] = useState(null)
   const [isAuth, login, logout] = useAuth(!currentUser, setCurrentUser, currentUser);
 
-  console.log(isAuth, currentUser);
+
 
   function UserPage() {
     return (

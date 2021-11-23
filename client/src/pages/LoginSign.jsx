@@ -14,8 +14,6 @@ export default function LoginSign(props) {
         const username = e?.target?.username?.value;
         const password = e?.target?.password?.value;
         const email = e?.target?.email?.value;
-        console.log(username, password, email)
-
         if (Action === "Login") {
             const postLogin = async () => {
                 try {

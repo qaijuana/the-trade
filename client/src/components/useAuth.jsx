@@ -22,12 +22,8 @@ function useAuth(initialValue, setCurrentUser, currentUser) {
                     body: JSON.stringify({
                         id: currentUser
                     })
-
-                })
-                const data = await res.json();
-                console.log(data)
-
-
+                });
+                const data = await res.json;
             } catch (error) {
                 console.error(error)
             }

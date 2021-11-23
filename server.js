@@ -11,12 +11,13 @@ const login_controller = require("./controllers/login_controller");
 const user_controller = require("./controllers/user_controller");
 const list_controller = require("./controllers/list_controllers");
 const upload_controller = require("./controllers/upload_controller")
+const authToken = require("./controllers/authToken")
 
 //* Middleware
+app.use(cookieParser()); //! req.cookie
 app.use(express.static(path.join(__dirname, "./client")));
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json()); //! req.body
-app.use(cookieParser()); //! req.cookie
 
 //* Controllers
 app.use("/api/login", login_controller);
