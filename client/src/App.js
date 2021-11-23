@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import LearnReact from "./components/LearnReact";
+import Cards from "./components/Cards";
 import ProfileEdit from "./pages/ProfileEdit";
 import useAuth from "./components/useAuth";
 import LoginSign from "./pages/LoginSign";
@@ -28,17 +29,23 @@ function App() {
         <h1>
           {title}
         </h1>
+        {
+          (title === "marketplace") ?
+            <Cards 
+            img="" title=""
+            description="" price="" /> :
+            ""
+        }
       </div>
     )
   }
-
 
   function NavBar() {
 
     function AuthUser() {
 
       return (
-        (isAuth) ?
+        (!currentUser) ?
           <>
             <Link to={"/learn"}>Learn</Link>
             <Link to={"/signup"}>Sign Up</Link>
@@ -47,7 +54,7 @@ function App() {
           :
           <>
             <Link to={"/create"}>Add</Link>
-            <Link to={"/learn"}>Learn</Link>
+            <Link to={"/inbox"}>Inbox</Link>
             <Link to={"/user"}>Profile</Link>
             <Link to={"/"} onClick={logout}>Logout</Link>
           </>

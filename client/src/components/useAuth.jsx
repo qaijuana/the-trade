@@ -4,15 +4,18 @@ import React, { useState } from 'react';
 function useAuth(initialValue, setCurrentUser, currentUser) {
     const [isAuth, setIsAuth] = useState(initialValue);
 
+    // LOGIN 
     function login(e) {
-        console.log("login")
         setIsAuth(!isAuth)
+        console.log("login")
     }
+
+    //! LOGOUT 
     function logout(e) {
         async function delRefreshToken() {
             try {
                 const res = await fetch("/api/login/logout", {
-                    method: "DELETE",
+                    method: "POST",
                     headers: {
                         "Content-Type": "application/json"
                     },

@@ -118,25 +118,5 @@ router.delete("/:id", async (req, res) => {
     }
 })
 
-//! LOGIN
-
-// router.post("/login", async (req, res) => {
-//     //! SWITCH TO DATABASE QUERY HERE 
-//     // const user = users.find(user => user.name === req.body.name)
-//     const findUser = pool.query(
-//         "SELECT username, email, password FROM users")
-//     if (!user) {
-//         return res.status(400).send("Invalid Username/Password");
-//     }
-//     try {
-//         if (await bcrypt.compare(req.body.password, user.password)) {
-//             res.send("Success");
-//         } else {
-//             res.send("You did an oopsie");
-//         }
-//     } catch (error) {
-//         res.sendStatus(400)
-//     }
-// })
 
 module.exports = router;
