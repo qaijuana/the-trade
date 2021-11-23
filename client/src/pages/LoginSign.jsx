@@ -1,35 +1,66 @@
-import React, { useState } from 'react'
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router';
 
-export default function LoginSign({ action: Action }, ...rest) {
+export default function LoginSign({ action: Action, login : Login }, ...rest) {
 
     const [status, setStatus] = useState("pending");
+    const navigate = useNavigate();
 
     function handleSubmit(e) {
         e.preventDefault();
-        const username = e.target.username.value;
-        const password = e.target.password.value;
+        const username = e?.target?.username?.value;
+        const password = e?.target?.password?.value;
+        const email = e?.target?.email?.value;
+        console.log(username, password, email)
+        
         if (Action === "Login") {
-            // console.log(username, password)
             const postLogin = async () => {
+                    try {
+                        setStatus("loading")
+                        const res = await fetch("/api/login", {
+                            method: "POST",
+                            headers: {
+                                "Content-Type": "application/json"
+                            },
+                            body: JSON.stringify({
+                                username: username,
+                                password: password
+                            })
+                        })
+                        const data = await res.json();
+                        console.log("data", data)
+                        setStatus("resolved");
+                        Login();
+                        navigate("/");
+                        
+                    } catch (error) {
+                        console.log(error)
+                    }
+            }
+            console.log(status)
+            postLogin();
+        } else if (Action === "Sign Up") {
+            const postSignUp = async () => {
                 try {
-                    setStatus("loading")
-                    const res = await fetch("/api/login", {
+                    const res = await fetch("/api/user/new", {
                         method: "POST",
                         headers: {
                             "Content-Type": "application/json"
                         },
                         body: JSON.stringify({
                             username: username,
-                            password: password
+                            password: password,
+                            email: email
                         })
                     })
-                    setStatus("resolved");
+                    const data = await res.json();
+                    console.log(data)
+                    navigate("/login");
                 } catch (error) {
-                    console.error(error)
+                    console.error(error);
                 }
             }
-            console.log(status)
-            postLogin();
+            postSignUp();
         }
     }
 

@@ -2,7 +2,9 @@ import { useState } from 'react'
 
 function useAuth(initialValue) {
     const [isAuth, setIsAuth] = useState(initialValue);
-    function login(e) {
+
+    async function login(e) {
+        
         console.log("login")
         setIsAuth(!isAuth)
     }

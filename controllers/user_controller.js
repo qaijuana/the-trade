@@ -12,25 +12,13 @@ router.get("/", async (req, res) => {
     )
     res.json(allUsers.rows)
 })
-// show one
 
-router.get("/:id", async (req, res) => {
-    const { id } = req.params;
-    try {
-        const findUser = await pool.query(
-            "SELECT * FROM users WHERE id = $1", [id]
-        )
-        findUser.rows[0].password = "lol suck on it"
-        res.json(findUser.rows[0])
-    } catch (error) {
-        res.sendStatus(400)
-    }
-})
 
 //! CREATE USER
 router.post("/new", async (req, res) => {
-    const username = req.body.username.toLowerCase();
-    const email = req.body.email.toLowerCase();
+    const username = req.body.username;
+    const email = req.body.email;
+    console.log(req.body)
     try {
         const salt = await bcrypt.genSalt(7);
         const hashedPassword = await bcrypt.hash(req.body.password, salt)
@@ -59,6 +47,7 @@ router.put("/edit/:id", async (req, res) => {
         user_photo,
         about
     } = req.body
+    console.log(req.body);
 
     if (first_name) {
         const updateFirstName = await pool.query(
@@ -98,6 +87,21 @@ router.put("/edit/:id", async (req, res) => {
         )
     }
     res.sendStatus(200)
+});
+
+// show one
+
+router.get("/:id", async (req, res) => {
+    const { id } = req.params;
+    try {
+        const findUser = await pool.query(
+            "SELECT * FROM users WHERE id = $1", [id]
+        )
+        findUser.rows[0].password = "lol suck on it"
+        res.json(findUser.rows[0])
+    } catch (error) {
+        res.sendStatus(400)
+    }
 })
 
 // delete

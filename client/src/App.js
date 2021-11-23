@@ -39,7 +39,7 @@ function App() {
           <>
             <Link to={"/learn"}>Learn</Link>
             <Link to={"/signup"}>Sign Up</Link>
-            <Link to={"/login"} onClick={login}>Login</Link>
+            <Link to={"/login"} >Login</Link>
           </>
           :
           <>
@@ -58,7 +58,7 @@ function App() {
           <Link to={"/marketplace"}>Shop</Link>
         </div>
         <div className="header-2">
-        <AuthUser />
+          <AuthUser />
         </div>
 
       </div>
@@ -74,13 +74,13 @@ function App() {
           <Routes>
             <Route path="/" element={<Page title={"home"} />} />
             <Route path="/marketplace" element={<Page title={"marketplace"} />} />
-            <Route path="/login" element={<LoginSign action="Login"/>} />
-            <Route path="/signup" element={<LoginSign action={"Sign Up"} />} />
+            <Route path="/login" element={<LoginSign login={login} action="Login" />} />
+            <Route path="/signup" element={<LoginSign action="Sign Up" />} />
             <Route path="/user" element={<UserPage />}>
             </Route>
             <Route path="/user/edit" element={<ProfileEdit />} />
             <Route path="/learn" element={<LearnReact />} />
-            <Route path="/create" element={<Page title={"add"}/>} />
+            <Route path="/create" element={<Page title={"add"} />} />
 
           </Routes>
 

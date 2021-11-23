@@ -22,9 +22,9 @@ function ProfileEdit(props) {
                     body: formData
                 })
                 const data = await res.json();
-                console.log("Data", data)
-                setDisplayImage(data)
-                setStatus("resolved")
+                console.log("Data", data);
+                setDisplayImage(data);
+                setStatus("resolved");
             } catch (error) {
                 console.error(error)
             }

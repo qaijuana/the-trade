@@ -1,6 +1,7 @@
 //* Dependencies
 require("dotenv").config();
 const express = require("express");
+const cookieParser = require("cookie-parser")
 const path = require("path");
 const { cloudinary } = require("./utils/cloudinary")
 
@@ -15,6 +16,7 @@ const upload_controller = require("./controllers/upload_controller")
 app.use(express.static(path.join(__dirname, "./client")));
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json()); //! req.body
+app.use(cookieParser()); //! req.cookie
 
 //* Controllers
 app.use("/api/login", login_controller);
@@ -22,9 +24,8 @@ app.use("/api/user", user_controller);
 app.use("/api/list", list_controller);
 app.use("/api/upload", upload_controller);
 
-
 app.get("/*", (req, res) => {
-    res.sendFile(path.join(__dirname, "./client", "index.html"));
+    res.sendFile(path.join(__dirname, "./client/public", "index.html"));
 });
 
 app.listen(port, () => {
