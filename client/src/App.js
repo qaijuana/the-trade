@@ -1,17 +1,23 @@
 import React, { useState } from "react";
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
+//! COMPONENTS
 import LearnReact from "./components/LearnReact";
-import Cards from "./components/Cards";
-import ProfileEdit from "./pages/ProfileEdit";
 import useAuth from "./components/useAuth";
+import NavBar from "./components/NavBar";
+//! PAGES
+import ProfileEdit from "./pages/ProfileEdit";
 import LoginSign from "./pages/LoginSign";
-import "./styles/App.css"
+import Marketplace from "./pages/Marketplace";
+
+import "./styles/App.css";
 
 
 function App() {
 
   const [currentUser, setCurrentUser] = useState(null)
-  const [isAuth, login, logout] = useAuth(!currentUser, setCurrentUser, currentUser);
+  const [isAuth, login, logout] = useAuth(
+    !currentUser, setCurrentUser, currentUser
+  );
 
   function UserPage() {
     return (
@@ -29,62 +35,48 @@ function App() {
         </h1>
         {
           (title === "marketplace") ?
-            "" :
+            <Marketplace /> :
             ""
         }
       </div>
     )
   }
 
-  function NavBar() {
+  function RefreshToken(props) {
 
-    function AuthUser() {
-
-      return (
-        (!currentUser) ?
-          <>
-            <Link to={"/learn"}>Learn</Link>
-            <Link to={"/signup"}>Sign Up</Link>
-            <Link to={"/login"} >Login</Link>
-          </>
-          :
-          <>
-            <Link to={"/create"}>Add</Link>
-            <Link to={"/inbox"}>Inbox</Link>
-            <Link to={"/user"}>Profile</Link>
-            <Link to={"/"} onClick={logout}>Logout</Link>
-          </>
-      )
-    }
+    async function handleRefresh() {
+      const res = await fetch("/api/login/token", {
+        method: "POST",
+        header: {
+          "Content-Type": "application/json"
+        }
+      });
+      const data = res.json();
+    };
 
     return (
-      <div className="header">
-        <div className="header-1">
-          <Link to={"/"}>Home</Link>
-          <Link to={"/marketplace"}>Shop</Link>
-        </div>
-        <div className="header-2">
-          <AuthUser />
-        </div>
-
+      <div className="refresh">
+        <button onClick={handleRefresh}>click me</button>
       </div>
-
     )
   }
 
+
   return (
+
     <Router>
       <div className="App">
-        <NavBar />
+        <NavBar currentUser={currentUser} logout={logout} />
         <div className="container">
           <Routes>
-            <Route path="/" element={<Page title={"home"} />} />
+            <Route path="user" element={<UserPage />}>
+            </Route>
+            <Route path="/user/edit/:id" element={<ProfileEdit />} />
+            <Route index element={<Page title={"home"} />} />
             <Route path="/marketplace" element={<Page title={"marketplace"} />} />
             <Route path="/login" element={<LoginSign setCurrentUser={setCurrentUser} login={login} action="Login" />} />
             <Route path="/signup" element={<LoginSign action="Sign Up" />} />
-            <Route path="/user" element={<UserPage />}>
-            </Route>
-            <Route path="/user/edit" element={<ProfileEdit />} />
+            <Route path="/inbox" element={<Page title="inbox"/>}/>
             <Route path="/learn" element={<LearnReact />} />
             <Route path="/create" element={<Page title={"add"} />} />
           </Routes>

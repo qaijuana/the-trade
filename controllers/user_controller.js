@@ -2,11 +2,11 @@ const bcrypt = require("bcrypt");
 const express = require("express");
 const router = express.Router();
 const pool = require("../database")
-
+const authToken = require("./authToken")
 
 // show 
 
-router.get("/", async (req, res) => {
+router.get("/", authToken, async (req, res) => {
     const allUsers = await pool.query(
         "SELECT * FROM users;"
     )
@@ -18,16 +18,14 @@ router.get("/", async (req, res) => {
 router.post("/new", async (req, res) => {
     const username = req.body.username;
     const email = req.body.email;
-    console.log(req.body)
+    const salt = await bcrypt.genSalt(7);
+    const hashedPassword = await bcrypt.hash(req.body.password, salt)
     try {
-        const salt = await bcrypt.genSalt(7);
-        const hashedPassword = await bcrypt.hash(req.body.password, salt)
         const newUser = await pool.query(
-            "INSERT INTO users (username, password, email) VALUES ($1, $2, $3) RETURNING *",
+            "INSERT INTO users (username, password, email) VALUES ($1, $2, $3) RETURNING id",
             [username, hashedPassword, email]
         )
-        res.json(newUser.rows[0])
-        res.sendStatus(201);
+        res.sendStatus(200);
     } catch (error) {
         res.sendStatus(500);
     }
@@ -36,7 +34,7 @@ router.post("/new", async (req, res) => {
 
 // edit
 
-router.put("/edit/:id", async (req, res) => {
+router.put("/edit/:id", authToken, async (req, res) => {
     const { id } = req.params;
     const {
         first_name,
@@ -47,7 +45,6 @@ router.put("/edit/:id", async (req, res) => {
         user_photo,
         about
     } = req.body
-    console.log(req.body);
 
     if (first_name) {
         const updateFirstName = await pool.query(
@@ -91,7 +88,7 @@ router.put("/edit/:id", async (req, res) => {
 
 // show one
 
-router.get("/:id", async (req, res) => {
+router.get("/:id", authToken, async (req, res) => {
     const { id } = req.params;
     try {
         const findUser = await pool.query(

@@ -30,7 +30,6 @@ export default function LoginSign(props) {
                     })
                     const data = await res.json();
                     setCurrentUser(data.id)
-                    console.log("data", data)
                     setStatus("resolved");
                     Login();
                     navigate("/");
@@ -42,6 +41,7 @@ export default function LoginSign(props) {
             console.log(status)
             postLogin();
         } else if (Action === "Sign Up") {
+
             const postSignUp = async () => {
                 try {
                     const res = await fetch("/api/user/new", {
@@ -55,9 +55,9 @@ export default function LoginSign(props) {
                             email: email
                         })
                     })
-                    const data = await res.json();
-                    console.log(data)
+                    // const data = await res.json();
                     navigate("/login");
+                    console.log("made it")
                 } catch (error) {
                     console.error(error);
                 }
