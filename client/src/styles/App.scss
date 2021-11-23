@@ -1,10 +1,113 @@
 @import "./variables.scss";
-@import "./cards.scss"
 
-.App {
-    text-align: center;
+*,
+*::before,
+*::after {
     box-sizing: border-box;
     margin: 0;
+    padding: 0;
+}
+
+#root {
+    height: 100%;
+}
+body {
+    font-family: $Poppins, sans-serif;
+    width: 100%;
+    color: $dark;
+}
+
+.wrapper {
+    margin: 2rem;
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: 1fr;
+    justify-content: center;
+}
+
+.card {
+    box-shadow: 0 0 10px 1px $dark;
+    border-radius: $radius;
+    max-width: 28rem;
+    display: flex;
+    text-align: left;
+
+    &-img {
+        width: 14rem;
+        height: 11rem;
+        object-fit: cover;
+    }
+    &-body {
+        margin: 1rem;
+        flex-grow: 1;
+    }
+    &-title {
+        line-height: 1.4rem;
+        margin-bottom: 0.5rem;
+    }
+    &-description {
+        line-height: 1.2rem;
+    }
+    &-price {
+        font-size: 1.4rem;
+        margin-top: 0.6rem;
+        &::before {
+            content: "$";
+            font-size: 1rem;
+            position: relative;
+            top: -0.3rem;
+            padding-right: 0.1rem;
+        }
+    }
+    &-offer {
+        border: none;
+        border-top: 1px solid $dark;
+        background-color: transparent;
+        font-family: inherit;
+        width: 100%;
+        padding-top: 1rem;
+        margin-top: 1rem;
+        cursor: pointer;
+
+        &:hover {
+            color: $primary;
+        }
+    }
+    &-msg {
+        border: none;
+        border-top: 1px solid $dark;
+        background-color: transparent;
+        font-family: inherit;
+        width: 100%;
+        padding-top: 1rem;
+        margin-top: 1rem;
+        cursor: pointer;
+
+        &:hover {
+            color: $primary;
+        }
+    }
+}
+
+@media screen and (min-width:600px) {
+    .wrapper {
+        grid-template-columns: repeat(auto-fit, minmax(14rem, 16rem));
+
+    }
+    .card {
+        flex-direction: column;
+        text-align: center;
+        min-width: 14rem;
+
+        &-img {
+            width: 100%;
+            height: 12rem;
+        }
+    }
+}
+
+.container {
+    text-align: center;
 }
 
 .header {
@@ -20,24 +123,9 @@
         color: $dark;
         margin: 10px;
     }
-
-
-    &-profile {
-        display: inline-block;
-
-        a {
-            display: flex;
-            flex-direction: column;
-        }
-    }
-
-    &-tool {
-        display: inline;
-    }
 }
 
 .image {
-
     &-card {
         display: flex;
         flex-direction: column;
@@ -47,8 +135,6 @@
         background: $bg;
         justify-content: space-between;
     }
-
-
 }
 
 .profile {
@@ -56,14 +142,4 @@
         width: 700px;
         align-items: center;
     }
-}
-
-body {
-    font-family: $Poppins;
-    width: 100%;
-    color: $dark;
-}
-
-#root {
-    height: 100%;
 }

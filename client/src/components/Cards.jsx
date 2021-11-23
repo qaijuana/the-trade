@@ -10,14 +10,14 @@ const Cards = (props) => {
                 <div className="card-body">
                     <h2 className="card-title">{props.title}</h2>
                     <p className="card-description">{props.description}</p>
-                    <h3 className="card-price">${props.price}</h3>
+                    <h3 className="card-price">{props.price}</h3>
                     <button className="card-offer">Offer</button>
+                    <br />
                     <button className="card-msg">Message</button>
                 </div>
-
             </div>
-
         </div>
+
     )
 }
 

@@ -13,8 +13,6 @@ function App() {
   const [currentUser, setCurrentUser] = useState(null)
   const [isAuth, login, logout] = useAuth(!currentUser, setCurrentUser, currentUser);
 
-
-
   function UserPage() {
     return (
       <Link to="/user/edit">
@@ -31,9 +29,7 @@ function App() {
         </h1>
         {
           (title === "marketplace") ?
-            <Cards 
-            img="" title=""
-            description="" price="" /> :
+            "" :
             ""
         }
       </div>
@@ -79,8 +75,8 @@ function App() {
   return (
     <Router>
       <div className="App">
+        <NavBar />
         <div className="container">
-          <NavBar />
           <Routes>
             <Route path="/" element={<Page title={"home"} />} />
             <Route path="/marketplace" element={<Page title={"marketplace"} />} />
@@ -91,9 +87,7 @@ function App() {
             <Route path="/user/edit" element={<ProfileEdit />} />
             <Route path="/learn" element={<LearnReact />} />
             <Route path="/create" element={<Page title={"add"} />} />
-
           </Routes>
-
         </div>
       </div>
     </Router>
