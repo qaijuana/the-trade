@@ -1,10 +1,13 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router';
 
-export default function LoginSign({ action: Action, login : Login }, ...rest) {
+export default function LoginSign(props) {
 
     const [status, setStatus] = useState("pending");
     const navigate = useNavigate();
+    const Action = props.action;
+    const Login = props.login;
+    const setCurrentUser = props.setCurrentUser;
 
     function handleSubmit(e) {
         e.preventDefault();
@@ -12,30 +15,31 @@ export default function LoginSign({ action: Action, login : Login }, ...rest) {
         const password = e?.target?.password?.value;
         const email = e?.target?.email?.value;
         console.log(username, password, email)
-        
+
         if (Action === "Login") {
             const postLogin = async () => {
-                    try {
-                        setStatus("loading")
-                        const res = await fetch("/api/login", {
-                            method: "POST",
-                            headers: {
-                                "Content-Type": "application/json"
-                            },
-                            body: JSON.stringify({
-                                username: username,
-                                password: password
-                            })
+                try {
+                    setStatus("loading")
+                    const res = await fetch("/api/login", {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json"
+                        },
+                        body: JSON.stringify({
+                            username: username,
+                            password: password
                         })
-                        const data = await res.json();
-                        console.log("data", data)
-                        setStatus("resolved");
-                        Login();
-                        navigate("/");
-                        
-                    } catch (error) {
-                        console.log(error)
-                    }
+                    })
+                    const data = await res.json();
+                    setCurrentUser(data.id)
+                    console.log("data", data)
+                    setStatus("resolved");
+                    Login();
+                    navigate("/");
+
+                } catch (error) {
+                    console.log(error)
+                }
             }
             console.log(status)
             postLogin();

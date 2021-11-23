@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import LearnReact from "./components/LearnReact";
 import ProfileEdit from "./pages/ProfileEdit";
@@ -9,7 +9,10 @@ import "./styles/App.css"
 
 function App() {
 
-  const [isAuth, login, logout] = useAuth(false);
+  const [currentUser, setCurrentUser] = useState(null)
+  const [isAuth, login, logout] = useAuth(!currentUser, setCurrentUser, currentUser);
+
+  console.log(isAuth, currentUser);
 
   function UserPage() {
     return (
@@ -74,7 +77,7 @@ function App() {
           <Routes>
             <Route path="/" element={<Page title={"home"} />} />
             <Route path="/marketplace" element={<Page title={"marketplace"} />} />
-            <Route path="/login" element={<LoginSign login={login} action="Login" />} />
+            <Route path="/login" element={<LoginSign setCurrentUser={setCurrentUser} login={login} action="Login" />} />
             <Route path="/signup" element={<LoginSign action="Sign Up" />} />
             <Route path="/user" element={<UserPage />}>
             </Route>
