@@ -5,12 +5,13 @@ const jwt = require("jsonwebtoken")
 
 
 function authToken(req, res, next) {
+    console.log("we're in auth");
     // const authHeader = req.headers['authorization'];
     //! if authHeader is true (&&) then authHeader.split will be done
     // const token = authHeader && authHeader.split(" ")[1];
     const { cookies } = req
-    const token = cookies.token
-    console.log("token", token)
+    const { token, id } = cookies;
+    console.log("auth")
 
     if (token == null) return res.sendStatus(401)
     try {
@@ -18,6 +19,7 @@ function authToken(req, res, next) {
             if (err) return res.sendStatus(403);
             req.user = user;
             console.log(req.user);
+            console.log("next")
             next();
         })
 
@@ -28,5 +30,5 @@ function authToken(req, res, next) {
 
 }
 
-module.exports =  authToken
+module.exports = authToken
 

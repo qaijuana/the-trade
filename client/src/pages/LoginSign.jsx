@@ -1,14 +1,15 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { useNavigate } from 'react-router';
-import { Form, Row, Col, InputGroup, FormControl, Button } from "react-bootstrap";
+import { Form, InputGroup, Button } from "react-bootstrap";
 
 export default function LoginSign(props) {
-
     const [status, setStatus] = useState("pending");
     const navigate = useNavigate();
     const action = props.action;
     const login = props.login;
     const setCurrentUser = props.setCurrentUser;
+    const formRef = useRef();
+
 
     function handleSubmit(e) {
         e.preventDefault();
@@ -41,6 +42,7 @@ export default function LoginSign(props) {
             }
             console.log(status)
             postLogin();
+
         } else if (action === "Sign Up") {
 
             const postSignUp = async () => {
@@ -70,8 +72,8 @@ export default function LoginSign(props) {
     return (
         <div>
             <h1>{action}</h1>
-            <Form>
-                <Form.Group className="mb-3" controlId="formBasicEmail">
+            <Form ref={formRef} onSubmit={handleSubmit}>
+                <Form.Group className="mb-3" controlId="username">
                     <Form.Label>Username</Form.Label>
                     <InputGroup>
                         <InputGroup.Text>@</InputGroup.Text>
@@ -79,26 +81,37 @@ export default function LoginSign(props) {
                     </InputGroup>
                 </Form.Group>
 
-                {(action === "Sign Up") ? <Form.Group>
-                    <Form.Label>Email</Form.Label>
-                    <Form.Control type="email" placeholder="Enter Email" />
-                    <Form.Text className="text-muted">
-                        We'll never share your email with anyone else.
-                    </Form.Text>
-                </Form.Group> : ""}
+                {(action === "Sign Up") ?
+                    <Form.Group className="mb-3" controlId="email">
+                        <Form.Label>Email</Form.Label>
+                        <Form.Control type="email" placeholder="Enter Email" />
+                        <Form.Text className="text-muted">
+                            We'll never share your email with anyone else.
+                        </Form.Text>
+                    </Form.Group> : ""}
 
-
-                <Form.Group className="mb-3" controlId="formBasicPassword">
+                <Form.Group className="mb-3" controlId="password">
                     <Form.Label>Password</Form.Label>
                     <Form.Control type="password" placeholder="Password" />
                 </Form.Group>
-                {(action === "Sign Up") ? "" :
-                <Form.Group className="mb-3 d-flex justify-content-center" controlId="formBasicCheckbox">
-                    <Form.Check type="checkbox" label="Keep me logged in" />
-                </Form.Group> 
+
+                {(action === "Sign Up") ?
+                    <Form.Group className="mb-3 d-flex justify-content-center">
+                        <Form.Check
+                            required
+                            label="Agree to terms and conditions"
+                            feedback="You must agree before submitting."
+                            feedbackType="invalid"
+                        />
+                    </Form.Group>
+                    :
+                    <Form.Group className="mb-3 d-flex justify-content-center" controlId="remember_me">
+                        <Form.Check type="checkbox" label="Keep me logged in" />
+                    </Form.Group>
                 }
+
                 <Button variant="primary" type="submit">
-                    Submit
+                    {action}
                 </Button>
             </Form>
 

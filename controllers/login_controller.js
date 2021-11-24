@@ -80,11 +80,11 @@ router.post("/token", async (req, res) => {
         "SELECT refresh_token FROM users WHERE id = $1", [cookies.id]
     )
     const refreshToken = findRefreshToken.rows?.[0]?.refresh_token
-    console.log(!refreshToken);
-    if (refreshToken.token == null)
+    if (refreshToken == null) {
+        console.log("null")
         return res.sendStatus(401);
-    //! Push refreshtoken into database
-    else
+    } else {
+        //! Push refreshtoken into database
         jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET,
             (err, user) => {
                 if (err) return res.sendStatus(403);
@@ -93,7 +93,7 @@ router.post("/token", async (req, res) => {
                 const newAccessToken = res.cookie("token", accessToken, {
                     httpOnly: true
                 })
-                const current_user = res.cookie("id", results.id, {
+                const current_user = res.cookie("id", cookies.id, {
                     httpOnly: true
                 })
                 // res.json({ accessToken: accessToken })
@@ -101,6 +101,7 @@ router.post("/token", async (req, res) => {
 
             }
         )
+    }
 })
 
 module.exports = router

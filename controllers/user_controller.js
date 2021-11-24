@@ -4,15 +4,13 @@ const router = express.Router();
 const pool = require("../database")
 const authToken = require("./authToken")
 
-// show 
-
+//! SHOW ALL FOR ADMIN
 router.get("/", authToken, async (req, res) => {
     const allUsers = await pool.query(
         "SELECT * FROM users;"
     )
     res.json(allUsers.rows)
 })
-
 
 //! CREATE USER
 router.post("/new", async (req, res) => {
@@ -32,9 +30,21 @@ router.post("/new", async (req, res) => {
 
 })
 
-// edit
+//! SHOW USER
+router.get("/:id", authToken, async (req, res) => {
+    const { id } = req.params;
+    try {
+        const findUser = await pool.query(
+            "SELECT * FROM users WHERE id = $1", [id]
+        )
+        findUser.rows[0].password = "lol suck on it"
+    } catch (error) {
+        res.sendStatus(400)
+    }
+})
 
-router.put("/edit/:id", authToken, async (req, res) => {
+//! EDIT
+router.post("/:id/edit", authToken, async (req, res) => {
     const { id } = req.params;
     const {
         first_name,
@@ -45,6 +55,7 @@ router.put("/edit/:id", authToken, async (req, res) => {
         user_photo,
         about
     } = req.body
+    console.log(req.body)
 
     if (first_name) {
         const updateFirstName = await pool.query(
@@ -86,23 +97,7 @@ router.put("/edit/:id", authToken, async (req, res) => {
     res.sendStatus(200)
 });
 
-// show one
-
-router.get("/:id", authToken, async (req, res) => {
-    const { id } = req.params;
-    try {
-        const findUser = await pool.query(
-            "SELECT * FROM users WHERE id = $1", [id]
-        )
-        findUser.rows[0].password = "lol suck on it"
-        res.json(findUser.rows[0])
-    } catch (error) {
-        res.sendStatus(400)
-    }
-})
-
-// delete
-
+//! DELETE
 router.delete("/:id", async (req, res) => {
     const { id } = req.params;
     try {
