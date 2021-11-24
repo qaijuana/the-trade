@@ -1,5 +1,6 @@
-@import "~bootstrap/scss/bootstrap";
+@import "../../node_modules/bootstrap/scss/bootstrap";
 @import "./variables.scss";
+
 
 *,
 *::before,
@@ -90,58 +91,60 @@ body {
     }
 }
 
-@media screen and (min-width:600px) {
-    .wrapper {
-        grid-template-columns: repeat(auto-fit, minmax(14rem, 16rem));
+// @media screen and (min-width:600px) {
+//     .wrapper {
+//         grid-template-columns: repeat(auto-fit, minmax(14rem, 16rem));
 
-    }
-    .card {
-        flex-direction: column;
-        text-align: center;
-        min-width: 14rem;
+//     }
+//     .card {
+//         flex-direction: column;
+//         text-align: center;
+//         min-width: 14rem;
 
-        &-img {
-            width: 100%;
-            height: 12rem;
-        }
-    }
-}
+//         &-img {
+//             width: 100%;
+//             height: 12rem;
+//         }
+//     }
+// }
 
-.container {
-    text-align: center;
-}
+// .container {
+//     text-align: center;
+// }
 
-.header {
-    height: $headerHeight;
-    background-color: $bg;
-    align-items: center;
-    justify-content: space-between;
-    padding: 0, 1.5rem;
-    display: flex;
+// .header {
+//     height: $headerHeight;
+//     background-color: $bg;
+//     align-items: center;
+//     justify-content: space-between;
+//     padding: 0, 1.5rem;
+//     display: flex;
 
-    a {
-        text-decoration: none;
-        color: $dark;
-        margin: 10px;
-    }
-}
+//     a {
+//         text-decoration: none;
+//         color: $dark;
+//         margin: 10px;
+//     }
+// }
 
-.image {
+// .image {
     
-    &-card {
-        display: flex;
-        flex-direction: column;
-        height: 200px;
-        width: 200px;
-        margin: 0 auto;
-        background: $bg;
-        justify-content: space-between;
-    }
-}
+//     &-card {
+//         display: flex;
+//         flex-direction: column;
+//         height: 200px;
+//         width: 200px;
+//         margin: 0 auto;
+//         background: $bg;
+//         justify-content: space-between;
+//     }
+// }
 
-.profile {
-    &-form {
-        width: 700px;
-        align-items: center;
-    }
-}
+// .profile {
+//     &-form {
+//         width: 700px;
+//         align-items: center;
+//     }
+// }
+
+

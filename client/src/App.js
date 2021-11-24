@@ -1,13 +1,16 @@
 import React, { useState } from "react";
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
+import { Container } from "react-bootstrap"
 //! COMPONENTS
 import LearnReact from "./components/LearnReact";
 import useAuth from "./components/useAuth";
 import NavBar from "./components/NavBar";
+import AppBar from "./components/AppBar";
 //! PAGES
 import ProfileEdit from "./pages/ProfileEdit";
 import LoginSign from "./pages/LoginSign";
 import Marketplace from "./pages/Marketplace";
+
 
 import "./styles/App.css";
 
@@ -42,32 +45,17 @@ function App() {
     )
   }
 
-  function RefreshToken(props) {
 
-    async function handleRefresh() {
-      const res = await fetch("/api/login/token", {
-        method: "POST",
-        header: {
-          "Content-Type": "application/json"
-        }
-      });
-      const data = res.json();
-    };
-
-    return (
-      <div className="refresh">
-        <button onClick={handleRefresh}>click me</button>
-      </div>
-    )
-  }
 
 
   return (
 
     <Router>
       <div className="App">
-        <NavBar currentUser={currentUser} logout={logout} />
-        <div className="container">
+        {/* <NavBar currentUser={currentUser} logout={logout} /> */}
+        <AppBar currentUser={currentUser} logout={logout} />
+
+        <Container>
           <Routes>
             <Route path="user" element={<UserPage />}>
             </Route>
@@ -76,11 +64,11 @@ function App() {
             <Route path="/marketplace" element={<Page title={"marketplace"} />} />
             <Route path="/login" element={<LoginSign setCurrentUser={setCurrentUser} login={login} action="Login" />} />
             <Route path="/signup" element={<LoginSign action="Sign Up" />} />
-            <Route path="/inbox" element={<Page title="inbox"/>}/>
+            <Route path="/inbox" element={<Page title="inbox" />} />
             <Route path="/learn" element={<LearnReact />} />
             <Route path="/create" element={<Page title={"add"} />} />
           </Routes>
-        </div>
+        </Container>
       </div>
     </Router>
   );

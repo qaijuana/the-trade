@@ -4,24 +4,7 @@ import { Link } from 'react-router-dom'
 const NavBar = (props) => {
     const currentUser = props.currentUser;
     const logout = props.logout;
-    function RefreshToken(props2) {
-
-        async function handleRefresh() {
-            const res = await fetch("/api/login/token", {
-                method: "POST",
-                header: {
-                    "Content-Type": "application/json"
-                }
-            });
-            const data = res.json();
-        };
-
-        return (
-            <div className="refresh">
-                <button onClick={handleRefresh}>click me</button>
-            </div>
-        )
-    }
+    
 
     return (
         <div className="header">
@@ -39,7 +22,7 @@ const NavBar = (props) => {
                         </>
                         :
                         <>
-                            <RefreshToken/>
+
                             <Link to={"/create"}>Add</Link>
                             <Link to={"/inbox"}>Inbox</Link>
                             <Link to={"/user/" + currentUser}>Profile</Link>
