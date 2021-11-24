@@ -17,9 +17,8 @@ const AppBar = (props) => {
                 }
             });
             const data = res.json();
-            console.log("hello")
         };
-        handleRefresh();
+        // handleRefresh();
         
 
         return (
@@ -58,7 +57,7 @@ const AppBar = (props) => {
                                     <NavDropdown.Divider />
                                     <NavDropdown.Item as={Link} to="/learn">Learn</NavDropdown.Item>
                                 </NavDropdown>
-                                <Nav.Link as={RefreshToken} >Refresh</Nav.Link>
+                                {/* <Nav.Link as={RefreshToken} >Refresh</Nav.Link> */}
                                 <Nav.Link as={Link} to={"/user/" + currentUser}>Profile</Nav.Link>
                                 <Nav.Link eventKey={2} as={Link} to="/" onClick={logout}>
                                     Logout

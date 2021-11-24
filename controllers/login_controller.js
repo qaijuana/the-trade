@@ -30,8 +30,8 @@ router.post("/", async (req, res) => {
     }
     try {
         if (await bcrypt.compare(pswrd, results.password)) {
-            const accessToken = genToken({ name: results.username });
-            const refreshToken = jwt.sign({ name: results.username }, process.env.REFRESH_TOKEN_SECRET, { expiresIn: "15m" })
+            const accessToken = genToken({ id: results.id });
+            const refreshToken = jwt.sign({ id: results.id }, process.env.REFRESH_TOKEN_SECRET)
             //! Push token into database!!! 
             const newRefreshToken = await pool.query(
                 "UPDATE users SET refresh_token = $1 WHERE id = $2",
@@ -49,7 +49,7 @@ router.post("/", async (req, res) => {
                 // refreshToken: refreshToken,
                 id: results.id
             })
-            // res.sendStatus(200);
+            res.sendStatus(200);
         } else {
             res.send("You did an oopsie");
         }
@@ -74,20 +74,30 @@ router.post("/logout", async (req, res) => {
 
 //! COOKIE REFRESH
 router.post("/token", async (req, res) => {
-    // const refreshToken = req.body.token;
     const { cookies } = req;
+    console.log(cookies)
+    console.log("did we break here?")
     const findRefreshToken = await pool.query(
         "SELECT refresh_token FROM users WHERE id = $1", [cookies.id]
     )
-    const refreshToken = findRefreshToken.rows?.[0]?.refresh_token
-    if (refreshToken == null) {
+    if (!findRefreshToken) {
+        res.sendStatus(401)
+    }
+    const refreshToken = await findRefreshToken.rows?.[0]?.refresh_token
+    console.log("refresh token", refreshToken)
+    if (refreshToken === null ) {
         console.log("null")
         return res.sendStatus(401);
     } else {
+        console.log("start of jwt")
         //! Push refreshtoken into database
         jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET,
             (err, user) => {
-                if (err) return res.sendStatus(403);
+                if (err) { 
+                    res.sendStatus(403);
+                    console.log("error in jwt") 
+                }
+                console.log(user);
                 //! If refreshtoken verified, generate new access token
                 const accessToken = genToken({ id: cookies.id })
                 const newAccessToken = res.cookie("token", accessToken, {
@@ -96,7 +106,9 @@ router.post("/token", async (req, res) => {
                 const current_user = res.cookie("id", cookies.id, {
                     httpOnly: true
                 })
-                // res.json({ accessToken: accessToken })
+                res.json({
+                    id: cookies.id
+                })
                 res.sendStatus(200)
 
             }

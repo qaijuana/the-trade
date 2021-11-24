@@ -44,57 +44,57 @@ router.get("/:id", authToken, async (req, res) => {
 })
 
 //! EDIT
-router.post("/:id/edit", authToken, async (req, res) => {
+router.post("/:id/edit", async (req, res) => {
     const { id } = req.params;
     const {
-        first_name,
-        last_name,
+        name,
         username,
         email,
         password,
         user_photo,
         about
     } = req.body
-    console.log(req.body)
+    console.log("Edit", req.body)
+    try {
+        if (name) {
+            const updateName = await pool.query(
+                "UPDATE users SET name = $1 WHERE id = $2", [first_name, id]
+            )
+        }
+        if (about) {
+            const updateAbout = await pool.query(
+                "UPDATE users SET about = $1 WHERE id = $2", [about, id]
+            )
+        }
+        if (username) {
+            const updateUsername = await pool.query(
+                "UPDATE users SET username = $1 WHERE id = $2", [username, id]
+            )
+        }
+        if (email) {
+            const updateEmail = await pool.query(
+                "UPDATE users SET email = $1 WHERE id = $2", [email, id]
+            )
+        }
+        if (password) {
+            const salt = await bcrypt.genSalt(7);
+            const hashedPassword = await bcrypt.hash(password, salt)
+            const updatepassword = await pool.query(
+                "UPDATE users SET password = $1 WHERE id = $2", [hashedPassword, id]
+            )
+        }
+        if (user_photo) {
+            const updateUserPhoto = await pool.query(
+                "UPDATE users SET user_photo = $1 WHERE id = $2", [user_photo, id]
+            )
+        }
+        res.sendStatus(200);
+    } catch (error) {
+        res.sendStatus(401);
+        console.error(error);
+    }
 
-    if (first_name) {
-        const updateFirstName = await pool.query(
-            "UPDATE users SET first_name = $1 WHERE id = $2", [first_name, id]
-        )
-    }
-    if (last_name) {
-        const updateLastName = await pool.query(
-            "UPDATE users SET last_name = $1 WHERE id = $2", [last_name, id]
-        )
-    }
-    if (about) {
-        const updateAbout = await pool.query(
-            "UPDATE users SET about = $1 WHERE id = $2", [about, id]
-        )
-    }
-    if (username) {
-        const updateUsername = await pool.query(
-            "UPDATE users SET username = $1 WHERE id = $2", [username, id]
-        )
-    }
-    if (email) {
-        const updateEmail = await pool.query(
-            "UPDATE users SET email = $1 WHERE id = $2", [email, id]
-        )
-    }
-    if (password) {
-        const salt = await bcrypt.genSalt(7);
-        const hashedPassword = await bcrypt.hash(password, salt)
-        const updatepassword = await pool.query(
-            "UPDATE users SET password = $1 WHERE id = $2", [hashedPassword, id]
-        )
-    }
-    if (user_photo) {
-        const updateUserPhoto = await pool.query(
-            "UPDATE users SET user_photo = $1 WHERE id = $2", [user_photo, id]
-        )
-    }
-    res.sendStatus(200)
+
 });
 
 //! DELETE

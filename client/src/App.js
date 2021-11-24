@@ -16,33 +16,39 @@ import "./styles/App.css";
 
 
 function App() {
-  
+
+  const navigate = useNavigate();
   const [currentUser, setCurrentUser] = useState(null)
   const [isAuth, login, logout] = useAuth(
     !currentUser, setCurrentUser, currentUser
-    );
-    // const navigate = useNavigate();
-    
+  );
+
+
   //! RELOGIN IF REFRESHED
   useEffect(() => {
     const cookieCheck = async () => {
       const res = await fetch("/api/login/token", {
         method: "POST",
       })
-      console.log("CookieCheck res", res.ok);
-      if (!res.ok) {
-        
-      }
       const data = await res.json();
-      console.log("Cookie Check Data", await data);
+      console.log(res.ok)
+      if (res.ok === false) {
+        console.log("res.ok is not ok")
+        // navigate("/login");
+      }
+      console.log(data.id, "res.ok is ok")
+      setCurrentUser(data.id);
+      console.log("useEffect", currentUser);
+
+
     }
     // cookieCheck();
 
-  },[])
+  }, [])
 
   function UserPage() {
     return (
-      <Link to={"/user/" + currentUser +"/edit"}>
+      <Link to={"/user/" + currentUser + "/edit"}>
         <h1>edit</h1>
       </Link>
     )
@@ -68,27 +74,27 @@ function App() {
 
   return (
 
-    <Router>
-      <div className="App">
-        {/* <NavBar currentUser={currentUser} logout={logout} /> */}
-        <AppBar currentUser={currentUser} logout={logout} />
 
-        <Container>
-          <Routes>
-            <Route index element={<Page title={"home"} />} />
-            <Route path="/user/:id" element={<UserPage />}>
-            </Route>
-            <Route path="/user/:id/edit" element={<EditProfile />} />
-            <Route path="/marketplace" element={<Page title={"marketplace"} />} />
-            <Route path="/login" element={<LoginSign setCurrentUser={setCurrentUser} login={login} action="Login" />} />
-            <Route path="/signup" element={<LoginSign action="Sign Up" />} />
-            <Route path="/inbox" element={<Page title="inbox" />} />
-            <Route path="/learn" element={<LearnReact />} />
-            <Route path="/create" element={<Page title={"add"} />} />
-          </Routes>
-        </Container>
-      </div>
-    </Router>
+    <div className="App">
+      {/* <NavBar currentUser={currentUser} logout={logout} /> */}
+      <AppBar currentUser={currentUser} logout={logout} />
+
+      <Container>
+        <Routes>
+          <Route index element={<Page title={"home"} />} />
+          <Route path="/user/:id" element={<UserPage />}>
+          </Route>
+          <Route path="/user/:id/edit" element={<EditProfile currentUser={currentUser} />} />
+          <Route path="/marketplace" element={<Page title={"marketplace"} />} />
+          <Route path="/login" element={<LoginSign setCurrentUser={setCurrentUser} login={login} action="Login" />} />
+          <Route path="/signup" element={<LoginSign action="Sign Up" />} />
+          <Route path="/inbox" element={<Page title="inbox" />} />
+          <Route path="/learn" element={<LearnReact />} />
+          <Route path="/create" element={<Page title={"add"} />} />
+        </Routes>
+      </Container>
+    </div>
+
   );
 }
 

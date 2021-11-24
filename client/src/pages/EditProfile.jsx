@@ -9,6 +9,7 @@ function EditProfile(props) {
     const [displayImage, setDisplayImage] = useState("");
     const [userPhoto, setUserPhoto] = useState();
     const [userInfo, setUserInfo] = useState({});
+    const currentUser = props.currentUser;
     const { id } = useParams();
     const cloudinaryUrl = `https://api.cloudinary.com/v1_1/${process.env.REACT_APP_CLOUD_NAME}/image/upload/w_300,h_300`;
 
@@ -67,13 +68,31 @@ function EditProfile(props) {
 
 
     const handleSubmit = (event) => {
-        const form = event.currentTarget;
-        console.log(form)
-        if (form.checkValidity() === false) {
-            event.preventDefault();
-            event.stopPropagation();
+        event.preventDefault();
+        event.stopPropagation();
+        const username = event?.target?.username?.value;
+        const password = event?.target?.password?.value;
+        const email = event?.target?.email?.value;
+        const name = event?.target?.name?.value;
+        const about = event?.target?.about?.value;
+        console.log(username, password, email, name, about)
+        async function updateUser() {
+            const res = await fetch(`/api/user/${currentUser}`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    name: name,
+                    username: username,
+                    email: email,
+                    password: password,
+                    about: about,
+                })
+            })
+            const data = await res.json();
         }
-        setValidated(true);
+        updateUser();
     };
 
     function CloudinaryDisplay() {
