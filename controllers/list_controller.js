@@ -3,34 +3,39 @@ const router = express.Router();
 const pool = require("../database")
 
 router.get("/", async (req, res) => {
+    console.log("get all")
     const allLists = await pool.query(
-        "SELECT listings.id, title, price, description,upload_date, category, condition, list_images, users.username FROM listings FULL JOIN users ON user_id = users.id"
+        "SELECT listings.id, title, price, description,upload_date, category, condition, list_images, users.username, user_id FROM listings FULL JOIN users ON user_id = users.id"
     )
     res.json(allLists.rows)
 })
 
 //! GET ONE LISTINGS
 router.get("/:id", async (req, res) => {
-    const { id } = req.body;
+    console.log("did i end up here instead?????")
+    const { id } = req.params;
+    console.log("id", id)
     const oneList = await pool.query(
-        "SELECT * FROM listings WHERE id = $1",
+        "SELECT listings.id, title, price, description,upload_date, category, condition, list_images, users.username, user_id FROM listings FULL JOIN users ON user_id = users.id WHERE listings.id = $1",
         [id]
     )
+    console.log(oneList.rows)
     res.json(oneList.rows[0])
 })
 
 
-router.get("/:id/:user", async (req, res) => {
-    const { user, id } = req.body;
-    const userLists = await pool.query(
-        "JOIN WHERE user_id = ",
-        [user, id]
-    )
-    res.json(userLists.rows)
-})
+// router.get("/:id/:user", async (req, res) => {
+//     const { user, id } = req.params;
+//     const userLists = await pool.query(
+//         "JOIN WHERE user_id = ",
+//         [user, id]
+//     )
+//     res.json(userLists.rows)
+// })
 
 //! CREATE LISTINGS // SET AUTHTOKEN
 router.post("/new", async (req, res) => {
+    console.log("create lists")
     const {
         title, price, description, category, condition, user_id, list_images
     } = req.body;
@@ -52,8 +57,8 @@ router.post("/new", async (req, res) => {
                 condition,
             ]
         );
-        console.log("did we make it out?")
-        res.sendStatus(200);
+        res.json(addList)
+        // res.sendStatus(200);
     } catch (error) {
         console.error(error);
     };

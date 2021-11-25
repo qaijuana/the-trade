@@ -8,6 +8,7 @@ import useAuth from "./components/useAuth";
 import AppBar from "./components/AppBar";
 //! PAGES
 import ShowProfile from "./pages/ShowProfile";
+import ShowList from "./pages/ShowList";
 import EditProfile from "./pages/EditProfile";
 import LoginSign from "./pages/LoginSign";
 import Marketplace from "./pages/Marketplace";
@@ -44,22 +45,12 @@ function App() {
   //     console.log(data.id, "res.ok is ok")
   //     setCurrentUser(data.id);
   //     console.log("useEffect", currentUser);
-
-
   //   }
   //   // cookieCheck();
-
   // }, [])
 
 
   //! Throwaway components 
-  function UserPage() {
-    return (
-      <Link to={"/user/" + currentUser + "/edit"}>
-        <h1>edit</h1>
-      </Link>
-    )
-  }
 
   function Page({ title }) {
     return (
@@ -81,7 +72,6 @@ function App() {
 
 
     <div className="App">
-      {/* <NavBar currentUser={currentUser} logout={logout} /> */}
       <AppBar currentUser={currentUser} logout={logout} />
 
       <Container>
@@ -91,7 +81,7 @@ function App() {
           </Route>
           <Route path="/user/:id/edit" element={<EditProfile currentUser={currentUser} />} />
           <Route path="/marketplace" element={<Page title={"marketplace"} />} />
-          <Route path="/list/:id" element={<Page/>} />
+          <Route path="/list/:id" element={<ShowList/>} />
           <Route path="/login" element={<LoginSign setCurrentUser={setCurrentUser} login={login} action="Login" />} />
           <Route path="/signup" element={<LoginSign action="Sign Up" />} />
           <Route path="/inbox" element={<Page title="inbox" />} />

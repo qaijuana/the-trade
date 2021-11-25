@@ -59,7 +59,7 @@ const NewList = (props) => {
                 const statusDb = resDb.ok;
                 setStatus("resolved");
                 navigate("/marketplace")
-                
+
             } catch (error) {
                 //! Catching errors for database
                 console.error(error);

@@ -31,6 +31,7 @@ router.post("/new", async (req, res) => {
 
 })
 
+//! This is causing things to crash. 
 //! SHOW USER PROFILE w/ LISTINGS
 router.get("/:id", async (req, res) => {
     const { id } = req.params;
@@ -41,8 +42,6 @@ router.get("/:id", async (req, res) => {
         )
         findUser.rows[0].password = "lol suck on it"
         const results = await findUser.rows;
-        console.log(results, "results");
-        console.log("hello????");
         res.json(results);
 
     } catch (error) {

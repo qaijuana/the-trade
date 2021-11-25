@@ -36,13 +36,13 @@ const ShowProfile = (props) => {
             <Container  >
                 <Col className="justify-content-center">
                     <UserCard img={profile[0].user_photo}
-                    about={profile[0].about} username={profile[0].username} name={profile[0].name}
+                        about={profile[0].about} username={profile[0].username} name={profile[0].name}
 
                     />
                 </Col>
 
                 <Col className="d-flex wrapper justify-content-around mt-5">
-                    {(profile[0].price) ? 
+                    {(profile[0].price) ?
                         profile.map((e, i) => {
                             return (
                                 <ListCards
