@@ -28,16 +28,31 @@ router.get("/:id/:user", async (req, res) => {
     res.json(userLists.rows)
 })
 
-//! CREATE LISTINGS
+//! CREATE LISTINGS // SET AUTHTOKEN
 router.post("/new", async (req, res) => {
     const {
-        title, price, description, list_images
+        title, price, description, category, condition, user_id, list_images
     } = req.body;
+    const upload_date = new Date(Date.now()).toISOString().replace('T', ' ').replace('Z', '');
+
+    console.log(req.body);
+
     try {
+        console.log("did we make it inside query?")
         const addList = await pool.query(
-            "INSERT INTO listings (title, price, description, user_id, upload_date, list_images) VALUES ($1, $2, $3, $4, $5, $6) RETURNING id",
-            [title, price, description, user_id, upload_date, list_images]
+            "INSERT INTO listings (title, price, description, user_id, upload_date, category, condition, list_images) VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING id",
+            [
+                title && title,
+                price && price,
+                description && description,
+                user_id,
+                upload_date,
+                category,
+                condition,
+                list_images
+            ]
         );
+        console.log("did we make it out?")
         res.sendStatus(200);
     } catch (error) {
         console.error(error);

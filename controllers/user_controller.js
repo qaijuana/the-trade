@@ -54,6 +54,7 @@ router.post("/:id/edit", async (req, res) => {
         user_photo,
         about
     } = req.body;
+    console.log(req.body)
     try {
         if (name) {
             const updateName = await pool.query(

@@ -38,6 +38,7 @@ function EditProfile(props) {
                         },
                         body: JSON.stringify({ user_photo: data.url })
                     })
+                    const dataPhoto = sendProfilePhoto.json();
                 } catch (error) {
                     setStatus("failed");
                     console.error(error);
@@ -53,19 +54,19 @@ function EditProfile(props) {
     }
 
 
-    useEffect(() => {
-        const getUser = async () => {
-            try {
-                const res = await fetch(`/api/user/${id}`)
-                const data = await res.json();
-                console.log("DATA", data)
-                setUserInfo(data);
-            } catch (error) {
-                console.error(error)
-            }
-        }
-        getUser();
-    }, [])
+    // useEffect(() => {
+    //     const getUser = async () => {
+    //         try {
+    //             const res = await fetch(`/api/user/${id}`)
+    //             const data = await res.json();
+    //             console.log("DATA", data)
+    //             setUserInfo(data);
+    //         } catch (error) {
+    //             console.error(error)
+    //         }
+    //     }
+    //     // getUser();
+    // }, [])
 
 
     const handleSubmit = (event) => {
@@ -97,7 +98,7 @@ function EditProfile(props) {
             } catch (error) {
                 console.error(error)
             }
-            
+
         }
         updateUser();
     };
@@ -120,12 +121,12 @@ function EditProfile(props) {
                     <Image as={CloudinaryDisplay} roundedCircle />
                     :
                     <Image src={userInfo.user_photo} roundedCircle />}
-                {/* <Form.Label>Default file input example</Form.Label> */}
-
                 <InputGroup>
                     <Form.Control type="file"
-                        onChange={(event) => { setUserPhoto(event.target.files[0]) }} />
-                    <Button variant="outline-secondary" id="button-addon2" onClick={handleUpload}>
+                        onChange={(event) => {
+                            setUserPhoto(event.target.files[0])
+                        }} />
+                    <Button variant="primary" id="button-addon2" onClick={handleUpload}>
                         Upload
                     </Button>
                 </InputGroup>

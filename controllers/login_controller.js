@@ -85,7 +85,7 @@ router.post("/token", async (req, res) => {
     }
     const refreshToken = await findRefreshToken.rows?.[0]?.refresh_token
     console.log("refresh token", refreshToken)
-    if (refreshToken === null ) {
+    if (refreshToken === null) {
         console.log("null")
         return res.sendStatus(401);
     } else {
@@ -93,18 +93,20 @@ router.post("/token", async (req, res) => {
         //! Push refreshtoken into database
         jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET,
             (err, user) => {
-                if (err) { 
+                if (err) {
                     res.sendStatus(403);
-                    console.log("error in jwt") 
+                    console.log("error in jwt")
                 }
                 console.log(user);
                 //! If refreshtoken verified, generate new access token
                 const accessToken = genToken({ id: cookies.id })
                 const newAccessToken = res.cookie("token", accessToken, {
-                    httpOnly: true
+                    httpOnly: true,
+                    secure: true
                 })
                 const current_user = res.cookie("id", cookies.id, {
-                    httpOnly: true
+                    httpOnly: true,
+                    secire: true
                 })
                 res.json({
                     id: cookies.id

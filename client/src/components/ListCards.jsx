@@ -1,5 +1,9 @@
 import React from 'react';
-import { Card, ListGroup, ListGroupItem, Stack } from "react-bootstrap";
+import { Card, Button, ButtonGroup } from "react-bootstrap";
+import { BsCurrencyDollar, BsAt, BsHeart, BsHeartFill, BsFillChatSquareFill } from "react-icons/bs";
+
+import { Link } from 'react-router-dom';
+
 
 const ListCards = (props) => {
     const img = props.img;
@@ -12,21 +16,30 @@ const ListCards = (props) => {
     return (
         <Card style={{ width: '18rem' }}>
             <Card.Img variant="top" src={img} />
-            <Stack direction="horizontal" gap={3} className="justify-content-between">
-                <Card.Title>@{author}</Card.Title>
-                <Card.Text >${price}</Card.Text>
-            </Stack>
-            <Card.Body>
-                <Card.Title>{title}</Card.Title>
+            <Card.Header className="d-flex justify-content-between">
+                <Card.Text className="fs-4">
+                    <BsAt />
+                    {author}
+                </Card.Text>
                 <Card.Text>
                     {date}
                 </Card.Text>
-            </Card.Body>
-            <Card.Body>
-                <Card.Link href="#">Offer</Card.Link>
-                <Card.Link href="#">Message</Card.Link>
-            </Card.Body>
-        </Card>
+            </Card.Header>
+            <Card.Body className="d-flex justify-content-between">
+                <Card.Title>{title}</Card.Title>
+                <Card.Text className="fs-4" >
+                    <BsCurrencyDollar />
+                    {price}
+                </Card.Text>
+            </Card.Body >
+            <Card.Footer>
+                <ButtonGroup size="lg" className="mb-2">
+                    <Button variant="secondary">Offer</Button>
+                    <Button variant="secondary"><BsFillChatSquareFill className="fs-3" /></Button>
+                    <Button variant="secondary"> <BsHeart className="fs-4" /> </Button>
+                </ButtonGroup>
+            </Card.Footer>
+        </Card >
     )
 }
 
