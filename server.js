@@ -9,7 +9,6 @@ const app = express();
 const port = process.env.PORT;
 const login_controller = require("./controllers/login_controller");
 const user_controller = require("./controllers/user_controller");
-const list_controller = require("./controllers/list_controllers");
 const upload_controller = require("./controllers/upload_controller")
 const list_controller = require("./controllers/list_controller")
 const authToken = require("./controllers/authToken")
