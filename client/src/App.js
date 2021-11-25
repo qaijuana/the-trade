@@ -18,7 +18,7 @@ import "./styles/App.css";
 function App() {
 
   const navigate = useNavigate();
-  const [currentUser, setCurrentUser] = useState(null)
+  const [currentUser, setCurrentUser] = useState(6)
   const [isAuth, login, logout] = useAuth(
     !currentUser, setCurrentUser, currentUser
   );

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from "react-router-dom";
+import { useNavigate } from 'react-router';
 import { Form, Row, Col, InputGroup, Button, FloatingLabel, Image } from "react-bootstrap";
 import { Image as ImageCloud, Transformation } from "cloudinary-react";
 
@@ -9,8 +10,8 @@ function EditProfile(props) {
     const [displayImage, setDisplayImage] = useState("");
     const [userPhoto, setUserPhoto] = useState();
     const [userInfo, setUserInfo] = useState({});
-    const currentUser = props.currentUser;
     const { id } = useParams();
+    const navigate = useNavigate();
     const cloudinaryUrl = `https://api.cloudinary.com/v1_1/${process.env.REACT_APP_CLOUD_NAME}/image/upload/w_300,h_300`;
 
 
@@ -69,7 +70,7 @@ function EditProfile(props) {
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        event.stopPropagation();
+        // event.stopPropagation();
         const username = event?.target?.username?.value;
         const password = event?.target?.password?.value;
         const email = event?.target?.email?.value;
@@ -77,20 +78,26 @@ function EditProfile(props) {
         const about = event?.target?.about?.value;
         console.log(username, password, email, name, about)
         async function updateUser() {
-            const res = await fetch(`/api/user/${currentUser}`, {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify({
-                    name: name,
-                    username: username,
-                    email: email,
-                    password: password,
-                    about: about,
+            try {
+                const res = await fetch(`/api/user/${id}/edit`, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({
+                        name: name,
+                        username: username,
+                        email: email,
+                        password: password,
+                        about: about,
+                    })
                 })
-            })
-            const data = await res.json();
+                const data = await res.json();
+                navigate(`/user/${id}`);
+            } catch (error) {
+                console.error(error)
+            }
+            
         }
         updateUser();
     };
@@ -130,7 +137,7 @@ function EditProfile(props) {
                         <InputGroup.Text id="inputGroupPrepend">@</InputGroup.Text>
                         <Form.Control
                             type="text"
-                            placeholder={userInfo?.username}
+                            placeholder="username"
                             aria-describedby="inputGroupPrepend"
                         />
                     </InputGroup>
@@ -140,7 +147,7 @@ function EditProfile(props) {
                     <Form.Control
                         type="text"
                         placeholder="Name"
-                        defaultValue={userInfo?.name}
+
                     />
 
                 </Form.Group>

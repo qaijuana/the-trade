@@ -25,7 +25,7 @@ router.post("/new", async (req, res) => {
         )
         res.sendStatus(200);
     } catch (error) {
-        res.sendStatus(500);
+        console.error(error);
     }
 
 })
@@ -53,12 +53,11 @@ router.post("/:id/edit", async (req, res) => {
         password,
         user_photo,
         about
-    } = req.body
-    console.log("Edit", req.body)
+    } = req.body;
     try {
         if (name) {
             const updateName = await pool.query(
-                "UPDATE users SET name = $1 WHERE id = $2", [first_name, id]
+                "UPDATE users SET name = $1 WHERE id = $2", [name, id]
             )
         }
         if (about) {
