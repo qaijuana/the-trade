@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router";
-import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
+import { Routes, Route, Link } from "react-router-dom";
 import { Container } from "react-bootstrap"
 //! COMPONENTS
 import LearnReact from "./components/LearnReact";
 import useAuth from "./components/useAuth";
 import AppBar from "./components/AppBar";
 //! PAGES
+import ShowProfile from "./pages/ShowProfile";
 import EditProfile from "./pages/EditProfile";
 import LoginSign from "./pages/LoginSign";
 import Marketplace from "./pages/Marketplace";
@@ -21,7 +22,7 @@ function App() {
   const navigate = useNavigate();
 
   //! CHANGE currentUser TO *NULL* FOR PRODUCTION
-  const [currentUser, setCurrentUser] = useState(6)
+  const [currentUser, setCurrentUser] = useState()
   const [isAuth, login, logout] = useAuth(
     !currentUser, setCurrentUser, currentUser
   );
@@ -86,10 +87,11 @@ function App() {
       <Container>
         <Routes>
           <Route index element={<Page title={"home"} />} />
-          <Route path="/user/:id" element={<UserPage />}>
+          <Route path="/user/:id" element={<ShowProfile />}>
           </Route>
           <Route path="/user/:id/edit" element={<EditProfile currentUser={currentUser} />} />
           <Route path="/marketplace" element={<Page title={"marketplace"} />} />
+          <Route path="/list/:id" element={<Page/>} />
           <Route path="/login" element={<LoginSign setCurrentUser={setCurrentUser} login={login} action="Login" />} />
           <Route path="/signup" element={<LoginSign action="Sign Up" />} />
           <Route path="/inbox" element={<Page title="inbox" />} />

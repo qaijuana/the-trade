@@ -16,6 +16,7 @@ const NewList = (props) => {
     const [listPhoto, setListPhoto] = useState();
     const [listInfo, setListInfo] = useState();
     const { id } = useParams();
+    const navigate = useNavigate();
 
     function handleSubmit(event) {
         event.preventDefault();
@@ -33,47 +34,49 @@ const NewList = (props) => {
         const formData = new FormData();
         formData.append("file", listPhoto);
         formData.append("upload_preset", "ofd7rhpu");
-        console.log(title, price, category, condition, description, listPhoto, cloudinaryUrl)
+        console.log(title, price, category, condition, description, listPhoto)
 
         async function createList() {
             setStatus("loading")
             try {
-                const resCloud = await fetch(cloudinaryUrl, {
+                setStatus("loading");
+                const resDb = await fetch("/api/lists/new", {
                     method: "POST",
-                    body: formData
-                });
-                const dataCloud = await resCloud.json();
-                setDisplayImage(dataCloud);
-                setStatus("resolved");
-                try {
-                    setStatus("loading");
-                    const resDb = await fetch("/api/lists/new", {
-                        method: "POST",
-                        headers: {
-                            "Content-Type": "application/json"
-                        },
-                        body: JSON.stringify({
-                            title: title && title,
-                            price: price && price,
-                            category: category && category,
-                            condition: condition && condition,
-                            description: description && description,
-                            user_id: currentUser,
-                            list_images: dataCloud.url
-                        })
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({
+                        title: title && title,
+                        price: price && price,
+                        category: category && category,
+                        condition: condition && condition,
+                        description: description && description,
+                        user_id: currentUser,
+                        list_images: listPhoto
                     })
-                    const dataDb = resDb.json();
-                    const statusDb = resDb.ok;
-                    setStatus("resolved");
-                    console.log(statusDb);
-                } catch (error) {
-                    //! Catching errors for database
-                    console.error(error);
-                }
+                })
+                const dataDb = resDb.json();
+                const statusDb = resDb.ok;
+                setStatus("resolved");
+                navigate("/marketplace")
+                
             } catch (error) {
-                setStatus("error");
+                //! Catching errors for database
                 console.error(error);
             }
+            // try {
+            //     const resCloud = await fetch(cloudinaryUrl, {
+            //         method: "POST",
+            //         body: formData
+            //     });
+            //     const dataCloud = await resCloud.json();
+            //     setDisplayImage(dataCloud);
+            //     setStatus("resolved");
+
+            // } catch (error) {
+            //     setStatus("error");
+            //     console.error(error);
+            // }
         }
         createList();
     }

@@ -1,4 +1,5 @@
 const bcrypt = require("bcrypt");
+const { json } = require("express");
 const express = require("express");
 const router = express.Router();
 const pool = require("../database")
@@ -30,14 +31,20 @@ router.post("/new", async (req, res) => {
 
 })
 
-//! SHOW USER
-router.get("/:id", authToken, async (req, res) => {
+//! SHOW USER PROFILE w/ LISTINGS
+router.get("/:id", async (req, res) => {
     const { id } = req.params;
+    console.log(id)
     try {
         const findUser = await pool.query(
-            "SELECT * FROM users WHERE id = $1", [id]
+            "SELECT * FROM users FULL JOIN listings ON users.id = user_id WHERE users.id = $1", [id]
         )
         findUser.rows[0].password = "lol suck on it"
+        const results = await findUser.rows;
+        console.log(results, "results");
+        console.log("hello????");
+        res.json(results);
+
     } catch (error) {
         res.sendStatus(400)
     }

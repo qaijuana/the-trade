@@ -4,7 +4,7 @@ const pool = require("../database")
 
 router.get("/", async (req, res) => {
     const allLists = await pool.query(
-        "SELECT * FROM listings"
+        "SELECT listings.id, title, price, description,upload_date, category, condition, list_images, users.username FROM listings FULL JOIN users ON user_id = users.id"
     )
     res.json(allLists.rows)
 })
@@ -18,6 +18,7 @@ router.get("/:id", async (req, res) => {
     )
     res.json(oneList.rows[0])
 })
+
 
 router.get("/:id/:user", async (req, res) => {
     const { user, id } = req.body;
@@ -40,16 +41,15 @@ router.post("/new", async (req, res) => {
     try {
         console.log("did we make it inside query?")
         const addList = await pool.query(
-            "INSERT INTO listings (title, price, description, user_id, upload_date, category, condition, list_images) VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING id",
+            "INSERT INTO listings (title, price, description, user_id, upload_date, category, condition) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING id",
             [
-                title && title,
-                price && price,
-                description && description,
+                title,
+                price,
+                description,
                 user_id,
                 upload_date,
                 category,
                 condition,
-                list_images
             ]
         );
         console.log("did we make it out?")
