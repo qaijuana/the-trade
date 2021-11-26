@@ -153,7 +153,7 @@ router.get("/token", async (req, res) => {
                 })
                 const current_user = res.cookie("id", cookies.id, {
                     httpOnly: true,
-                    secire: true
+                    secure: true
                 })
                 res.json({
                     id: cookies.id

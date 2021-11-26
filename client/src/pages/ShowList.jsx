@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router';
 import { Container, Card, ButtonGroup, Button } from 'react-bootstrap';
-import { BsAt, BsHeart, BsFillChatSquareFill } from "react-icons/bs";
+import { BsAt, BsHeart, BsHeartFill, BsFillChatSquareFill } from "react-icons/bs";
 import { useParams } from 'react-router';
 
 const ShowList = (props) => {
     const { id } = useParams();
     const [listInfo, setListInfo] = useState([])
     const navigate = useNavigate();
+    const [like, setLike] = useState(false);
 
     console.log(id)
 
@@ -63,8 +64,16 @@ const ShowList = (props) => {
                 <Card.Footer>
                     <ButtonGroup size="lg" className="mb-2">
                         <Button variant="secondary">Offer</Button>
-                        <Button variant="secondary"><BsFillChatSquareFill className="fs-3" /></Button>
-                        <Button variant="secondary"> <BsHeart className="fs-4" /> </Button>
+                        <Button variant="secondary">
+                            <BsFillChatSquareFill className="fs-3" />
+                        </Button>
+                        <Button variant="secondary" onClick={() => { setLike(!like) }}>
+                            {(!like) ?
+                                <BsHeart className="fs-4" />
+                                :
+                                < BsHeartFill className="fs-4" />
+                            }
+                        </Button>
                     </ButtonGroup>
                 </Card.Footer>
             </Card >

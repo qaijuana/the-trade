@@ -1,11 +1,12 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Card, Button, ButtonGroup } from "react-bootstrap";
-import { BsCurrencyDollar, BsAt, BsHeart, BsHeartFill, BsFillChatSquareFill } from "react-icons/bs";
+import { BsAt, BsHeart, BsHeartFill, BsFillChatSquareFill } from "react-icons/bs";
 
 import { Link } from 'react-router-dom';
 
 
 const ListCards = (props) => {
+    const [like, setLike] = useState(false);
     const img = props.img;
     const title = props.title;
     const category = props.category;
@@ -39,7 +40,13 @@ const ListCards = (props) => {
                 <ButtonGroup size="" className="mb-2">
                     <Button variant="secondary">Offer</Button>
                     <Button variant="secondary"><BsFillChatSquareFill className="fs-3" /></Button>
-                    <Button variant="secondary"> <BsHeart className="fs-4" /> </Button>
+                    <Button variant="secondary" onClick={() => { setLike(!like) }}>
+                        {(!like) ?
+                            <BsHeart className="fs-4" />
+                            :
+                            < BsHeartFill className="fs-4" />
+                        }
+                    </Button>
                     <Button variant="secondary" onClick={onClick}> More </Button>
                 </ButtonGroup>
             </Card.Footer>
