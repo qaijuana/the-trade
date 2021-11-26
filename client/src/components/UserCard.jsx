@@ -9,22 +9,27 @@ const UserCard = (props) => {
     const about = props.about;
     const img = props.img;
     const user_id = props.user_id;
+    const id = props.id;
+    const currentUser = props.currentUser;
 
 
     return (
         <div className="bg-warning mt-3" style={{ height: "750px" }}>
 
 
-            <Image className="img-thumbnail float-right" src={img} roundedCircle />
-
-
+            <Image className="img-thumbnail float-right mt-3" src={img} roundedCircle />
             <Col>
-                <h1>hello, @{username}</h1>
+                <h1>hello, @{username} ({name})</h1>
                 <h1>{about}</h1>
             </Col>
-            <Button size="lg" variant="secondary" 
-            as={Link} to={`/user/${user_id}/edit`}
-            >Edit</Button>
+            {
+                (id === currentUser) ?
+                    <Button size="lg" variant="secondary"
+                        as={Link} to={`/user/${user_id}/edit`}
+                    >Edit</Button>
+
+                    : ""
+        }
         </div>
     )
 }

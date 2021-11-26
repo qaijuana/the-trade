@@ -10,7 +10,9 @@ const ShowProfile = (props) => {
     const [profile, setProfile] = useState([]);
     const [status, setStatus] = useState("pending");
     const navigate = useNavigate();
+    const currentUser = props.currentUser;
     //! reset
+
 
     useEffect(() => {
         setProfile([]);
@@ -28,7 +30,7 @@ const ShowProfile = (props) => {
 
         }
         getProfile();
-    }, [])
+    }, [currentUser, id])
 
     console.log(profile)
 
@@ -39,7 +41,7 @@ const ShowProfile = (props) => {
                 <Col className="justify-content-center">
                     <UserCard img={profile[0].user_photo}
                         about={profile[0].about} username={profile[0].username} name={profile[0].name}
-                        user_id={profile[0].user_id}
+                        user_id={profile[0].user_id} id={id} currentUser={currentUser}
 
                     />
                 </Col>

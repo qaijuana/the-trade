@@ -28,7 +28,6 @@ function App() {
     !currentUser, setCurrentUser, currentUser
   );
 
-
   //! RELOGIN IF REFRESHED
   //! ADD FETCH FOR MARKETPLACE
   useEffect(() => {
@@ -48,6 +47,7 @@ function App() {
     }
     cookieCheck();
   }, [])
+
 
 
   //! Throwaway components 
@@ -77,7 +77,7 @@ function App() {
       <Container>
         <Routes>
           <Route index element={<Page title={"home"} />} />
-          <Route path="/user/:id" element={<ShowProfile />}>
+          <Route path="/user/:id" element={<ShowProfile currentUser={currentUser} />}>
           </Route>
           <Route path="/user/:id/edit" element={<EditProfile currentUser={currentUser} />} />
           <Route path="/marketplace" element={<Page title={"marketplace"} />} />
