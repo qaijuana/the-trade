@@ -30,6 +30,7 @@ function EditProfile(props) {
                 })
                 const data = await res.json();
                 setDisplayImage(data);
+                navigate(`/user/${id}`);
                 try {
                     const sendProfilePhoto = await fetch(`/api/user/${id}/edit`, {
                         method: "POST",
@@ -93,8 +94,8 @@ function EditProfile(props) {
                         about: about,
                     })
                 })
-                const data = await res.json();
                 navigate(`/user/${id}`);
+                const data = await res.json();
             } catch (error) {
                 console.error(error)
             }

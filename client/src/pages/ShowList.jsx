@@ -20,7 +20,7 @@ const ShowList = (props) => {
             try {
                 const res = await fetch(`/api/lists/${id}`)
                 const data = await res.json();
-                console.log(data)
+                // console.log(data)
                 setListInfo(data);
 
             } catch (error) {

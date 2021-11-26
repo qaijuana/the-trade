@@ -36,9 +36,11 @@ router.get("/:id", async (req, res) => {
 //! CREATE LISTINGS // SET AUTHTOKEN
 router.post("/new", async (req, res) => {
     console.log("create lists")
+    const { id } = req.cookies;
     const {
         title, price, description, category, condition, user_id, list_images
     } = req.body;
+    console.log("create", id, user_id)
     const upload_date = new Date(Date.now()).toISOString().replace('T', ' ').replace('Z', '');
 
     console.log(req.body);

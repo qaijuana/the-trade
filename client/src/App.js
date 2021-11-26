@@ -31,23 +31,23 @@ function App() {
 
   //! RELOGIN IF REFRESHED
   //! ADD FETCH FOR MARKETPLACE
-  // useEffect(() => {
-  //   const cookieCheck = async () => {
-  //     const res = await fetch("/api/login/token", {
-  //       method: "POST",
-  //     })
-  //     const data = await res.json();
-  //     console.log(res.ok)
-  //     if (res.ok === false) {
-  //       console.log("res.ok is not ok")
-  //       // navigate("/login");
-  //     }
-  //     console.log(data.id, "res.ok is ok")
-  //     setCurrentUser(data.id);
-  //     console.log("useEffect", currentUser);
-  //   }
-  //   // cookieCheck();
-  // }, [])
+  useEffect(() => {
+    const cookieCheck = async () => {
+      const res = await fetch("/api/login/token")
+      const data = await res.json();
+      const ok = await res.ok
+      console.log(ok)
+      if (ok) {
+        console.log(data.id, "res.ok is ok")
+        setCurrentUser(data.id);
+        console.log("useEffect", currentUser);
+        navigate("/marketplace")
+      }
+      console.log("res.ok is not ok")
+      navigate("/login");
+    }
+    cookieCheck();
+  }, [])
 
 
   //! Throwaway components 
@@ -81,8 +81,9 @@ function App() {
           </Route>
           <Route path="/user/:id/edit" element={<EditProfile currentUser={currentUser} />} />
           <Route path="/marketplace" element={<Page title={"marketplace"} />} />
-          <Route path="/list/:id" element={<ShowList/>} />
-          <Route path="/login" element={<LoginSign setCurrentUser={setCurrentUser} login={login} action="Login" />} />
+          <Route path="/list/:id" element={<ShowList />} />
+          <Route path="/login" element={<LoginSign setCurrentUser={setCurrentUser} login={login}
+            action="Login" currentUser={currentUser} />} />
           <Route path="/signup" element={<LoginSign action="Sign Up" />} />
           <Route path="/inbox" element={<Page title="inbox" />} />
           <Route path="/learn" element={<LearnReact />} />

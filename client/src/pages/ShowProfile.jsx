@@ -37,6 +37,7 @@ const ShowProfile = (props) => {
                 <Col className="justify-content-center">
                     <UserCard img={profile[0].user_photo}
                         about={profile[0].about} username={profile[0].username} name={profile[0].name}
+                        user_id={profile[0].user_id}
 
                     />
                 </Col>

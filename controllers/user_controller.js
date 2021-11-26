@@ -94,9 +94,8 @@ router.post("/:id/edit", async (req, res) => {
                 "UPDATE users SET user_photo = $1 WHERE id = $2", [user_photo, id]
             )
         }
-        res.sendStatus(200);
+        res.send("updated");
     } catch (error) {
-        res.sendStatus(401);
         console.error(error);
     }
 

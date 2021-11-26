@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router';
 import { Form, InputGroup, Button } from "react-bootstrap";
 
@@ -8,14 +8,23 @@ export default function LoginSign(props) {
     const action = props.action;
     const login = props.login;
     const setCurrentUser = props.setCurrentUser;
-    const formRef = useRef();
 
+    const currentUser = props.currentUser;
+
+    useEffect(() => {
+        if (currentUser) {
+            navigate("/marketplace")
+        }
+    }, [currentUser])
 
     function handleSubmit(e) {
         e.preventDefault();
         const username = e?.target?.username?.value;
         const password = e?.target?.password?.value;
         const email = e?.target?.email?.value;
+
+
+
         if (action === "Login") {
             const postLogin = async () => {
                 try {
@@ -34,7 +43,7 @@ export default function LoginSign(props) {
                     setCurrentUser(data.id)
                     setStatus("resolved");
                     login();
-                    navigate("/");
+                    navigate("/marketplace");
 
                 } catch (error) {
                     console.log(error)
@@ -72,7 +81,7 @@ export default function LoginSign(props) {
     return (
         <div>
             <h1>{action}</h1>
-            <Form ref={formRef} onSubmit={handleSubmit}>
+            <Form onSubmit={handleSubmit}>
                 <Form.Group className="mb-3" controlId="username">
                     <Form.Label>Username</Form.Label>
                     <InputGroup>

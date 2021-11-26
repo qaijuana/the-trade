@@ -8,6 +8,8 @@ const UserCard = (props) => {
     const username = props.username;
     const about = props.about;
     const img = props.img;
+    const user_id = props.user_id;
+
 
     return (
         <div className="bg-warning mt-3" style={{ height: "750px" }}>
@@ -20,7 +22,9 @@ const UserCard = (props) => {
                 <h1>hello, @{username}</h1>
                 <h1>{about}</h1>
             </Col>
-            <Button size="lg" variant="secondary">Edit</Button>
+            <Button size="lg" variant="secondary" 
+            as={Link} to={`/user/${user_id}/edit`}
+            >Edit</Button>
         </div>
     )
 }
