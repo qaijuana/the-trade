@@ -1,8 +1,6 @@
 require("dotenv").config();
 const { Pool } = require("pg");
 
-
-
 const pool = new Pool({
     user: "vaytombyphixyv",
     password: process.env.POSTGRES_PASSWORD,

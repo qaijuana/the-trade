@@ -42,7 +42,7 @@ app.use(cors(corsOptions));
 
 //* Middleware
 app.use(cookieParser()); //! req.cookie
-app.use(express.static(path.join(__dirname, "./client")));
+app.use(express.static(path.join(__dirname, "./client/build")));
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json()); //! req.body
 
