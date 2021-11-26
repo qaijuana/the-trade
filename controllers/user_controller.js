@@ -50,7 +50,7 @@ router.get("/:id", async (req, res) => {
 })
 
 //! EDIT
-router.post("/:id/edit", async (req, res) => {
+router.post("/:id/edit", authToken, async (req, res) => {
     const { id } = req.params;
     const {
         name,

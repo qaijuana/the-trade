@@ -10,8 +10,10 @@ const ShowProfile = (props) => {
     const [profile, setProfile] = useState([]);
     const [status, setStatus] = useState("pending");
     const navigate = useNavigate();
+    //! reset
 
     useEffect(() => {
+        setProfile([]);
         async function getProfile() {
             try {
                 setStatus("status")

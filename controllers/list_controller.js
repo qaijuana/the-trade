@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
-const pool = require("../database")
+const pool = require("../database");
+const authToken = require("./authToken");
 
 router.get("/", async (req, res) => {
     console.log("get all")
@@ -34,7 +35,7 @@ router.get("/:id", async (req, res) => {
 // })
 
 //! CREATE LISTINGS // SET AUTHTOKEN
-router.post("/new", async (req, res) => {
+router.post("/new", authToken, async (req, res) => {
     console.log("create lists")
     const { id } = req.cookies;
     const {
@@ -68,7 +69,7 @@ router.post("/new", async (req, res) => {
 
 
 //! EDIT LIST
-router.post("/:id/edit", async (req, res) => {
+router.post("/:id/edit", authToken, async (req, res) => {
     const { id } = req.params;
     const {
         title, price, description, list_images
@@ -102,7 +103,7 @@ router.post("/:id/edit", async (req, res) => {
 })
 
 //! DELETE
-router.delete("/:id", async (req, res) => {
+router.delete("/:id", authToken, async (req, res) => {
     const { id } = req.params;
     try {
         const deleteUser = await pool.query(
