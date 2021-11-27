@@ -30,7 +30,10 @@ const Marketplace = (props) => {
     }
     if (allList.length !== 0)
         return (
+            <>
+                <h1>Marketplace</h1>
             <div className="wrapper">
+
                 {
                     allList.map((e, i) => {
                         if (e.price)
@@ -45,6 +48,7 @@ const Marketplace = (props) => {
                     })
                 }
             </div>
+            </>
         )
 }
 

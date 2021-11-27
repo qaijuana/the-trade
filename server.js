@@ -34,13 +34,8 @@ const corsOptions = {
     },
 };
 
-// all routes are now exposed, 
-// sometimes you just want to limit access 
-// (ie OMDB - it's ok for anyone to see the movies, 
-// but you don't want just anyone updating the movies)
-app.use(cors(corsOptions));
-
 //* Middleware
+app.use(cors(corsOptions));
 app.use(cookieParser()); //! req.cookie
 app.use(express.static(path.join(__dirname, "./client/build")));
 app.use(express.urlencoded({ extended: false }));

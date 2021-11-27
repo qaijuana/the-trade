@@ -23,8 +23,6 @@ export default function LoginSign(props) {
         const password = e?.target?.password?.value;
         const email = e?.target?.email?.value;
 
-
-
         if (action === "Login") {
             const postLogin = async () => {
                 try {
@@ -123,17 +121,6 @@ export default function LoginSign(props) {
                     {action}
                 </Button>
             </Form>
-
-            {/* <form onSubmit={handleSubmit}>
-                <input type="text" name="username" placeholder="username" />
-                <br />
-                {(action === "Sign Up") ? <input type="email" name="email" placeholder="email" /> : ""}
-                <br />
-                <input type="password" name="password" placeholder="password" />
-                <br />
-                <input type="submit" value={action} />
-            </form> */}
-
         </div>
     )
 }

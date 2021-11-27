@@ -6,19 +6,19 @@ const pool = require("../database");
 const authToken = require("./authToken");
 
 
+//? Consider setting a separate server for authentication. 
+
 function genToken(user) {
     return (jwt.sign(user, process.env.ACCESS_TOKEN_SECRET, { expiresIn: "15m" }))
 }
 
-router.get("/silent", authToken, (req, res) => {
-    res.json(post.filter(post => post.username === req.user.name))
-})
-
+///////////////////////////////
+///////////////////////////////
 //! COOKIE REFRESH
+///////////////////////////////
+///////////////////////////////
 router.get("/token", async (req, res) => {
     const { cookies } = req;
-    console.log(cookies)
-    console.log("did we break here?")
     const findRefreshToken = await pool.query(
         "SELECT refresh_token FROM users WHERE id = $1", [cookies.id]
     )
@@ -28,42 +28,48 @@ router.get("/token", async (req, res) => {
     const refreshToken = await findRefreshToken.rows?.[0]?.refresh_token
     console.log("refresh token", refreshToken)
     if (refreshToken === null) {
-        console.log("null")
         return res.sendStatus(401);
-    } else {
-        console.log("start of jwt")
-        //! Push refreshtoken into database
-        jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET,
-            (err, user) => {
-                if (err) {
-                    res.sendStatus(403);
-                    console.log("error in jwt")
-                }
-                console.log(user);
-                //! If refreshtoken verified, generate new access token
-                const accessToken = genToken({ id: cookies.id })
-                const newAccessToken = res.cookie("token", accessToken, {
-                    httpOnly: true,
-                    secure: true
-                })
-                const current_user = res.cookie("id", cookies.id, {
-                    httpOnly: true,
-                    secure: true
-                })
-                res.json({
-                    id: cookies.id
-                })
-                // res.sendStatus(200)
-
-            }
-        )
     }
-})
+    //! VERIFY TOKEN
+    jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET,
+        async (err, user) => {
+            if (err) {
+                res.sendStatus(403);
+                console.log("error in jwt")
+            }
+            console.log(user);
+            //! If refreshtoken verified, generate new access token
+            const accessToken = genToken({ id: cookies.id })
+            const refreshToken = jwt.sign({ id: cookies.id }, process.env.REFRESH_TOKEN_SECRET)
+            //! Push token into database!!! 
+            const newRefreshToken = await pool.query(
+                "UPDATE users SET refresh_token = $1 WHERE id = $2",
+                [refreshToken, cookies.id]
+            )
+            const newAccessToken = res.cookie("token", accessToken, {
+                httpOnly: true,
+                secure: true
+            })
+            const current_user = res.cookie("id", cookies.id, {
+                httpOnly: true,
+                secure: true
+            })
+            res.json({
+                id: cookies.id
+            })
+        }
+    )
+});
 
-
+///////////////////////////////
+///////////////////////////////
 //! LOGIN
+//////////////////////////////
+//////////////////////////////
 router.post("/", async (req, res) => {
-    //* authenticate user
+    //? Clear cookie when someone tries to attempt to avoid client side error.
+    res.clearCookie("token");
+    res.clearCookie("id");
     const username = req.body.username;
     const pswrd = req.body.password;
     const findUser = await pool.query(
@@ -91,8 +97,6 @@ router.post("/", async (req, res) => {
                 httpOnly: true
             })
             res.json({
-                // accessToken: accessToken,
-                // refreshToken: refreshToken,
                 id: results.id
             })
         } else {
@@ -102,68 +106,24 @@ router.post("/", async (req, res) => {
         res.sendStatus(400)
     }
 
-})
+});
 
+///////////////////////////////
+///////////////////////////////
 //! LOGOUT
+///////////////////////////////
+///////////////////////////////
 router.post("/logout", async (req, res) => {
     //! Delete token cookie here
     res.clearCookie("token");
-    // res.clearCookie("id");
+    res.clearCookie("id");
     //! Delete refreshtoken from database here 
     const delRefreshToken = await pool.query(
         "UPDATE users SET refresh_token = NULL WHERE id = $1 RETURNING id", [req.body.id]
     )
     res.json(delRefreshToken.rows[0])
-    // res.sendStatus(204);
-})
+});
 
-
-
-//! COOKIE REFRESH
-router.post("/token", async (req, res) => {
-    const { cookies } = req;
-    console.log(cookies)
-    console.log("did we break here?")
-    const findRefreshToken = await pool.query(
-        "SELECT refresh_token FROM users WHERE id = $1", [cookies.id]
-    )
-    if (!findRefreshToken) {
-        res.sendStatus(401)
-    }
-    const refreshToken = await findRefreshToken.rows?.[0]?.refresh_token
-    console.log("refresh token", refreshToken)
-    if (refreshToken === null) {
-        console.log("null")
-        return res.sendStatus(401);
-    } else {
-        console.log("start of jwt")
-        //! Push refreshtoken into database
-        jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET,
-            (err, user) => {
-                if (err) {
-                    res.sendStatus(403);
-                    console.log("error in jwt")
-                }
-                console.log(user);
-                //! If refreshtoken verified, generate new access token
-                const accessToken = genToken({ id: cookies.id })
-                const newAccessToken = res.cookie("token", accessToken, {
-                    httpOnly: true,
-                    secure: true
-                })
-                const current_user = res.cookie("id", cookies.id, {
-                    httpOnly: true,
-                    secire: true
-                })
-                res.json({
-                    id: cookies.id
-                })
-                res.sendStatus(200)
-
-            }
-        )
-    }
-})
 
 
 module.exports = router

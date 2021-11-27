@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router";
-import { Routes, Route, Link } from "react-router-dom";
+import { Routes, Route, Outlet } from "react-router-dom";
 import { Container } from "react-bootstrap"
 //! COMPONENTS
 import LearnReact from "./components/LearnReact";
@@ -48,6 +48,13 @@ function App() {
     cookieCheck();
   }, [])
 
+  function UserPage() {
+    return (
+      <>
+        <Outlet />
+      </>
+    ) 
+  }
 
 
   //! Throwaway components 
@@ -77,10 +84,12 @@ function App() {
       <Container>
         <Routes>
           <Route index element={<Page title={"home"} />} />
-          <Route path="/user/:id" element={<ShowProfile currentUser={currentUser} />}>
+
+          <Route path="/user" element={<UserPage />}>
+            < Route path=":id" element={<ShowProfile currentUser={currentUser} />} />
+            <Route path=":id/edit" element={<EditProfile currentUser={currentUser} />} />
           </Route>
-          <Route path="/user/:id/edit" element={<EditProfile currentUser={currentUser} />} />
-          <Route path="/marketplace" element={<Page title={"marketplace"} />} />
+          <Route path="/marketplace" element={<Marketplace />} />
           <Route path="/list/:id" element={<ShowList />} />
           <Route path="/login" element={<LoginSign setCurrentUser={setCurrentUser} login={login}
             action="Login" currentUser={currentUser} />} />
@@ -90,7 +99,7 @@ function App() {
           <Route path="/create" element={<NewList currentUser={currentUser} />} />
         </Routes>
       </Container>
-    </div>
+    </div >
 
   );
 }
