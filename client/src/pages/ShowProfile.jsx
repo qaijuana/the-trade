@@ -46,7 +46,7 @@ const ShowProfile = (props) => {
                     />
                 </Col>
 
-                <Col className="d-flex wrapper justify-content-around mt-5">
+                <Col className=" wrapper mt-5 ">
                     {(profile[0].price) ?
                         profile.map((e, i) => {
                             return (

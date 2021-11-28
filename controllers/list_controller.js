@@ -95,6 +95,16 @@ console.log("we are editing lists", req.body)
                 "UPDATE listings SET list_images = $1 WHERE id = $2", [list_images, id]
             )
         }
+        if (category) {
+            const updatecategory = await pool.query(
+                "UPDATE listings SET category = $1 WHERE id = $2", [category, id]
+            )
+        }
+        if (condition) {
+            const updatelist_images = await pool.query(
+                "UPDATE listings SET condition = $1 WHERE id = $2", [condition, id]
+            )
+        }
         res.json({msg: "all good"})
         res.sendStatus(200);
     } catch (error) {
