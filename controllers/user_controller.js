@@ -15,8 +15,8 @@ router.get("/", authToken, async (req, res) => {
 
 //! CREATE USER
 router.post("/new", async (req, res) => {
-    const username = req.body.username;
-    const email = req.body.email;
+    const username = (req.body.username).split(" ").join("");;
+    const email = (req.body.email).split(" ").join("");;
     const salt = await bcrypt.genSalt(7);
     const hashedPassword = await bcrypt.hash(req.body.password, salt)
     try {
@@ -54,13 +54,12 @@ router.post("/:id/edit", authToken, async (req, res) => {
     const { id } = req.params;
     const {
         name,
-        username,
         email,
         password,
         user_photo,
         about
     } = req.body;
-    console.log(req.body)
+    const username = (req.body.username).split(" ").join("");
     try {
         if (name) {
             const updateName = await pool.query(

@@ -40,7 +40,7 @@ const NewList = (props) => {
             setStatus("loading")
             try {
                 setStatus("loading");
-                const resDb = await fetch("/api/lists/new", {
+                const resDb = await fetch("/api/list/new", {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json"

@@ -6,7 +6,7 @@ const authToken = require("./authToken");
 router.get("/", async (req, res) => {
     console.log("get all")
     const allLists = await pool.query(
-        "SELECT listings.id, title, price, description,upload_date, category, condition, list_images, users.username, user_id FROM listings FULL JOIN users ON user_id = users.id"
+        "SELECT listings.id, title, price, description,upload_date, category, condition, list_images, users.username, user_id FROM listings FULL JOIN users ON user_id = users.id ORDER BY id DESC"
     )
     res.json(allLists.rows)
 })
@@ -41,25 +41,23 @@ router.post("/new", authToken, async (req, res) => {
         title, price, description, category, condition, user_id, list_images
     } = req.body;
     console.log("create", id, user_id)
-    const upload_date = new Date(Date.now()).toISOString().replace('T', ' ').replace('Z', '');
+    // const upload_date = new Date(Date.now()).toISOString().replace('T', ' ').replace('Z', '');
 
     console.log(req.body);
 
     try {
         const addList = await pool.query(
-            "INSERT INTO listings (title, price, description, user_id, upload_date, category, condition) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING id",
+            "INSERT INTO listings (title, price, description, user_id, category, condition) VALUES ($1, $2, $3, $4, $5, $6) RETURNING id",
             [
                 title,
                 price,
                 description,
                 user_id,
-                upload_date,
                 category,
                 condition,
             ]
         );
         res.json(addList)
-        // res.sendStatus(200);
     } catch (error) {
         console.error(error);
     };

@@ -70,8 +70,8 @@ router.post("/", async (req, res) => {
     //? Clear cookie when someone tries to attempt to avoid client side error.
     res.clearCookie("token");
     res.clearCookie("id");
-    const username = req.body.username;
-    const pswrd = req.body.password;
+    const username = (req.body.username).split(" ").join("");
+    const pswrd = (req.body.password);
     const findUser = await pool.query(
         "SELECT id, username, password FROM users WHERE username = $1", [username]
     )
