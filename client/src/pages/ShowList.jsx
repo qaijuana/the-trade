@@ -19,7 +19,7 @@ const ShowList = (props) => {
     useEffect(() => {
         const getList = async () => {
             try {
-                const res = await fetch(`/api/lists/${id}`)
+                const res = await fetch(`/api/list/${id}`)
                 const data = await res.json();
                 // console.log(data)
                 setListInfo(data);
