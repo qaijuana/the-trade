@@ -14,10 +14,12 @@ import LoginSign from "./pages/LoginSign";
 import Marketplace from "./pages/Marketplace";
 import NewList from "./pages/NewList";
 import EditList from "./pages/EditList";
+import TheInbox from "./pages/TheInbox";
 
 
 
 import "./styles/App.css";
+
 
 
 function App() {
@@ -86,7 +88,7 @@ function App() {
           <Route path="/login" element={<LoginSign setCurrentUser={setCurrentUser} login={login}
             action="Login" currentUser={currentUser} />} />
           <Route path="/signup" element={<LoginSign action="Sign Up" />} />
-          <Route path="/inbox" element={<Page title="inbox" />} />
+          <Route path="/inbox" element={<TheInbox/>} />
           <Route path="/learn" element={<LearnReact />} />
           <Route path="/create" element={<NewList currentUser={currentUser} />} />
         </Routes>
