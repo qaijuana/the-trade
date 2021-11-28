@@ -36,7 +36,6 @@ router.get("/:id", async (req, res) => {
 
 //! CREATE LISTINGS // SET AUTHTOKEN
 router.post("/new", authToken, async (req, res) => {
-    console.log("create lists")
     const { id } = req.cookies;
     const {
         title, price, description, category, condition, user_id, list_images
@@ -47,7 +46,6 @@ router.post("/new", authToken, async (req, res) => {
     console.log(req.body);
 
     try {
-        console.log("did we make it inside query?")
         const addList = await pool.query(
             "INSERT INTO listings (title, price, description, user_id, upload_date, category, condition) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING id",
             [
@@ -72,9 +70,10 @@ router.post("/new", authToken, async (req, res) => {
 router.post("/:id/edit", authToken, async (req, res) => {
     const { id } = req.params;
     const {
-        title, price, description, list_images
+        title, price, description, list_images, category, condition
     } = req.body;
 
+console.log("we are editing lists", req.body)
     try {
         if (title) {
             const updatetitle = await pool.query(
@@ -96,6 +95,7 @@ router.post("/:id/edit", authToken, async (req, res) => {
                 "UPDATE listings SET list_images = $1 WHERE id = $2", [list_images, id]
             )
         }
+        res.json({msg: "all good"})
         res.sendStatus(200);
     } catch (error) {
         console.error(error);

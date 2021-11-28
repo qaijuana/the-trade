@@ -46,7 +46,6 @@ app.use("/api/login", login_controller);
 app.use("/api/user", user_controller);
 app.use("/api/list", list_controller);
 app.use("/api/upload", upload_controller);
-app.use("/api/lists", list_controller);
 app.use("/api/image", image_controller);
 
 app.get("/*", (req, res) => {

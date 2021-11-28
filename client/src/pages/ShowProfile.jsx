@@ -51,10 +51,9 @@ const ShowProfile = (props) => {
                         profile.map((e, i) => {
                             return (
                                 <ListCards
-                                    img={e.list_images} title={e.title}
-                                    category={e.category} price={e.price} author={e.username} date={e.upload_date}
-                                    onClick={() => { navigate(`/list/${e.id}`) }}
-                                    onUser={() => { navigate(`/user/${e.user_id}`) }}
+                                    img={e.list_images} title={e.title} list_id={e.id} user_id={e.user_id}
+                                    category={e.category} price={e.price} author={e.username}
+                                    date={e.upload_date} typeoflist={true}
                                 />
                             )
                         }) : <h1>Much Empty</h1>

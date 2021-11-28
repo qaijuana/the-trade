@@ -13,6 +13,8 @@ import EditProfile from "./pages/EditProfile";
 import LoginSign from "./pages/LoginSign";
 import Marketplace from "./pages/Marketplace";
 import NewList from "./pages/NewList";
+import EditList from "./pages/EditList";
+
 
 
 import "./styles/App.css";
@@ -37,10 +39,8 @@ function App() {
       const ok = await res.ok
       console.log(ok)
       if (ok) {
-        console.log(data.id, "res.ok is ok")
         setCurrentUser(data.id);
-        console.log("useEffect", currentUser);
-        navigate("/marketplace")
+        // navigate("/marketplace")
       }
       console.log("res.ok is not ok")
       navigate("/login");
@@ -48,31 +48,18 @@ function App() {
     cookieCheck();
   }, [])
 
-  function UserPage() {
+  function Page() {
     return (
       <>
         <Outlet />
       </>
-    ) 
+    )
   }
 
 
   //! Throwaway components 
 
-  function Page({ title }) {
-    return (
-      <div className="test">
-        <h1>
-          {title}
-        </h1>
-        {
-          (title === "marketplace") ?
-            <Marketplace /> :
-            ""
-        }
-      </div>
-    )
-  }
+
 
 
   return (
@@ -84,13 +71,18 @@ function App() {
       <Container>
         <Routes>
           <Route index element={<Page title={"home"} />} />
+          <Route path="/marketplace" element={<Marketplace />} />
 
-          <Route path="/user" element={<UserPage />}>
+          <Route path="/user" element={<Page />}>
             < Route path=":id" element={<ShowProfile currentUser={currentUser} />} />
             <Route path=":id/edit" element={<EditProfile currentUser={currentUser} />} />
           </Route>
-          <Route path="/marketplace" element={<Marketplace />} />
-          <Route path="/list/:id" element={<ShowList />} />
+
+          <Route path="/list" element={<Page />}>
+            <Route path=":id" element={<ShowList />} />
+            <Route path=":id/edit" element={<EditList currentUser={currentUser} />} />
+          </Route>
+
           <Route path="/login" element={<LoginSign setCurrentUser={setCurrentUser} login={login}
             action="Login" currentUser={currentUser} />} />
           <Route path="/signup" element={<LoginSign action="Sign Up" />} />

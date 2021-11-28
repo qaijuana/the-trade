@@ -32,22 +32,21 @@ const Marketplace = (props) => {
         return (
             <>
                 <h1>Marketplace</h1>
-            <div className="wrapper">
+                <div className="wrapper">
 
-                {
-                    allList.map((e, i) => {
-                        if (e.price)
-                            return (
-                                <ListCards img={e.list_images} title={e.title}
-                                    category={e.category} price={e.price} author={e.username} date={e.upload_date}
-                                    onClick={() => { navigate(`/list/${e.id}`) }}
-                                    onUser={() => { navigate(`/user/${e.user_id}`) }}
-                                />
-                            )
+                    {
+                        allList.map((e, i) => {
+                            if (e.price)
+                                return (
+                                    <ListCards img={e.list_images} title={e.title}
+                                        category={e.category} price={e.price} author={e.username} date={e.upload_date}
+                                        user_id={e.user_id} list_id={e.id}
+                                    />
+                                )
 
-                    })
-                }
-            </div>
+                        })
+                    }
+                </div>
             </>
         )
 }
