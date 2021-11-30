@@ -24,9 +24,9 @@
 				},
 				{
 					"id": "dd784bc5-a61e-4691-898f-f7a9b8e014de",
-					"name": "profileName",
+					"name": "username",
 					"datatype": "varchar",
-					"param": "200",
+					"param": "",
 					"pk": false,
 					"nn": true,
 					"comment": "",
@@ -43,7 +43,7 @@
 					"id": "70390ad7-c228-4de0-b935-779ba5d1668e",
 					"name": "email",
 					"datatype": "varchar",
-					"param": "200",
+					"param": "",
 					"pk": false,
 					"nn": true,
 					"comment": "",
@@ -75,7 +75,7 @@
 				},
 				{
 					"id": "ea331c8a-79b0-46f9-89a6-686f55d49216",
-					"name": "profilePic",
+					"name": "user_photo",
 					"datatype": "varchar",
 					"param": "",
 					"pk": false,
@@ -92,7 +92,41 @@
 				},
 				{
 					"id": "f02a0158-4786-4287-a35f-0b809e7f2503",
-					"name": "aboutMe",
+					"name": "about",
+					"datatype": "varchar",
+					"param": "",
+					"pk": false,
+					"nn": false,
+					"comment": "",
+					"defaultvalue": "",
+					"data": "",
+					"collation": null,
+					"list": false,
+					"after": "",
+					"pg": {
+						"generatedIdentity": "no"
+					}
+				},
+				{
+					"id": "f34f87e4-64fe-4871-9ac3-5434ca2bbcb7",
+					"name": "name",
+					"datatype": "varchar",
+					"param": "",
+					"pk": false,
+					"nn": false,
+					"comment": "",
+					"defaultvalue": "",
+					"data": "",
+					"collation": null,
+					"list": false,
+					"after": "",
+					"pg": {
+						"generatedIdentity": "no"
+					}
+				},
+				{
+					"id": "93184e07-110d-4d6a-8389-c9fa7f37569b",
+					"name": "refresh_token",
 					"datatype": "varchar",
 					"param": "",
 					"pk": false,
@@ -111,7 +145,9 @@
 			"relations": [
 				"de62924f-86e5-4ec5-9678-698f246a379e",
 				"81c6015b-cc50-49e3-ac64-ecb6e72ac0ec",
-				"9f2018de-54d5-4861-b03d-51448c55e1e4"
+				"9f2018de-54d5-4861-b03d-51448c55e1e4",
+				"3c0f8a0e-7f68-4599-84d9-40250e5c53db",
+				"ee09d063-df5a-429d-8a22-65081ed24783"
 			],
 			"lines": [],
 			"keys": [
@@ -307,7 +343,8 @@
 			"relations": [
 				"de62924f-86e5-4ec5-9678-698f246a379e",
 				"c04435ac-2fde-415c-86db-344cfeea456b",
-				"9f2018de-54d5-4861-b03d-51448c55e1e4"
+				"9f2018de-54d5-4861-b03d-51448c55e1e4",
+				"430301c8-7cea-4620-870e-3f68ae03d75d"
 			],
 			"lines": [],
 			"keys": [
@@ -410,7 +447,7 @@
 				{
 					"id": "30f42e4b-54a4-4eff-ab9a-9a479857ab20",
 					"name": "upload_date",
-					"datatype": "date",
+					"datatype": "timestamp with time zone",
 					"param": "",
 					"pk": false,
 					"nn": true,
@@ -430,7 +467,7 @@
 					"datatype": "text",
 					"param": "",
 					"pk": false,
-					"nn": true,
+					"nn": false,
 					"comment": "",
 					"defaultvalue": "",
 					"data": "",
@@ -457,13 +494,65 @@
 					},
 					"fk": true,
 					"ref": "Users "
+				},
+				{
+					"id": "26227732-c763-4b51-9400-f2564affe472",
+					"name": "category",
+					"datatype": "varchar",
+					"param": "",
+					"pk": false,
+					"nn": true,
+					"comment": "",
+					"defaultvalue": "",
+					"data": "",
+					"collation": null,
+					"list": false,
+					"after": "",
+					"pg": {
+						"generatedIdentity": "no"
+					}
+				},
+				{
+					"id": "4140e6b7-7e6e-4337-9295-62c4354aab49",
+					"name": "condition",
+					"datatype": "varchar",
+					"param": "",
+					"pk": false,
+					"nn": true,
+					"comment": "",
+					"defaultvalue": "",
+					"data": "",
+					"collation": null,
+					"list": false,
+					"after": "",
+					"pg": {
+						"generatedIdentity": "no"
+					}
+				},
+				{
+					"id": "6911f604-3f5b-4b22-adaa-2061fc089290",
+					"name": "sold",
+					"datatype": "boolean",
+					"param": "",
+					"pk": false,
+					"nn": false,
+					"comment": "",
+					"defaultvalue": "",
+					"data": "",
+					"collation": null,
+					"list": false,
+					"after": "",
+					"pg": {
+						"generatedIdentity": "no"
+					}
 				}
 			],
 			"relations": [
 				"81c6015b-cc50-49e3-ac64-ecb6e72ac0ec",
 				"c04435ac-2fde-415c-86db-344cfeea456b",
 				"8ae70112-c6ce-4e43-954b-68c5e5244c93",
-				"11a776e7-201a-4456-9f20-13e4a8173e9b"
+				"11a776e7-201a-4456-9f20-13e4a8173e9b",
+				"ffb3f210-fa85-4b4d-9753-77953d8e1cbf"
 			],
 			"lines": [],
 			"keys": [
@@ -744,6 +833,180 @@
 				"rowsecurity": false,
 				"schema": ""
 			}
+		},
+		"8cd5cece-7d4f-4c58-aaee-47bc50453a51": {
+			"id": "8cd5cece-7d4f-4c58-aaee-47bc50453a51",
+			"visible": true,
+			"name": "messages",
+			"desc": "",
+			"estimatedSize": "",
+			"cols": [
+				{
+					"id": "bd1cf3d4-465e-4c44-8682-7e36e733738c",
+					"name": "id",
+					"datatype": "bigserial",
+					"pk": true,
+					"nn": true,
+					"comment": "",
+					"defaultvalue": "",
+					"data": "",
+					"collation": null,
+					"after": "",
+					"pg": {
+						"generatedIdentity": "no"
+					}
+				},
+				{
+					"id": "566c75f0-fc71-497e-9e40-b4ed49561702",
+					"name": "message",
+					"datatype": "varchar",
+					"param": "",
+					"pk": false,
+					"nn": true,
+					"comment": "",
+					"defaultvalue": "",
+					"data": "",
+					"collation": null,
+					"list": false,
+					"after": "",
+					"pg": {
+						"generatedIdentity": "no"
+					}
+				},
+				{
+					"id": "8a2cea86-abd2-4b86-8c06-3ae169a61dd9",
+					"name": "theInbox_id",
+					"datatype": "bigserial",
+					"pk": false,
+					"nn": true,
+					"comment": "",
+					"defaultvalue": "",
+					"data": "",
+					"collation": null,
+					"after": "",
+					"pg": {
+						"generatedIdentity": "no"
+					},
+					"fk": true,
+					"ref": "theInbox"
+				},
+				{
+					"id": "da3c7341-c9cb-4a11-9926-37ab9586768d",
+					"name": "users_id",
+					"datatype": "bigserial",
+					"pk": false,
+					"nn": true,
+					"comment": "",
+					"defaultvalue": "",
+					"data": "",
+					"collation": null,
+					"after": "",
+					"pg": {
+						"generatedIdentity": "no"
+					},
+					"fk": true,
+					"ref": "users"
+				}
+			],
+			"relations": [
+				"430301c8-7cea-4620-870e-3f68ae03d75d",
+				"ee09d063-df5a-429d-8a22-65081ed24783"
+			],
+			"lines": [],
+			"keys": [
+				{
+					"id": "858bfa55-e34c-446f-8932-45e5f3850cd4",
+					"name": "Primary key",
+					"isPk": true,
+					"using": "",
+					"cols": [
+						{
+							"id": "ba5d8ef1-1875-44ce-93d9-7f782300b59c",
+							"colid": "bd1cf3d4-465e-4c44-8682-7e36e733738c"
+						}
+					]
+				}
+			],
+			"indexes": [],
+			"embeddable": false,
+			"generate": true,
+			"generateCustomCode": true,
+			"objectType": "table",
+			"pg": {
+				"rowsecurity": false,
+				"schema": ""
+			}
+		},
+		"26228d14-83b7-4ba3-bf4d-9f170f8808c3": {
+			"id": "26228d14-83b7-4ba3-bf4d-9f170f8808c3",
+			"visible": true,
+			"name": "Likes",
+			"desc": "",
+			"estimatedSize": "",
+			"cols": [
+				{
+					"id": "087c6e22-776d-4193-905e-f7d5018497a4",
+					"name": "users_id",
+					"datatype": "bigint",
+					"pk": true,
+					"nn": true,
+					"comment": "",
+					"defaultvalue": "",
+					"data": "",
+					"collation": null,
+					"after": "",
+					"pg": {
+						"generatedIdentity": "no"
+					},
+					"fk": true,
+					"ref": "users"
+				},
+				{
+					"id": "8bc85503-df72-4d37-a601-d2627c838d85",
+					"name": "listings_id",
+					"datatype": "bigint",
+					"pk": false,
+					"nn": true,
+					"comment": "",
+					"defaultvalue": "",
+					"data": "",
+					"collation": null,
+					"after": "",
+					"pg": {
+						"generatedIdentity": "no"
+					},
+					"fk": true,
+					"ref": "listings"
+				}
+			],
+			"relations": [
+				"3c0f8a0e-7f68-4599-84d9-40250e5c53db",
+				"ffb3f210-fa85-4b4d-9753-77953d8e1cbf"
+			],
+			"lines": [],
+			"keys": [
+				{
+					"id": "a3915c82-1424-4c9f-ae05-deb11fe4a974",
+					"name": "Primary key",
+					"isPk": true,
+					"using": "",
+					"cols": [
+						{
+							"id": "36df2a8e-99ea-49ae-8c8b-2ea48cec4d06",
+							"colid": "087c6e22-776d-4193-905e-f7d5018497a4"
+						}
+					]
+				}
+			],
+			"indexes": [],
+			"embeddable": false,
+			"generate": true,
+			"generateCustomCode": true,
+			"objectType": "table",
+			"pg": {
+				"rowsecurity": false,
+				"schema": ""
+			}
 		}
 	},
 	"relations": {
@@ -896,6 +1159,106 @@
 			],
 			"generate": true,
 			"generateCustomCode": true
+		},
+		"3c0f8a0e-7f68-4599-84d9-40250e5c53db": {
+			"id": "3c0f8a0e-7f68-4599-84d9-40250e5c53db",
+			"visible": true,
+			"name": "users_Likes",
+			"desc": "",
+			"type": "identifying",
+			"parent_key": "5e855a97-a8a0-4254-938b-b2f54716061a",
+			"parent": "615e3515-f27b-4329-800b-b0f5c2486b59",
+			"child": "26228d14-83b7-4ba3-bf4d-9f170f8808c3",
+			"c_mp": "true",
+			"c_mch": "true",
+			"c_p": "one",
+			"c_ch": "many",
+			"c_cp": "",
+			"c_cch": "",
+			"cols": [
+				{
+					"id": "ac709204-c612-4396-ad73-b9cec18e1e5b",
+					"parentcol": "30cd24c9-d3f5-4865-8430-dee29515eeec",
+					"childcol": "087c6e22-776d-4193-905e-f7d5018497a4"
+				}
+			],
+			"generate": true,
+			"generateCustomCode": true
+		},
+		"ffb3f210-fa85-4b4d-9753-77953d8e1cbf": {
+			"id": "ffb3f210-fa85-4b4d-9753-77953d8e1cbf",
+			"visible": true,
+			"name": "listings_Likes",
+			"desc": "",
+			"type": "identifying",
+			"parent_key": "5f720244-07d6-41bd-95cd-576952432794",
+			"parent": "bceaa76e-762c-47bf-a0a0-b7693c7e0d85",
+			"child": "26228d14-83b7-4ba3-bf4d-9f170f8808c3",
+			"c_mp": "true",
+			"c_mch": "true",
+			"c_p": "one",
+			"c_ch": "many",
+			"c_cp": "",
+			"c_cch": "",
+			"cols": [
+				{
+					"id": "678728fa-89dd-4777-8328-ba242cc9f040",
+					"parentcol": "7fdf6ed1-f3bd-4320-aa0f-3c45d09fa2e1",
+					"childcol": "8bc85503-df72-4d37-a601-d2627c838d85"
+				}
+			],
+			"generate": true,
+			"generateCustomCode": true
+		},
+		"430301c8-7cea-4620-870e-3f68ae03d75d": {
+			"id": "430301c8-7cea-4620-870e-3f68ae03d75d",
+			"visible": true,
+			"name": "theInbox_messages",
+			"desc": "",
+			"type": "identifying",
+			"parent_key": "139509ac-8549-4dc3-90e8-6e3d24ecf38d",
+			"parent": "b2510bea-3142-4c74-bd8a-bc3fb654e40f",
+			"child": "8cd5cece-7d4f-4c58-aaee-47bc50453a51",
+			"c_mp": "true",
+			"c_mch": "true",
+			"c_p": "one",
+			"c_ch": "many",
+			"c_cp": "",
+			"c_cch": "",
+			"cols": [
+				{
+					"id": "0d80a2a6-eb3d-465d-b44d-c0d5f4576c9d",
+					"parentcol": "1d111719-571e-4a11-ad45-4e3613315f58",
+					"childcol": "8a2cea86-abd2-4b86-8c06-3ae169a61dd9"
+				}
+			],
+			"generate": true,
+			"generateCustomCode": true
+		},
+		"ee09d063-df5a-429d-8a22-65081ed24783": {
+			"id": "ee09d063-df5a-429d-8a22-65081ed24783",
+			"visible": true,
+			"name": "users_messages",
+			"desc": "",
+			"type": "identifying",
+			"parent_key": "5e855a97-a8a0-4254-938b-b2f54716061a",
+			"parent": "615e3515-f27b-4329-800b-b0f5c2486b59",
+			"child": "8cd5cece-7d4f-4c58-aaee-47bc50453a51",
+			"c_mp": "true",
+			"c_mch": "true",
+			"c_p": "one",
+			"c_ch": "many",
+			"c_cp": "",
+			"c_cch": "",
+			"cols": [
+				{
+					"id": "54951b27-81d9-4d1a-8561-63e83ace8f5a",
+					"parentcol": "30cd24c9-d3f5-4865-8430-dee29515eeec",
+					"childcol": "da3c7341-c9cb-4a11-9926-37ab9586768d"
+				}
+			],
+			"generate": true,
+			"generateCustomCode": true
 		}
 	},
 	"notes": {},
@@ -943,7 +1306,7 @@
 			"quotation": "if_needed"
 		},
 		"writeFileParam": false,
-		"lastSaved": "Thu Nov 25 2021 18:04:32 GMT+0800 (Singapore Standard Time)"
+		"lastSaved": "Fri Nov 26 2021 16:13:24 GMT+0800 (Singapore Standard Time)"
 	},
 	"otherObjects": {},
 	"diagrams": {
@@ -985,7 +1348,7 @@
 					"referencedItemId": "bceaa76e-762c-47bf-a0a0-b7693c7e0d85",
 					"x": 71,
 					"y": 291,
-					"gHeight": 194,
+					"gHeight": 214,
 					"gWidth": 267,
 					"color": "#ffffff",
 					"background": "#03a9f4",
@@ -994,8 +1357,8 @@
 				},
 				"a9e668d4-8167-4b54-a945-db523fdded96": {
 					"referencedItemId": "a9e668d4-8167-4b54-a945-db523fdded96",
-					"x": 505,
-					"y": 290,
+					"x": 496,
+					"y": 532,
 					"gHeight": 187,
 					"gWidth": 210,
 					"color": "#ffffff",
@@ -1005,9 +1368,31 @@
 				},
 				"26fcd772-1621-400d-92ea-87a0222e0297": {
 					"referencedItemId": "26fcd772-1621-400d-92ea-87a0222e0297",
-					"x": 511,
-					"y": 565,
+					"x": 72,
+					"y": 512,
 					"gHeight": 81,
+					"gWidth": 198,
+					"color": "#ffffff",
+					"background": "#03a9f4",
+					"resized": false,
+					"autoExpand": true
+				},
+				"8cd5cece-7d4f-4c58-aaee-47bc50453a51": {
+					"referencedItemId": "8cd5cece-7d4f-4c58-aaee-47bc50453a51",
+					"x": 496,
+					"y": 282,
+					"gHeight": 199,
+					"gWidth": 214,
+					"color": "#ffffff",
+					"background": "#03a9f4",
+					"resized": true,
+					"autoExpand": true
+				},
+				"26228d14-83b7-4ba3-bf4d-9f170f8808c3": {
+					"referencedItemId": "26228d14-83b7-4ba3-bf4d-9f170f8808c3",
+					"x": 73,
+					"y": 627,
+					"gHeight": 63,
 					"gWidth": 198,
 					"color": "#ffffff",
 					"background": "#03a9f4",
@@ -1027,11 +1412,17 @@
 		"bceaa76e-762c-47bf-a0a0-b7693c7e0d85",
 		"a9e668d4-8167-4b54-a945-db523fdded96",
 		"26fcd772-1621-400d-92ea-87a0222e0297",
+		"8cd5cece-7d4f-4c58-aaee-47bc50453a51",
+		"26228d14-83b7-4ba3-bf4d-9f170f8808c3",
 		"de62924f-86e5-4ec5-9678-698f246a379e",
 		"81c6015b-cc50-49e3-ac64-ecb6e72ac0ec",
 		"c04435ac-2fde-415c-86db-344cfeea456b",
 		"9f2018de-54d5-4861-b03d-51448c55e1e4",
 		"8ae70112-c6ce-4e43-954b-68c5e5244c93",
-		"11a776e7-201a-4456-9f20-13e4a8173e9b"
+		"11a776e7-201a-4456-9f20-13e4a8173e9b",
+		"3c0f8a0e-7f68-4599-84d9-40250e5c53db",
+		"ffb3f210-fa85-4b4d-9753-77953d8e1cbf",
+		"430301c8-7cea-4620-870e-3f68ae03d75d",
+		"ee09d063-df5a-429d-8a22-65081ed24783"
 	]
 }
