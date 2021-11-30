@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from "react-router-dom";
-import { Container, Col } from 'react-bootstrap';
+import { Container, Col, Row } from 'react-bootstrap';
 import ListCards from '../components/ListCards';
 import UserCard from '../components/UserCard';
 import { useNavigate } from 'react-router';
@@ -21,6 +21,7 @@ const ShowProfile = (props) => {
                 setStatus("status")
                 const res = await fetch(`/api/user/${id}`)
                 const data = await res.json()
+                console.log(profile, data)
                 setProfile(data)
                 setStatus("resolved")
             } catch (error) {
@@ -37,20 +38,21 @@ const ShowProfile = (props) => {
 
     if (profile.length > 0)
         return (
-            <Container  >
-                <Col className="justify-content-center">
+            <Col  >
+                <Row className="justify-content-center text-center">
                     <UserCard img={profile[0].user_photo}
                         about={profile[0].about} username={profile[0].username} name={profile[0].name}
                         user_id={profile[0].user_id} id={id} currentUser={currentUser}
 
                     />
-                </Col>
+                </Row>
 
-                <Col className=" wrapper mt-5 ">
+                <Row className=" d-flex flex-row justify-content-between mt-3 ">
+
                     {(profile[0].price) ?
                         profile.map((e, i) => {
                             return (
-                                <ListCards
+                                <ListCards className="mt-4"
                                     img={e.list_images} title={e.title} list_id={e.id} user_id={e.user_id}
                                     category={e.category} price={e.price} author={e.username}
                                     date={e.upload_date} typeoflist={true}
@@ -58,8 +60,8 @@ const ShowProfile = (props) => {
                             )
                         }) : <h1>Much Empty</h1>
                     }
-                </Col>
-            </Container>
+                </Row>
+            </Col>
 
         )
     return (

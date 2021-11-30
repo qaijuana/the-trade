@@ -11977,15 +11977,27 @@ body {
   color: #1d1d1d;
 }
 
-.contact {
+.noscroll {
   -ms-overflow-style: none;
   /* Internet Explorer 10+ */
   scrollbar-width: none;
   /* Firefox */
 }
 
-.contact::-webkit-scrollbar {
+.noscroll::-webkit-scrollbar {
   display: none;
   /* Safari and Chrome */
+}
+
+.wrapper {
+  margin: 2rem;
+  display: -ms-grid;
+  display: grid;
+  gap: 1rem;
+  -ms-grid-columns: 1fr;
+      grid-template-columns: 1fr;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
 }
 /*# sourceMappingURL=App.css.map */

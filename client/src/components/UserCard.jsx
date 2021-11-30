@@ -14,7 +14,7 @@ const UserCard = (props) => {
 
 
     return (
-        <div className="bg-warning mt-3" style={{ height: "750px" }}>
+        <div className="bg-warning mt-3 " style={{ height: "750px" }}>
 
 
             <Image className="img-thumbnail float-right mt-3" src={img} roundedCircle />

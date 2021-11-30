@@ -4,7 +4,7 @@ import Inbox from "../components/Inbox"
 
 function TheInbox(props) {
     return (
-        <div className="">
+        <div className="inbox">
             <Inbox/>
         </div>
     )

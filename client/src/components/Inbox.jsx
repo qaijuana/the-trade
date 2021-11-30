@@ -5,7 +5,7 @@ function Inbox(props) {
     return (
         <>
             <div className=" w-75 mx-auto mt-3 row " >
-                <div className="col-3 overflow-scroll contacts" style={{ "height": "700px", "width": "300px" }} >
+                <div className="col-3 overflow-scroll noscroll" style={{ "height": "700px", "width": "300px" }} >
                     <ListGroup as="ul" >
                         <ListGroup.Item
                             as="li"
@@ -216,91 +216,93 @@ function Inbox(props) {
 
                 <div className="col ">
 
-                    <div className="border overflow-auto " style={{ "height": "600px" }}>
-                        <div className="text-center">
+                    <div className="border overflow-auto noscroll " style={{ "height": "600px" }}>
+                        <div className="text-center position-sticky bg-light ">
                             <h3>
                                 Item name
                             </h3>
                         </div>
-                        <div className="sender">
-                            <h1 className="text-end">
-                                hello
-                            </h1>
-                        </div>
-                        <div className="receiver">
-                            <h1 className="text-start">
-                                hello
-                            </h1>
-                        </div>
-                        <div className="sender">
-                            <h1 className="text-end">
-                                hello
-                            </h1>
-                        </div>
-                        <div className="receiver">
-                            <h1 className="text-start">
-                                hello
-                            </h1>
-                        </div>
-                        <div className="sender">
-                            <h1 className="text-end">
-                                hello
-                            </h1>
-                        </div>
-                        <div className="receiver">
-                            <h1 className="text-start">
-                                hello
-                            </h1>
-                        </div>
-                        <div className="sender">
-                            <h1 className="text-end">
-                                hello
-                            </h1>
-                        </div>
-                        <div className="receiver">
-                            <h1 className="text-start">
-                                hello
-                            </h1>
-                        </div>
-                        <div className="sender">
-                            <h1 className="text-end">
-                                hello
-                            </h1>
-                        </div>
-                        <div className="receiver">
-                            <h1 className="text-start">
-                                hello
-                            </h1>
-                        </div>
-                        <div className="sender">
-                            <h1 className="text-end">
-                                hello
-                            </h1>
-                        </div>
-                        <div className="receiver">
-                            <h1 className="text-start">
-                                hello
-                            </h1>
-                        </div>
-                        <div className="sender">
-                            <h1 className="text-end">
-                                hello
-                            </h1>
-                        </div>
-                        <div className="receiver">
-                            <h1 className="text-start">
-                                hello
-                            </h1>
-                        </div>
-                        <div className="sender">
-                            <h1 className="text-end">
-                                hello
-                            </h1>
-                        </div>
-                        <div className="receiver">
-                            <h1 className="text-start">
-                                hello
-                            </h1>
+                        <div className="chat mt-5">
+                            <div className="sender">
+                                <h1 className="text-end">
+                                    hello
+                                </h1>
+                            </div>
+                            <div className="receiver">
+                                <h1 className="text-start">
+                                    hello
+                                </h1>
+                            </div>
+                            <div className="sender">
+                                <h1 className="text-end">
+                                    hello
+                                </h1>
+                            </div>
+                            <div className="receiver">
+                                <h1 className="text-start">
+                                    hello
+                                </h1>
+                            </div>
+                            <div className="sender">
+                                <h1 className="text-end">
+                                    hello
+                                </h1>
+                            </div>
+                            <div className="receiver">
+                                <h1 className="text-start">
+                                    hello
+                                </h1>
+                            </div>
+                            <div className="sender">
+                                <h1 className="text-end">
+                                    hello
+                                </h1>
+                            </div>
+                            <div className="receiver">
+                                <h1 className="text-start">
+                                    hello
+                                </h1>
+                            </div>
+                            <div className="sender">
+                                <h1 className="text-end">
+                                    hello
+                                </h1>
+                            </div>
+                            <div className="receiver">
+                                <h1 className="text-start">
+                                    hello
+                                </h1>
+                            </div>
+                            <div className="sender">
+                                <h1 className="text-end">
+                                    hello
+                                </h1>
+                            </div>
+                            <div className="receiver">
+                                <h1 className="text-start">
+                                    hello
+                                </h1>
+                            </div>
+                            <div className="sender">
+                                <h1 className="text-end">
+                                    hello
+                                </h1>
+                            </div>
+                            <div className="receiver">
+                                <h1 className="text-start">
+                                    hello
+                                </h1>
+                            </div>
+                            <div className="sender">
+                                <h1 className="text-end">
+                                    hello
+                                </h1>
+                            </div>
+                            <div className="receiver">
+                                <h1 className="text-start">
+                                    hello
+                                </h1>
+                            </div>
                         </div>
                     </div>
 

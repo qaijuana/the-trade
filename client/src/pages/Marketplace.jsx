@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from 'react';
+import { Row } from "react-bootstrap"
 import ListCards from '../components/ListCards';
-import { useNavigate } from 'react-router';
+// import { useNavigate } from 'react-router';
 
 
 const Marketplace = (props) => {
 
     const [allList, setAllList] = useState([]);
-    const navigate = useNavigate();
+    // const navigate = useNavigate();
 
     useEffect(() => {
         const getLists = async () => {
@@ -32,7 +33,7 @@ const Marketplace = (props) => {
         return (
             <>
                 <h1>Marketplace</h1>
-                <div className="wrapper">
+                <Row className="d-flex flex-row justify-content-between mt-3">
 
                     {
                         allList.map((e, i) => {
@@ -46,7 +47,7 @@ const Marketplace = (props) => {
 
                         })
                     }
-                </div>
+                </Row>
             </>
         )
 }

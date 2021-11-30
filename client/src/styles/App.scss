@@ -19,21 +19,23 @@ body {
     color: $dark;
 }
 
-.contact {
+.noscroll {
     -ms-overflow-style: none;  /* Internet Explorer 10+ */
     scrollbar-width: none;  /* Firefox */
 }
-.contact::-webkit-scrollbar { 
+.noscroll::-webkit-scrollbar { 
     display: none;  /* Safari and Chrome */
 }
 
-// .wrapper {
-//     margin: 2rem;
-//     display: grid;
-//     gap: 1rem;
-//     grid-template-columns: 1fr;
-//     justify-content: center;
-// }
+.wrapper {
+    margin: 2rem;
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: 1fr;
+    justify-content: center;
+}
+
+
 
 
 

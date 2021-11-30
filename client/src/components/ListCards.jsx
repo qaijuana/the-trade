@@ -35,7 +35,7 @@ const ListCards = (props) => {
     }
 
     return (
-        <Card style={{ width: '18rem' }} >
+        <Card style={{ width: '18rem' }} className="mt-2" >
             <Card.Img variant="top" src={img} />
             <Card.Header className="d-flex justify-content-between">
                 <Card.Text className="fs-4">
