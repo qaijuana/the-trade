@@ -47,12 +47,12 @@ const ShowProfile = (props) => {
                     />
                 </Row>
 
-                <Row className=" d-flex flex-row justify-content-between mt-3 ">
+                <Row className=" d-flex flex-row mt-3 mx-auto ">
 
                     {(profile[0].price) ?
                         profile.map((e, i) => {
                             return (
-                                <ListCards className="mt-4"
+                                <ListCards
                                     img={e.list_images} title={e.title} list_id={e.id} user_id={e.user_id}
                                     category={e.category} price={e.price} author={e.username}
                                     date={e.upload_date} typeoflist={true}
@@ -65,7 +65,9 @@ const ShowProfile = (props) => {
 
         )
     return (
-        <h1>Loading</h1>
+        <h1 className="text-center">
+            Loading
+        </h1>
     )
 
 }

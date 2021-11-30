@@ -35,7 +35,7 @@ const ListCards = (props) => {
     }
 
     return (
-        <Card style={{ width: '18rem' }} className="mt-2" >
+        <Card style={{ width: '18rem', border: "none" }} className="m-2" >
             <Card.Img variant="top" src={img} />
             <Card.Header className="d-flex justify-content-between">
                 <Card.Text className="fs-4">
@@ -59,7 +59,7 @@ const ListCards = (props) => {
 
                     <ButtonGroup size="" className="mb-2">
                         <Button variant="secondary">Offer</Button>
-                        <Button variant="secondary"><BsFillChatSquareFill className="fs-3" /></Button>
+                        <Button variant="secondary" onClick={()=>{ navigate("/inbox")}}><BsFillChatSquareFill className="fs-3" /></Button>
                         <Button variant="secondary" onClick={() => { setLike(!like) }}>
                             {(!like) ?
                                 <BsHeart className="fs-4" />

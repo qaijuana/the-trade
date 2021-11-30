@@ -39,13 +39,14 @@ function App() {
       const res = await fetch("/api/login/token")
       const data = await res.json();
       const ok = await res.ok
-      console.log(ok)
+      console.log("ok", ok)
       if (ok) {
         setCurrentUser(data.id);
         // navigate("/marketplace")
+      } else {
+        navigate("/login");
+        console.log("res.ok is not ok")
       }
-      console.log("res.ok is not ok")
-      navigate("/login");
     }
     cookieCheck();
   }, [])
@@ -88,7 +89,7 @@ function App() {
           <Route path="/login" element={<LoginSign setCurrentUser={setCurrentUser} login={login}
             action="Login" currentUser={currentUser} />} />
           <Route path="/signup" element={<LoginSign action="Sign Up" />} />
-          <Route path="/inbox" element={<TheInbox/>} />
+          <Route path="/inbox" element={<TheInbox />} />
           <Route path="/learn" element={<LearnReact />} />
           <Route path="/create" element={<NewList currentUser={currentUser} />} />
         </Routes>

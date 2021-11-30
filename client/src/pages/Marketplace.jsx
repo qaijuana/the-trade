@@ -26,14 +26,16 @@ const Marketplace = (props) => {
 
     if (allList.length === 0) {
         return (
-            <h1>Loading</h1>
+            <h1 className="text-center">
+                Loading
+            </h1>
         )
     }
     if (allList.length !== 0)
         return (
             <>
-                <h1>Marketplace</h1>
-                <Row className="d-flex flex-row justify-content-between mt-3">
+                <h1 className="text-center">Marketplace</h1>
+                <Row className="d-flex flex-row mt-3">
 
                     {
                         allList.map((e, i) => {
