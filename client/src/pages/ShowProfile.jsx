@@ -9,7 +9,7 @@ const ShowProfile = (props) => {
     const { id } = useParams();
     const [profile, setProfile] = useState([]);
     const [status, setStatus] = useState("pending");
-    const navigate = useNavigate();
+    // const navigate = useNavigate();
     const currentUser = props.currentUser;
     //! reset
 

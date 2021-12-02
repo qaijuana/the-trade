@@ -34,7 +34,9 @@ const Marketplace = (props) => {
     if (allList.length !== 0)
         return (
             <>
-                <h1 className="text-center">Marketplace</h1>
+                <h1 className="text-center">
+                    Marketplace
+                </h1>
                 <Row className="d-flex flex-row mt-3">
 
                     {

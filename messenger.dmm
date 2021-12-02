@@ -879,7 +879,7 @@
 					"datatype": "boolean",
 					"param": "",
 					"pk": false,
-					"nn": false,
+					"nn": true,
 					"comment": "",
 					"defaultvalue": "false",
 					"data": "",
@@ -923,6 +923,23 @@
 					},
 					"fk": true,
 					"ref": "users"
+				},
+				{
+					"id": "3a5dee9f-d189-42e2-83f1-e9d53a52b071",
+					"name": "timestamp",
+					"datatype": "timestamp with time zone",
+					"param": "",
+					"pk": false,
+					"nn": true,
+					"comment": "",
+					"defaultvalue": "",
+					"data": "",
+					"collation": null,
+					"list": false,
+					"after": "",
+					"pg": {
+						"generatedIdentity": "no"
+					}
 				}
 			],
 			"relations": [
@@ -1323,7 +1340,7 @@
 			"quotation": "if_needed"
 		},
 		"writeFileParam": false,
-		"lastSaved": "Mon Nov 29 2021 16:19:16 GMT+0800 (Singapore Standard Time)"
+		"lastSaved": "Tue Nov 30 2021 14:34:44 GMT+0800 (Singapore Standard Time)"
 	},
 	"otherObjects": {},
 	"diagrams": {

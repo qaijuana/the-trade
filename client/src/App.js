@@ -16,10 +16,8 @@ import NewList from "./pages/NewList";
 import EditList from "./pages/EditList";
 import TheInbox from "./pages/TheInbox";
 
-
-
+//! CSS
 import "./styles/App.css";
-
 
 
 function App() {
@@ -51,18 +49,13 @@ function App() {
     cookieCheck();
   }, [])
 
-  function Page() {
+  function Layout() {
     return (
       <>
         <Outlet />
       </>
     )
   }
-
-
-  //! Throwaway components 
-
-
 
 
   return (
@@ -73,15 +66,15 @@ function App() {
 
       <Container>
         <Routes>
-          <Route index element={<Page title={"home"} />} />
+          <Route index element={<Layout title={"home"} />} />
           <Route path="/marketplace" element={<Marketplace />} />
 
-          <Route path="/user" element={<Page />}>
+          <Route path="/user" element={<Layout />}>
             < Route path=":id" element={<ShowProfile currentUser={currentUser} />} />
             <Route path=":id/edit" element={<EditProfile currentUser={currentUser} />} />
           </Route>
 
-          <Route path="/list" element={<Page />}>
+          <Route path="/list" element={<Layout />}>
             <Route path=":id" element={<ShowList />} />
             <Route path=":id/edit" element={<EditList currentUser={currentUser} />} />
           </Route>
