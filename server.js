@@ -8,11 +8,13 @@ const cloudinary = require("cloudinary").v2;
 
 const app = express();
 const port = process.env.PORT;
+//? Controllers
 const login_controller = require("./controllers/login_controller");
 const user_controller = require("./controllers/user_controller");
 const upload_controller = require("./controllers/upload_controller")
 const list_controller = require("./controllers/list_controller")
 const image_controller = require("./controllers/image_controller");
+const inbox_controller = require("./controllers/inbox_controller")
 const authToken = require("./controllers/authToken");
 
 cloudinary.config({
@@ -47,6 +49,7 @@ app.use("/api/user", user_controller);
 app.use("/api/list", list_controller);
 app.use("/api/upload", upload_controller);
 app.use("/api/image", image_controller);
+app.use("api/inbox", inbox_controller);
 
 app.get("/*", (req, res) => {
     res.sendFile(path.join(__dirname, "./client/build", "index.html"));

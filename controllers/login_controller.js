@@ -18,7 +18,12 @@ function genToken(user) {
 ///////////////////////////////
 ///////////////////////////////
 router.get("/token", async (req, res) => {
+
     const { cookies } = req;
+
+    if (!cookies) {
+        res.sendStatus(401);
+    }
     const findRefreshToken = await pool.query(
         "SELECT refresh_token FROM users WHERE id = $1", [cookies.id]
     )
@@ -27,38 +32,38 @@ router.get("/token", async (req, res) => {
     }
     const refreshToken = await findRefreshToken.rows?.[0]?.refresh_token
     console.log("refresh token", refreshToken)
-    if (refreshToken === null) {
-        return res.sendStatus(401);
-    }
-    //! VERIFY TOKEN
-    jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET,
-        async (err, user) => {
-            if (err) {
-                res.sendStatus(403);
-                console.log("error in jwt")
+    if (refreshToken) {
+        //! VERIFY TOKEN
+        jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET,
+            async (err, user) => {
+                if (err) {
+                    res.sendStatus(403);
+                    console.log("error in jwt")
+                }
+                console.log(user);
+                //! If refreshtoken verified, generate new access token
+                const accessToken = genToken({ id: cookies.id })
+                const refreshToken = jwt.sign({ id: cookies.id }, process.env.REFRESH_TOKEN_SECRET)
+                //! Push token into database!!! 
+                const newRefreshToken = await pool.query(
+                    "UPDATE users SET refresh_token = $1 WHERE id = $2",
+                    [refreshToken, cookies.id]
+                )
+                const newAccessToken = res.cookie("token", accessToken, {
+                    httpOnly: true,
+                    secure: true
+                })
+                const current_user = res.cookie("id", cookies.id, {
+                    httpOnly: true,
+                    secure: true
+                })
+                res.json({
+                    id: cookies.id
+                })
             }
-            console.log(user);
-            //! If refreshtoken verified, generate new access token
-            const accessToken = genToken({ id: cookies.id })
-            const refreshToken = jwt.sign({ id: cookies.id }, process.env.REFRESH_TOKEN_SECRET)
-            //! Push token into database!!! 
-            const newRefreshToken = await pool.query(
-                "UPDATE users SET refresh_token = $1 WHERE id = $2",
-                [refreshToken, cookies.id]
-            )
-            const newAccessToken = res.cookie("token", accessToken, {
-                httpOnly: true,
-                secure: true
-            })
-            const current_user = res.cookie("id", cookies.id, {
-                httpOnly: true,
-                secure: true
-            })
-            res.json({
-                id: cookies.id
-            })
-        }
-    )
+        )
+    }
+
 });
 
 ///////////////////////////////
@@ -126,4 +131,4 @@ router.post("/logout", async (req, res) => {
 
 
 
-module.exports = router
+module.exports = router;

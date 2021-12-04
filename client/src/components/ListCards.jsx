@@ -14,7 +14,7 @@ const ListCards = (props) => {
     const date = props.date;
     const list_id = props.list_id;
     const user_id = props.user_id;
-    const typeoflist = props.typeoflist;
+    const currentUser = props.currentUser;
     const navigate = useNavigate();
 
     function handleDelete(event, list_id) {
@@ -55,7 +55,7 @@ const ListCards = (props) => {
                 </Card.Text>
             </Card.Body >
             <Card.Footer>
-                {(!typeoflist) ?
+                {(currentUser !== user_id) ?
 
                     <ButtonGroup size="" className="mb-2">
                         <Button variant="secondary">Offer</Button>
@@ -67,7 +67,7 @@ const ListCards = (props) => {
                                 < BsHeartFill className="fs-4" />
                             }
                         </Button>
-                        <Button variant="secondary" onClick={() => { navigate(`/list/${list_id}`) }}> More </Button>
+                        <Button stretched-link variant="secondary" onClick={() => { navigate(`/list/${list_id}`) }}> More </Button>
                     </ButtonGroup>
 
                     :

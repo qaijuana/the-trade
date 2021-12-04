@@ -2,6 +2,9 @@ import React from 'react';
 import { Badge, ListGroup, InputGroup, Form, Button } from "react-bootstrap";
 
 function Inbox(props) {
+    const handleSubmit = props.handleSubmit;
+    const messages = props.messages;
+
     return (
         <>
             <div className=" w-75 mx-auto mt-3 row " >
@@ -306,18 +309,28 @@ function Inbox(props) {
                         </div>
                     </div>
 
-                    <InputGroup className=" bottom-0 right-0 ">
-                        <Form.Control
-                            as="textarea"
-                            placeholder="Say Something"
-                            aria-label="Say Something"
-                            aria-describedby="basic-addon2"
-                            style={{ "height": "100px", "resize": "none" }}
-                        />
-                        <Button variant="secondary" id="button-addon2" className="">
-                            Send
-                        </Button>
-                    </InputGroup>
+                    <Form onSubmit={handleSubmit}>
+                        <InputGroup className=" bottom-0 right-0 ">
+                            <Form.Control
+                                id="messages"
+                                as="textarea"
+                                placeholder="Say Something"
+                                aria-label="Say Something"
+                                aria-describedby="basic-addon2"
+                                style={{
+                                    "height": "100px",
+                                    "resize": "none"
+                                }}
+                            />
+                            <Button
+
+                                variant="secondary"
+                                id="button-addon2"
+                                type="submit">
+                                Send
+                            </Button>
+                        </InputGroup>
+                    </Form>
 
                 </div>
             </div>

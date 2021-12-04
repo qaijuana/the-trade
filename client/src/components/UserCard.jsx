@@ -14,23 +14,39 @@ const UserCard = (props) => {
 
 
     return (
-        <div className="bg-warning mt-3 " style={{ height: "750px" }}>
+        <Col className=" bg-warning mt-3  " style={{ height: "600px" }}>
 
 
-            <Image className="img-thumbnail float-right mt-3" src={img} roundedCircle />
-            <Col>
-                <h1>hello, @{username} ({name})</h1>
-                <h1>{about}</h1>
+
+                <Row className="w-75 align-center">
+                    <Image
+                        className="img-thumbnail mt-3"
+                        src={img}
+                        roundedCircle
+                         />
+                </Row>
+
+                <Row>
+                    <h3>hello, @{username} ({name})</h3>
+                    <h3>{about}</h3>
+                </Row>
+
+                <Row>
+                    {
+                        (id === currentUser) ?
+                            <Button
+                                size="lg"
+                                variant="secondary"
+                                as={Link}
+                                to={`/user/${user_id}/edit`}
+                            >
+                                Edit
+                            </Button>
+                            :
+                            ""
+                    }
+                </Row>
             </Col>
-            {
-                (id === currentUser) ?
-                    <Button size="lg" variant="secondary"
-                        as={Link} to={`/user/${user_id}/edit`}
-                    >Edit</Button>
-
-                    : ""
-        }
-        </div>
     )
 }
 

@@ -38,11 +38,17 @@ const ShowProfile = (props) => {
 
     if (profile.length > 0)
         return (
-            <Col  >
-                <Row className="justify-content-center text-center">
-                    <UserCard img={profile[0].user_photo}
-                        about={profile[0].about} username={profile[0].username} name={profile[0].name}
-                        user_id={profile[0].user_id} id={id} currentUser={currentUser}
+            <Col className="d-flex"  >
+                <Row className=" my-auto position-relative"
+                >
+                    <UserCard
+                        img={profile[0].user_photo}
+                        about={profile[0].about}
+                        username={profile[0].username}
+                        name={profile[0].name}
+                        user_id={profile[0].user_id}
+                        id={id}
+                        currentUser={currentUser}
 
                     />
                 </Row>
@@ -53,9 +59,15 @@ const ShowProfile = (props) => {
                         profile.map((e, i) => {
                             return (
                                 <ListCards
-                                    img={e.list_images} title={e.title} list_id={e.id} user_id={e.user_id}
-                                    category={e.category} price={e.price} author={e.username}
-                                    date={e.upload_date} typeoflist={true}
+                                    img={e.list_images}
+                                    title={e.title}
+                                    list_id={e.id}
+                                    user_id={e.user_id}
+                                    category={e.category}
+                                    price={e.price}
+                                    author={e.username}
+                                    date={e.upload_date}
+                                    currentUser={currentUser}
                                 />
                             )
                         }) : <h1>Much Empty</h1>
