@@ -1,312 +1,148 @@
 import React from 'react';
 import { Badge, ListGroup, InputGroup, Form, Button } from "react-bootstrap";
 
+const messages = "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Sit alias velit, est mollitia tenetur corrupti ipsa doloribus perspiciatis fugiat asperiores!"
+
+
+
 function Inbox(props) {
     const handleSubmit = props.handleSubmit;
-    const messages = props.messages;
+    // const messages = props.messages;
+
+    function MessageReceiver(props) {
+
+        return (
+            <div className="">
+                <div className="card text-start primary w-75 float-start mt-3">
+                    <div className="card-header">
+                        Receiver
+                    </div>
+                    <div className="card-body">
+                        <p className="card-text">
+                            {messages}
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+        )
+    }
+    function MessageSender(props) {
+        return (
+            <div className="">
+                <div className="card w-75 float-end mt-3 ">
+
+
+                    <div className="card-header">
+
+
+
+                        <h6 className="text-end">
+                            You
+                        </h6>
+
+                    </div>
+                    <div className="card-body">
+                        <p className="card-text">
+                            {messages}
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+        )
+    }
+    function ChatList() {
+        return (
+            <ListGroup.Item
+                as="li"
+                className="d-flex justify-content-between align-items-start"
+            >
+                <div className="ms-2 me-auto">
+                    <div className="fw-bold">Subheading</div>
+                    Cras justo odio
+                </div>
+                <Badge variant="primary" pill>
+                    14
+                </Badge>
+            </ListGroup.Item>
+        )
+    }
 
     return (
         <>
             <div className=" w-75 mx-auto mt-3 row " >
-                <div className="col-3 overflow-scroll noscroll" style={{ "height": "700px", "width": "300px" }} >
+                <div
+                    className="col-3 overflow-scroll noscroll"
+                    style={{
+                        "height": "700px",
+                        "width": "300px"
+                    }} >
                     <ListGroup as="ul" >
-                        <ListGroup.Item
-                            as="li"
-                            className="d-flex justify-content-between align-items-start"
-                        >
-                            <div className="ms-2 me-auto">
-                                <div className="fw-bold">Subheading</div>
-                                Cras justo odio
-                            </div>
-                            <Badge variant="primary" pill>
-                                14
-                            </Badge>
-                        </ListGroup.Item>
-                        <ListGroup.Item
-                            as="li"
-                            className="d-flex justify-content-between align-items-start"
-                        >
-                            <div className="ms-2 me-auto">
-                                <div className="fw-bold">Subheading</div>
-                                Cras justo odio
-                            </div>
-                            <Badge variant="primary" pill>
-                                14
-                            </Badge>
-                        </ListGroup.Item>
-                        <ListGroup.Item
-                            as="li"
-                            className="d-flex justify-content-between align-items-start"
-                        >
-                            <div className="ms-2 me-auto">
-                                <div className="fw-bold">Subheading</div>
-                                Cras justo odio
-                            </div>
-                            <Badge variant="primary" pill>
-                                14
-                            </Badge>
-                        </ListGroup.Item>
-                        <ListGroup.Item
-                            as="li"
-                            className="d-flex justify-content-between align-items-start"
-                        >
-                            <div className="ms-2 me-auto">
-                                <div className="fw-bold">Subheading</div>
-                                Cras justo odio
-                            </div>
-                            <Badge variant="primary" pill>
-                                14
-                            </Badge>
-                        </ListGroup.Item>
-                        <ListGroup.Item
-                            as="li"
-                            className="d-flex justify-content-between align-items-start"
-                        >
-                            <div className="ms-2 me-auto">
-                                <div className="fw-bold">Subheading</div>
-                                Cras justo odio
-                            </div>
-                            <Badge variant="primary" pill>
-                                14
-                            </Badge>
-                        </ListGroup.Item>
-                        <ListGroup.Item
-                            as="li"
-                            className="d-flex justify-content-between align-items-start"
-                        >
-                            <div className="ms-2 me-auto">
-                                <div className="fw-bold">Subheading</div>
-                                Cras justo odio
-                            </div>
-                            <Badge variant="primary" pill>
-                                14
-                            </Badge>
-                        </ListGroup.Item>
-                        <ListGroup.Item
-                            as="li"
-                            className="d-flex justify-content-between align-items-start"
-                        >
-                            <div className="ms-2 me-auto">
-                                <div className="fw-bold">Subheading</div>
-                                Cras justo odio
-                            </div>
-                            <Badge variant="primary" pill>
-                                14
-                            </Badge>
-                        </ListGroup.Item>
-                        <ListGroup.Item
-                            as="li"
-                            className="d-flex justify-content-between align-items-start"
-                        >
-                            <div className="ms-2 me-auto">
-                                <div className="fw-bold">Subheading</div>
-                                Cras justo odio
-                            </div>
-                            <Badge variant="primary" pill>
-                                14
-                            </Badge>
-                        </ListGroup.Item>
-                        <ListGroup.Item
-                            as="li"
-                            className="d-flex justify-content-between align-items-start"
-                        >
-                            <div className="ms-2 me-auto">
-                                <div className="fw-bold">Subheading</div>
-                                Cras justo odio
-                            </div>
-                            <Badge variant="primary" pill>
-                                14
-                            </Badge>
-                        </ListGroup.Item>
-                        <ListGroup.Item
-                            as="li"
-                            className="d-flex justify-content-between align-items-start"
-                        >
-                            <div className="ms-2 me-auto">
-                                <div className="fw-bold">Subheading</div>
-                                Cras justo odio
-                            </div>
-                            <Badge variant="primary" pill>
-                                14
-                            </Badge>
-                        </ListGroup.Item>
-                        <ListGroup.Item
-                            as="li"
-                            className="d-flex justify-content-between align-items-start"
-                        >
-                            <div className="ms-2 me-auto">
-                                <div className="fw-bold">Subheading</div>
-                                Cras justo odio
-                            </div>
-                            <Badge variant="primary" pill>
-                                14
-                            </Badge>
-                        </ListGroup.Item>
-                        <ListGroup.Item
-                            as="li"
-                            className="d-flex justify-content-between align-items-start"
-                        >
-                            <div className="ms-2 me-auto">
-                                <div className="fw-bold">Subheading</div>
-                                Cras justo odio
-                            </div>
-                            <Badge variant="primary" pill>
-                                14
-                            </Badge>
-                        </ListGroup.Item>
-                        <ListGroup.Item
-                            as="li"
-                            className="d-flex justify-content-between align-items-start"
-                        >
-                            <div className="ms-2 me-auto">
-                                <div className="fw-bold">Subheading</div>
-                                Cras justo odio
-                            </div>
-                            <Badge variant="primary" pill>
-                                14
-                            </Badge>
-                        </ListGroup.Item>
-                        <ListGroup.Item
-                            as="li"
-                            className="d-flex justify-content-between align-items-start"
-                        >
-                            <div className="ms-2 me-auto">
-                                <div className="fw-bold">Subheading</div>
-                                Cras justo odio
-                            </div>
-                            <Badge variant="primary" pill>
-                                14
-                            </Badge>
-                        </ListGroup.Item>
-                        <ListGroup.Item
-                            as="li"
-                            className="d-flex justify-content-between align-items-start"
-                        >
-                            <div className="ms-2 me-auto">
-                                <div className="fw-bold">Subheading</div>
-                                Cras justo odio
-                            </div>
-                            <Badge variant="primary" pill>
-                                14
-                            </Badge>
-                        </ListGroup.Item>
-                        <ListGroup.Item
-                            as="li"
-                            className="d-flex justify-content-between align-items-start"
-                        >
-                            <div className="ms-2 me-auto">
-                                <div className="fw-bold">Subheading</div>
-                                Cras justo odio
-                            </div>
-                            <Badge variant="primary" pill>
-                                14
-                            </Badge>
-                        </ListGroup.Item>
-                        <ListGroup.Item
-                            as="li"
-                            className="d-flex justify-content-between align-items-start"
-                        >
-                            <div className="ms-2 me-auto">
-                                <div className="fw-bold">Subheading</div>
-                                Cras justo odio
-                            </div>
-                            <Badge variant="primary" pill>
-                                14
-                            </Badge>
-                        </ListGroup.Item>
+                    <ChatList/>
+                    <ChatList/>
+                    <ChatList/>
+                    <ChatList/>
+                    <ChatList/>
+                    <ChatList/>
+                    <ChatList/>
+                    <ChatList/>
+                    <ChatList/>
+                    <ChatList/>
+                    <ChatList/>
+                    <ChatList/>
+                    <ChatList/>
+                    <ChatList/>
+                    <ChatList/>
+                    <ChatList/>
+                    <ChatList/>
+                    <ChatList/>
+                    <ChatList/>
+                    <ChatList/>
+                    <ChatList/>
+                    <ChatList/>
+                    <ChatList/>
+                    <ChatList/>
+                    <ChatList/>
+                    <ChatList/>
+                    <ChatList/>
+                    <ChatList/>
+                    <ChatList/>
+                    <ChatList/>
+                    <ChatList/>
                     </ListGroup>
                 </div>
 
                 <div className="col ">
 
                     <div className="border overflow-auto noscroll " style={{ "height": "600px" }}>
-                        <div className="text-center position-sticky bg-light ">
-                            <h3>
+                        <div
+                            className=" position-fixed bg-light w-auto "
+                            style={{
+                                "z-index": "1"
+                            }}
+                        >
+                            <h3 className="">
                                 Item name
                             </h3>
                         </div>
-                        <div className="chat mt-5">
-                            <div className="sender">
-                                <h1 className="text-end">
-                                    hello
-                                </h1>
-                            </div>
-                            <div className="receiver">
-                                <h1 className="text-start">
-                                    hello
-                                </h1>
-                            </div>
-                            <div className="sender">
-                                <h1 className="text-end">
-                                    hello
-                                </h1>
-                            </div>
-                            <div className="receiver">
-                                <h1 className="text-start">
-                                    hello
-                                </h1>
-                            </div>
-                            <div className="sender">
-                                <h1 className="text-end">
-                                    hello
-                                </h1>
-                            </div>
-                            <div className="receiver">
-                                <h1 className="text-start">
-                                    hello
-                                </h1>
-                            </div>
-                            <div className="sender">
-                                <h1 className="text-end">
-                                    hello
-                                </h1>
-                            </div>
-                            <div className="receiver">
-                                <h1 className="text-start">
-                                    hello
-                                </h1>
-                            </div>
-                            <div className="sender">
-                                <h1 className="text-end">
-                                    hello
-                                </h1>
-                            </div>
-                            <div className="receiver">
-                                <h1 className="text-start">
-                                    hello
-                                </h1>
-                            </div>
-                            <div className="sender">
-                                <h1 className="text-end">
-                                    hello
-                                </h1>
-                            </div>
-                            <div className="receiver">
-                                <h1 className="text-start">
-                                    hello
-                                </h1>
-                            </div>
-                            <div className="sender">
-                                <h1 className="text-end">
-                                    hello
-                                </h1>
-                            </div>
-                            <div className="receiver">
-                                <h1 className="text-start">
-                                    hello
-                                </h1>
-                            </div>
-                            <div className="sender">
-                                <h1 className="text-end">
-                                    hello
-                                </h1>
-                            </div>
-                            <div className="receiver">
-                                <h1 className="text-start">
-                                    hello
-                                </h1>
-                            </div>
-                        </div>
+                        <MessageReceiver />
+                        <MessageSender />
+                        <MessageReceiver />
+                        <MessageSender />
+                        <MessageReceiver />
+                        <MessageSender />
+                        <MessageReceiver />
+                        <MessageSender />
+                        <MessageReceiver />
+                        <MessageSender />
+                        <MessageReceiver />
+                        <MessageSender />
+                        <MessageReceiver />
+                        <MessageSender />
+                        <MessageReceiver />
+                        <MessageSender />
+                        <MessageSender />
                     </div>
 
                     <Form onSubmit={handleSubmit}>
@@ -336,8 +172,7 @@ function Inbox(props) {
             </div>
 
 
-        </
-        >
+        </>
     )
 }
 

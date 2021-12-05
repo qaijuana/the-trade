@@ -13,8 +13,10 @@ inbox.get("/:id", (req, res) => {
     res.json(id);
 })
 
-inbox.post("/new", (req, res) => {
+inbox.post("/new/:action", (req, res) => {
     const { id } = req.cookies;
+    const { action } = req.params;
+    
 })
 
 module.exports = inbox;

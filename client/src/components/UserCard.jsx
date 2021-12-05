@@ -18,7 +18,7 @@ const UserCard = (props) => {
 
 
 
-                <Row className="w-75 align-center">
+                <Row className="w-75 mx-auto">
                     <Image
                         className="img-thumbnail mt-3"
                         src={img}

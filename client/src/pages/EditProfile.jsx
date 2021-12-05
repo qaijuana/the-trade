@@ -111,6 +111,12 @@ function EditProfile(props) {
                 <Transformation height="300" width="300" crop="fill" />
             </ImageCloud>
         )
+    };
+
+    function handleFile(e) {
+        e.preventDefault();
+        setUserPhoto()
+        console.log(e.target.files[0]);
     }
 
     return (
@@ -118,15 +124,15 @@ function EditProfile(props) {
         <Form noValidate validated={validated} onSubmit={handleSubmit} className="mt-5">
 
             <Form.Group controlId="formFile" className="mb-3">
-                {displayImage ?
-                    <Image as={CloudinaryDisplay} roundedCircle />
-                    :
-                    <Image src={userInfo.user_photo} roundedCircle />}
+                {
+                    displayImage ?
+                        <Image as={CloudinaryDisplay} roundedCircle />
+                        :
+                        <Image src={userInfo.user_photo} roundedCircle />
+                }
                 <InputGroup>
                     <Form.Control type="file"
-                        onChange={(event) => {
-                            setUserPhoto(event.target.files[0])
-                        }} />
+                        onChange={handleFile} />
                     <Button variant="primary" id="button-addon2" onClick={handleUpload}>
                         Upload
                     </Button>

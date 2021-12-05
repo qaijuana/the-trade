@@ -1,7 +1,5 @@
-import React, { useState } from 'react';
-import { useParams } from "react-router-dom";
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router';
-import { Image as ImageCloud, Transformation } from "cloudinary-react";
 import {
     Form, Col, Row,
     FloatingLabel, Image,
@@ -9,20 +7,20 @@ import {
 } from "react-bootstrap";
 
 const NewList = (props) => {
-    const cloudinaryUrl = `https://api.cloudinary.com/v1_1/${process.env.REACT_APP_CLOUD_NAME}/image/upload/w_300,h_300`;
-    const [validated, setValidated] = useState(false);
     const [status, setStatus] = useState("pending");
-    const [displayImage, setDisplayImage] = useState("");
-    const [listPhoto, setListPhoto] = useState();
-    const [listInfo, setListInfo] = useState();
-    const { id } = useParams();
+    const [Base64, setBase64] = useState("")
     const navigate = useNavigate();
+
+    useEffect(() => {
+        console.log(status);
+    }, [status])
 
     function handleSubmit(event) {
         event.preventDefault();
-        event.stopPropagation();
-        //! For Validation
-        // const form = event.currentTarget;
+
+        if (Base64) {
+            handleUpload();
+        }
         //! For input groups
         const currentUser = props.currentUser;
         const title = event?.target?.title?.value
@@ -30,14 +28,10 @@ const NewList = (props) => {
         const category = event?.target?.category?.value
         const condition = event?.target?.condition?.value
         const description = event?.target?.description?.value
-        //! For Cloudinary
-        const formData = new FormData();
-        formData.append("file", listPhoto);
-        formData.append("upload_preset", "ofd7rhpu");
-        console.log(title, price, category, condition, description, listPhoto)
+
+        console.log(title, price, category, condition, description)
 
         async function createList() {
-            setStatus("loading")
             try {
                 setStatus("loading");
                 const resDb = await fetch("/api/list/new", {
@@ -52,46 +46,71 @@ const NewList = (props) => {
                         condition: condition && condition,
                         description: description && description,
                         user_id: currentUser,
-                        list_images: listPhoto
+
                     })
                 })
-                const dataDb = resDb.json();
-                const statusDb = resDb.ok;
+                // const dataDb = resDb.json();
+                // const statusDb = resDb.ok;
                 setStatus("resolved");
+                //* Redirect to Show List
                 navigate("/marketplace")
 
             } catch (error) {
                 //! Catching errors for database
+                setStatus("error")
                 console.error(error);
             }
-            // try {
-            //     const resCloud = await fetch(cloudinaryUrl, {
-            //         method: "POST",
-            //         body: formData
-            //     });
-            //     const dataCloud = await resCloud.json();
-            //     setDisplayImage(dataCloud);
-            //     setStatus("resolved");
 
-            // } catch (error) {
-            //     setStatus("error");
-            //     console.error(error);
-            // }
         }
-        createList();
+        // createList();
+    }
+
+    function handleUpload(e) {
+        e.preventDefault(); 
+        if (!Base64) return;
+        async function createImage() {
+            try {
+                setStatus("loading");
+                const res = await fetch("/api/image/new", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: {
+                        files: Base64
+                    }
+                })
+                const data = res.json();
+                console.log("Base64", data);
+                setStatus("resolved");
+
+            } catch (error) {
+                setStatus(error);
+            }
+        }
+        // createImage();
+
+    }
+
+    function handleFileChange(event) {
+        event.preventDefault();
+        const files = event.target.files
+        const file = files[0];
+        //! Convert to Base64 String
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onloadend = () => {
+            setBase64(reader.result)
+        }
+        reader.onerror = () => {
+            console.error("error")
+        }
     }
 
 
 
 
-    function CloudinaryDisplay() {
-        return (
-            <ImageCloud cloudName={process.env.REACT_APP_CLOUD_NAME}
-                publicId={displayImage.public_id} >
-                <Transformation height="300" width="300" crop="fill" />
-            </ImageCloud>
-        )
-    }
+
 
 
 
@@ -100,19 +119,47 @@ const NewList = (props) => {
             <h1>
                 add
             </h1>
-            <Form noValidate validated={validated} onSubmit={handleSubmit}>
-                <Form.Group controlId="list_images" className="mb-3">
-                    {displayImage ?
-                        <Image as={CloudinaryDisplay} roundedCircle />
+            <Form onSubmit={handleSubmit}>
+
+                {/* //! IMAGE PREVIEW */}
+                {
+                    (Base64) ?
+                        <div
+                            className="mx-auto"
+                            style={{
+                                position: "relative",
+                                height: "200px",
+                                width: "200px",
+                                overflow: "hidden"
+                            }}>
+                            <Image
+                                src={Base64}
+                                className=""
+                                style={{
+                                    position: "absolute",
+                                    left: "50 %",
+                                    top: "50 %",
+                                    height: "100 %",
+                                    width: "auto",
+                                    "- webkit - transform": "translate(-50%,-50%)",
+                                    "-ms-transform": "translate(-50%,-50%)",
+                                    transform: "translate(-50%,-50%)",
+                                }}
+
+                            />
+                        </div>
                         :
-                        <Image src="" roundedCircle />}
+                        ""
+                }
+
+                <Form.Group controlId="list_images" className="mb-3">
                     <Form.Label>Select Photos</Form.Label>
                     <InputGroup>
                         <Form.Control type="file"
-                            onChange={(event) => { setListPhoto(event.target.files[0]) }} />
-                        {/* <Button variant="outline-secondary" id="button-addon2" onClick={handleUpload}>
+                            onChange={handleFileChange} />
+                        <Button variant="outline-secondary" id="button-addon2" onClick={handleUpload}>
                             Upload
-                        </Button> */}
+                        </Button>
                     </InputGroup>
                 </Form.Group>
 
