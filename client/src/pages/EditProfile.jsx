@@ -10,64 +10,10 @@ function EditProfile(props) {
     const [displayImage, setDisplayImage] = useState("");
     const [userPhoto, setUserPhoto] = useState();
     const [userInfo, setUserInfo] = useState({});
+    const [Base64, setBase64] = useState("");
     const { id } = useParams();
     const navigate = useNavigate();
     const cloudinaryUrl = `https://api.cloudinary.com/v1_1/${process.env.REACT_APP_CLOUD_NAME}/image/upload/w_300,h_300`;
-
-
-    function handleUpload(event) {
-        event.preventDefault();
-        const formData = new FormData();
-        formData.append("file", userPhoto)
-        formData.append("upload_preset", "ofd7rhpu")
-
-        const sendCloudinary = async () => {
-            setStatus("Loading");
-            try {
-                const res = await fetch(cloudinaryUrl, {
-                    method: "POST",
-                    body: formData
-                })
-                const data = await res.json();
-                setDisplayImage(data);
-                navigate(`/user/${id}`);
-                try {
-                    const sendProfilePhoto = await fetch(`/api/user/${id}/edit`, {
-                        method: "POST",
-                        headers: {
-                            "Content-Type": "application/json"
-                        },
-                        body: JSON.stringify({ user_photo: data.url })
-                    })
-                    const dataPhoto = sendProfilePhoto.json();
-                } catch (error) {
-                    setStatus("failed");
-                    console.error(error);
-                }
-                setStatus("resolved");
-            } catch (error) {
-                setStatus("failed");
-                console.error(error)
-            }
-            console.log(status)
-        }
-        sendCloudinary();
-    }
-
-
-    // useEffect(() => {
-    //     const getUser = async () => {
-    //         try {
-    //             const res = await fetch(`/api/user/${id}`)
-    //             const data = await res.json();
-    //             console.log("DATA", data)
-    //             setUserInfo(data);
-    //         } catch (error) {
-    //             console.error(error)
-    //         }
-    //     }
-    //     // getUser();
-    // }, [])
 
 
     const handleSubmit = (event) => {
@@ -79,6 +25,7 @@ function EditProfile(props) {
         const name = event?.target?.name?.value;
         const about = event?.target?.about?.value;
         console.log(username, password, email, name, about)
+
         async function updateUser() {
             try {
                 const res = await fetch(`/api/user/${id}/edit`, {
@@ -92,6 +39,7 @@ function EditProfile(props) {
                         email: email,
                         password: password,
                         about: about,
+                        files: Base64
                     })
                 })
                 navigate(`/user/${id}`);
@@ -104,38 +52,40 @@ function EditProfile(props) {
         updateUser();
     };
 
-    function CloudinaryDisplay() {
-        return (
-            <ImageCloud cloudName={process.env.REACT_APP_CLOUD_NAME}
-                publicId={displayImage.public_id} >
-                <Transformation height="300" width="300" crop="fill" />
-            </ImageCloud>
-        )
-    };
 
-    function handleFile(e) {
-        e.preventDefault();
-        setUserPhoto()
-        console.log(e.target.files[0]);
+    function handleFile(event) {
+        event.preventDefault();
+        const files = event.target.files
+        const file = files[0];
+        //! Convert to Base64 String
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onloadend = () => {
+            setBase64(reader.result)
+            console.log(Base64);
+        }
+        reader.onerror = () => {
+            console.error("error")
+        }
     }
 
     return (
 
-        <Form noValidate validated={validated} onSubmit={handleSubmit} className="mt-5">
+        <Form onSubmit={handleSubmit} className="mt-5">
 
             <Form.Group controlId="formFile" className="mb-3">
                 {
-                    displayImage ?
-                        <Image as={CloudinaryDisplay} roundedCircle />
+                    Base64 ?
+                        <Image src={Base64} roundedCircle />
                         :
                         <Image src={userInfo.user_photo} roundedCircle />
                 }
                 <InputGroup>
                     <Form.Control type="file"
                         onChange={handleFile} />
-                    <Button variant="primary" id="button-addon2" onClick={handleUpload}>
+                    {/* <Button variant="primary" id="button-addon2" onClick={handleUpload}>
                         Upload
-                    </Button>
+                    </Button> */}
                 </InputGroup>
             </Form.Group>
             <Row className="mb-3">

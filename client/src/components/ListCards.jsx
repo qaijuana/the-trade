@@ -14,17 +14,18 @@ const ListCards = (props) => {
     const date = props.date;
     const list_id = props.list_id;
     const user_id = props.user_id;
+    const url = props.url;
     const currentUser = props.currentUser;
     const navigate = useNavigate();
 
     function handleDelete(event, list_id) {
-        console.log(event, list_id)
         event.preventDefault();
         async function deleteList() {
             try {
                 const delete_list = fetch(`/api/list/${list_id}`, {
                     method: "DELETE"
                 })
+                delete_list.json();
                 navigate(`/user/${user_id}`)
             } catch (error) {
                 console.error(error);
@@ -36,7 +37,7 @@ const ListCards = (props) => {
 
     return (
         <Card style={{ width: '18rem', border: "none" }} className="m-2" >
-            <Card.Img variant="top" src={img} />
+            <Card.Img variant="top" src={(url) ? url : img} />
             <Card.Header className="d-flex justify-content-between">
                 <Card.Text className="fs-4">
                     <Button variant="secondary" className="d-flex" onClick={() => { navigate(`/user/${user_id}`) }}>

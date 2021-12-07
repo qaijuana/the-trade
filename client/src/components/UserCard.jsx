@@ -10,6 +10,7 @@ const UserCard = (props) => {
     const img = props.img;
     const user_id = props.user_id;
     const id = props.id;
+    const url = props.url;
     const currentUser = props.currentUser;
 
 
@@ -18,35 +19,35 @@ const UserCard = (props) => {
 
 
 
-                <Row className="w-75 mx-auto">
-                    <Image
-                        className="img-thumbnail mt-3"
-                        src={img}
-                        roundedCircle
-                         />
-                </Row>
+            <Row className="w-75 mx-auto">
+                <Image
+                    className="img-thumbnail mt-3"
+                    src={url ? url : img}
+                    roundedCircle
+                />
+            </Row>
 
-                <Row>
-                    <h3>hello, @{username} ({name})</h3>
-                    <h3>{about}</h3>
-                </Row>
+            <Row>
+                <h3>hello, @{username} ({name})</h3>
+                <h3>{about}</h3>
+            </Row>
 
-                <Row>
-                    {
-                        (id === currentUser) ?
-                            <Button
-                                size="lg"
-                                variant="secondary"
-                                as={Link}
-                                to={`/user/${user_id}/edit`}
-                            >
-                                Edit
-                            </Button>
-                            :
-                            ""
-                    }
-                </Row>
-            </Col>
+            <Row>
+                {
+                    (id === currentUser) ?
+                        <Button
+                            size="lg"
+                            variant="secondary"
+                            as={Link}
+                            to={`/user/${user_id}/edit`}
+                        >
+                            Edit
+                        </Button>
+                        :
+                        ""
+                }
+            </Row>
+        </Col>
     )
 }
 

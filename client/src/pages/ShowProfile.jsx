@@ -68,6 +68,7 @@ const ShowProfile = (props) => {
                                     author={e.username}
                                     date={e.upload_date}
                                     currentUser={currentUser}
+                                    url={e.url}
                                 />
                             )
                         }) : <h1>Much Empty</h1>

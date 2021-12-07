@@ -8,7 +8,7 @@ import {
 
 const NewList = (props) => {
     const [status, setStatus] = useState("pending");
-    const [Base64, setBase64] = useState("")
+    const [Base64, setBase64] = useState("");
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -18,9 +18,6 @@ const NewList = (props) => {
     function handleSubmit(event) {
         event.preventDefault();
 
-        if (Base64) {
-            handleUpload();
-        }
         //! For input groups
         const currentUser = props.currentUser;
         const title = event?.target?.title?.value
@@ -29,7 +26,7 @@ const NewList = (props) => {
         const condition = event?.target?.condition?.value
         const description = event?.target?.description?.value
 
-        console.log(title, price, category, condition, description)
+        console.log(title, price, category, condition, description, Base64)
 
         async function createList() {
             try {
@@ -40,16 +37,18 @@ const NewList = (props) => {
                         "Content-Type": "application/json"
                     },
                     body: JSON.stringify({
-                        title: title && title,
-                        price: price && price,
-                        category: category && category,
-                        condition: condition && condition,
-                        description: description && description,
+                        title: title,
+                        price: price,
+                        category: category,
+                        condition: condition,
+                        description: description,
                         user_id: currentUser,
+                        files: Base64,
 
                     })
                 })
-                // const dataDb = resDb.json();
+                const dataDb = resDb.json
+                console.log(dataDb);
                 // const statusDb = resDb.ok;
                 setStatus("resolved");
                 //* Redirect to Show List
@@ -62,35 +61,9 @@ const NewList = (props) => {
             }
 
         }
-        // createList();
+        createList();
     }
 
-    function handleUpload(e) {
-        e.preventDefault(); 
-        if (!Base64) return;
-        async function createImage() {
-            try {
-                setStatus("loading");
-                const res = await fetch("/api/image/new", {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json"
-                    },
-                    body: {
-                        files: Base64
-                    }
-                })
-                const data = res.json();
-                console.log("Base64", data);
-                setStatus("resolved");
-
-            } catch (error) {
-                setStatus(error);
-            }
-        }
-        // createImage();
-
-    }
 
     function handleFileChange(event) {
         event.preventDefault();
@@ -157,9 +130,9 @@ const NewList = (props) => {
                     <InputGroup>
                         <Form.Control type="file"
                             onChange={handleFileChange} />
-                        <Button variant="outline-secondary" id="button-addon2" onClick={handleUpload}>
+                        {/* <Button variant="outline-secondary" id="button-addon2" onClick={handleUpload}>
                             Upload
-                        </Button>
+                        </Button> */}
                     </InputGroup>
                 </Form.Group>
 

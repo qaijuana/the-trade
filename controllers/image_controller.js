@@ -1,6 +1,8 @@
 const express = require("express");
 const image = express.Router();
 const pool = require("../database")
+const cloudinary = require("cloudinary").v2;
+
 
 //! Get images of User's listing;
 image.get("/:id", async (req, res) => {
@@ -8,15 +10,15 @@ image.get("/:id", async (req, res) => {
     const list_image = await pool.query(
         "SELECT"
     )
-})
+});
 
-image.post("/new", (req, res) => {
+image.post("/new", async (req, res) => {
+    // const { action } = req.params;
     const { id } = req.cookies;
-    const { action } = req.params;
+    if (!id) return res.sendStatus(403);
     const { files } = req.body;
-    cloudinary.v2.uploader.upload(`${files}`,
-        function (error, result) { console.log(result, error) });
-})
+    
+});
 
 
 

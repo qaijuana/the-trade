@@ -8,7 +8,7 @@ function authToken(req, res, next) {
     const { cookies } = req
     const { token, id } = cookies;
 
-    if (token == null) return res.sendStatus(401)
+    if (!token) return res.sendStatus(401);
     try {
         jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, user) => {
             if (err) return res.sendStatus(403);
@@ -20,6 +20,7 @@ function authToken(req, res, next) {
         res.clearCookie("token");
         res.clearCookie("id")
         console.error(error);
+        res.sendStatus(403);
     }
 
 }

@@ -41,7 +41,7 @@ app.use(cors(corsOptions));
 app.use(cookieParser()); //! req.cookie
 app.use(express.static(path.join(__dirname, "./client/build")));
 app.use(express.urlencoded({ extended: false }));
-app.use(express.json()); //! req.body
+app.use(express.json({ limit: '50mb' })); //! req.body
 
 //* Controllers
 app.use("/api/login", login_controller);

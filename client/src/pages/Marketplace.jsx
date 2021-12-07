@@ -45,7 +45,7 @@ const Marketplace = (props) => {
                                 return (
                                     <ListCards img={e.list_images} title={e.title}
                                         category={e.category} price={e.price} author={e.username} date={e.upload_date}
-                                        user_id={e.user_id} list_id={e.id}
+                                        user_id={e.user_id} list_id={e.id} url={e.url}
                                     />
                                 )
 

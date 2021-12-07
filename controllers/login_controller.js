@@ -18,9 +18,7 @@ function genToken(user) {
 ///////////////////////////////
 ///////////////////////////////
 router.get("/token", async (req, res) => {
-
     const { cookies } = req;
-
     if (!cookies) {
         res.sendStatus(401);
     }
@@ -31,7 +29,6 @@ router.get("/token", async (req, res) => {
         res.sendStatus(401)
     }
     const refreshToken = await findRefreshToken.rows?.[0]?.refresh_token
-    console.log("refresh token", refreshToken)
     if (refreshToken) {
         //! VERIFY TOKEN
         jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET,

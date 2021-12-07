@@ -2,8 +2,9 @@ const bcrypt = require("bcrypt");
 const { json } = require("express");
 const express = require("express");
 const router = express.Router();
-const pool = require("../database")
-const authToken = require("./authToken")
+const pool = require("../database");
+const authToken = require("./authToken");
+const cloudinary = require("cloudinary").v2;
 
 //! SHOW ALL FOR ADMIN
 router.get("/", authToken, async (req, res) => {
@@ -35,12 +36,11 @@ router.post("/new", async (req, res) => {
 //! SHOW USER PROFILE w/ LISTINGS
 router.get("/:id", async (req, res) => {
     const { id } = req.params;
-    console.log(id)
     try {
         const findUser = await pool.query(
-            "SELECT * FROM users FULL JOIN listings ON users.id = user_id WHERE users.id = $1", [id]
+            "SELECT about, category, condition, description, email, list_images, listings_id, name, price, public_id, sold, title, upload_date, url, user_id, user_photo, username FROM users FULL JOIN listings ON users.id = user_id FULL JOIN list_photos ON listings.id = list_photos.listings_id WHERE users.id = $1 ORDER BY listings.id DESC", [id]
         )
-        findUser.rows[0].password = "lol suck on it"
+        // findUser.rows[0].password = "lol suck on it"
         const results = await findUser.rows;
         res.json(results);
 
@@ -50,17 +50,29 @@ router.get("/:id", async (req, res) => {
 })
 
 //! EDIT
-router.post("/:id/edit", authToken, async (req, res) => {
+router.post("/:id/edit", async (req, res) => {
     const { id } = req.params;
     const {
         name,
-        email,
         password,
-        user_photo,
-        about
+        about,
+        files
     } = req.body;
-    const username = (req.body.username).split(" ").join("");
+    const username = req.body.username && (req.body.username).split(" ").join("");
+    const email = req.body.email && (req.body.email).split(" ").join("");
+
+
+
     try {
+        const cloudUpload = await cloudinary.uploader.upload(
+            files, (error, result) => {
+                // console.log(result, error);
+                if (error) return error;
+                return result;
+            });
+        const user_photo = await cloudUpload.url
+        console.log("Cloudi response:", cloudUpload, user_photo);
+
         if (name) {
             const updateName = await pool.query(
                 "UPDATE users SET name = $1 WHERE id = $2", [name, id]
