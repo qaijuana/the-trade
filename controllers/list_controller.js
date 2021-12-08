@@ -5,10 +5,10 @@ const authToken = require("./authToken");
 const cloudinary = require("cloudinary").v2;
 
 router.get("/", async (req, res) => {
-    console.log("get all")
     const allLists = await pool.query(
-        "SELECT listings.id, title, price, description, upload_date, category, condition, list_images, users.username, user_id, list_photos.url, list_photos.id FROM listings FULL JOIN users ON user_id = users.id FULL JOIN list_photos ON listings.id = list_photos.listings_id ORDER BY listings.id DESC"
+        "SELECT listings.id, title, price, description, upload_date, category, condition, list_images, users.username, user_id, list_photos.url, list_photos.id AS photo_id FROM listings FULL JOIN users ON user_id = users.id FULL JOIN list_photos ON list_photos.listings_id = listings.id ORDER BY listings.id DESC"
     )
+    console.log(allLists.rows)
     res.json(allLists.rows)
 })
 
@@ -17,7 +17,7 @@ router.get("/:id", async (req, res) => {
     const { id } = req.params;
     console.log("id", id)
     const oneList = await pool.query(
-        "SELECT listings.id, title, price, description,upload_date, category, condition, list_images, users.username, user_id FROM listings FULL JOIN users ON user_id = users.id WHERE listings.id = $1",
+        "SELECT listings.id , title, price, description, upload_date, category, condition, list_images, users.username, user_id, list_photos.url, list_photos.id AS photo_id FROM listings FULL JOIN users ON user_id = users.id FULL JOIN list_photos ON list_photos.listings_id = listings.id WHERE listings.id = $1",
         [id]
     )
     console.log(oneList.rows)

@@ -1,13 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from "react-router-dom";
-import { Container, Col, Row } from 'react-bootstrap';
+import { Col, Row } from 'react-bootstrap';
 import ListCards from '../components/ListCards';
 import UserCard from '../components/UserCard';
-import { useNavigate } from 'react-router';
 
 const ShowProfile = (props) => {
     const { id } = useParams();
-    const [profile, setProfile] = useState([]);
+    const [profile, setProfile] = useState("");
     const [status, setStatus] = useState("pending");
     // const navigate = useNavigate();
     const currentUser = props.currentUser;
@@ -19,10 +18,10 @@ const ShowProfile = (props) => {
         async function getProfile() {
             try {
                 setStatus("status")
-                const res = await fetch(`/api/user/${id}`)
+                const res = await fetch(`/api/user/${id}/profile`)
                 const data = await res.json()
-                console.log(profile, data)
                 setProfile(data)
+                // console.log(profile, data)
                 setStatus("resolved")
             } catch (error) {
                 setStatus("failed")
@@ -33,7 +32,7 @@ const ShowProfile = (props) => {
         getProfile();
     }, [currentUser, id])
 
-    console.log(profile)
+    // console.log(profile)
 
 
     if (profile.length > 0)

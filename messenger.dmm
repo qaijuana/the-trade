@@ -306,23 +306,6 @@
 					"ref": "Users "
 				},
 				{
-					"id": "a1d1dc78-d0df-4168-ad86-51b7a0768514",
-					"name": "listing_id",
-					"datatype": "bigint",
-					"pk": false,
-					"nn": true,
-					"comment": "",
-					"defaultvalue": "",
-					"data": "",
-					"collation": null,
-					"after": "",
-					"pg": {
-						"generatedIdentity": "no"
-					},
-					"fk": true,
-					"ref": "Listings"
-				},
-				{
 					"id": "9f92a9b6-03dd-4194-805c-c27b3e12a651",
 					"name": "buyer_id",
 					"datatype": "bigint",
@@ -338,6 +321,23 @@
 					},
 					"fk": true,
 					"ref": "Users "
+				},
+				{
+					"id": "a1d1dc78-d0df-4168-ad86-51b7a0768514",
+					"name": "listing_id",
+					"datatype": "bigint",
+					"pk": false,
+					"nn": true,
+					"comment": "",
+					"defaultvalue": "",
+					"data": "",
+					"collation": null,
+					"after": "",
+					"pg": {
+						"generatedIdentity": "no"
+					},
+					"fk": true,
+					"ref": "Listings"
 				}
 			],
 			"relations": [
@@ -445,6 +445,23 @@
 					}
 				},
 				{
+					"id": "6911f604-3f5b-4b22-adaa-2061fc089290",
+					"name": "sold",
+					"datatype": "boolean",
+					"param": "",
+					"pk": false,
+					"nn": false,
+					"comment": "",
+					"defaultvalue": "",
+					"data": "",
+					"collation": null,
+					"list": false,
+					"after": "",
+					"pg": {
+						"generatedIdentity": "no"
+					}
+				},
+				{
 					"id": "30f42e4b-54a4-4eff-ab9a-9a479857ab20",
 					"name": "upload_date",
 					"datatype": "timestamp with time zone",
@@ -477,23 +494,6 @@
 					"pg": {
 						"generatedIdentity": "no"
 					}
-				},
-				{
-					"id": "cfec79d3-377f-40b6-90f5-0925e77624de",
-					"name": "user_id",
-					"datatype": "bigint",
-					"pk": false,
-					"nn": true,
-					"comment": "",
-					"defaultvalue": "",
-					"data": "",
-					"collation": null,
-					"after": "",
-					"pg": {
-						"generatedIdentity": "no"
-					},
-					"fk": true,
-					"ref": "Users "
 				},
 				{
 					"id": "26227732-c763-4b51-9400-f2564affe472",
@@ -530,21 +530,21 @@
 					}
 				},
 				{
-					"id": "6911f604-3f5b-4b22-adaa-2061fc089290",
-					"name": "sold",
-					"datatype": "boolean",
-					"param": "",
+					"id": "cfec79d3-377f-40b6-90f5-0925e77624de",
+					"name": "user_id",
+					"datatype": "bigint",
 					"pk": false,
-					"nn": false,
+					"nn": true,
 					"comment": "",
 					"defaultvalue": "",
 					"data": "",
 					"collation": null,
-					"list": false,
 					"after": "",
 					"pg": {
 						"generatedIdentity": "no"
-					}
+					},
+					"fk": true,
+					"ref": "Users "
 				}
 			],
 			"relations": [
@@ -789,6 +789,23 @@
 					}
 				},
 				{
+					"id": "b2dce4aa-0c31-46c6-8e21-c62378b4928c",
+					"name": "public_id",
+					"datatype": "varchar",
+					"param": "",
+					"pk": false,
+					"nn": true,
+					"comment": "",
+					"defaultvalue": "",
+					"data": "",
+					"collation": null,
+					"list": false,
+					"after": "",
+					"pg": {
+						"generatedIdentity": "no"
+					}
+				},
+				{
 					"id": "dc282484-bf4a-49cc-bfad-f09e3224fefe",
 					"name": "listings_id",
 					"datatype": "bigint",
@@ -891,6 +908,23 @@
 					}
 				},
 				{
+					"id": "3a5dee9f-d189-42e2-83f1-e9d53a52b071",
+					"name": "timestamp",
+					"datatype": "timestamp with time zone",
+					"param": "",
+					"pk": false,
+					"nn": true,
+					"comment": "",
+					"defaultvalue": "",
+					"data": "",
+					"collation": null,
+					"list": false,
+					"after": "",
+					"pg": {
+						"generatedIdentity": "no"
+					}
+				},
+				{
 					"id": "8a2cea86-abd2-4b86-8c06-3ae169a61dd9",
 					"name": "theInbox_id",
 					"datatype": "bigint",
@@ -923,23 +957,6 @@
 					},
 					"fk": true,
 					"ref": "users"
-				},
-				{
-					"id": "3a5dee9f-d189-42e2-83f1-e9d53a52b071",
-					"name": "timestamp",
-					"datatype": "timestamp with time zone",
-					"param": "",
-					"pk": false,
-					"nn": true,
-					"comment": "",
-					"defaultvalue": "",
-					"data": "",
-					"collation": null,
-					"list": false,
-					"after": "",
-					"pg": {
-						"generatedIdentity": "no"
-					}
 				}
 			],
 			"relations": [
@@ -1340,7 +1357,7 @@
 			"quotation": "if_needed"
 		},
 		"writeFileParam": false,
-		"lastSaved": "Wed Dec 01 2021 01:16:39 GMT+0800 (Singapore Standard Time)"
+		"lastSaved": "Sun Dec 05 2021 15:30:35 GMT+0800 (Singapore Standard Time)"
 	},
 	"otherObjects": {},
 	"diagrams": {
@@ -1402,10 +1419,10 @@
 				},
 				"26fcd772-1621-400d-92ea-87a0222e0297": {
 					"referencedItemId": "26fcd772-1621-400d-92ea-87a0222e0297",
-					"x": 72,
-					"y": 512,
-					"gHeight": 81,
-					"gWidth": 198,
+					"x": 76,
+					"y": 503,
+					"gHeight": 99,
+					"gWidth": 203,
 					"color": "#ffffff",
 					"background": "#008000",
 					"resized": false,

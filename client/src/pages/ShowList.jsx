@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router';
 import { Container, Card, ButtonGroup, Button } from 'react-bootstrap';
 import { BsAt, BsHeart, BsHeartFill, BsFillChatSquareFill } from "react-icons/bs";
 import { useParams } from 'react-router';
+import ListCards from '../components/ListCards';
 
 const ShowList = (props) => {
     const { id } = useParams();
@@ -10,7 +11,6 @@ const ShowList = (props) => {
     const navigate = useNavigate();
     const [like, setLike] = useState(false);
 
-    console.log(id)
 
     function handleUser() {
         navigate(`/user/${listInfo.user_id}`)
@@ -21,11 +21,11 @@ const ShowList = (props) => {
             try {
                 const res = await fetch(`/api/list/${id}`)
                 const data = await res.json();
-                // console.log(data)
                 setListInfo(data);
-
+                console.log(listInfo)
             } catch (error) {
                 console.error(error);
+                navigate("/marketplace")
             }
         }
         getList();
@@ -37,7 +37,7 @@ const ShowList = (props) => {
     return (
         <Container>
             <Card className="mt-4" >
-                <Card.Img variant="top" src={listInfo.list_images} />
+                <Card.Img variant="top" src={listInfo && listInfo.url ? listInfo.url : listInfo.list_images} />
                 <Card.Header className="d-flex justify-content-between">
                     <Card.Text className="fs-4">
                         <Button variant="secondary" className="d-flex" onClick={handleUser}>

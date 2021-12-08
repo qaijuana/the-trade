@@ -37,7 +37,6 @@ function App() {
       const res = await fetch("/api/login/token")
       const data = await res.json();
       const ok = await res.ok
-      console.log("ok", ok)
       if (ok) {
         setCurrentUser(data.id);
         // navigate("/marketplace")

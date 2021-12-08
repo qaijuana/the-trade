@@ -12,11 +12,8 @@ function genToken(user) {
     return (jwt.sign(user, process.env.ACCESS_TOKEN_SECRET, { expiresIn: "15m" }))
 }
 
-///////////////////////////////
-///////////////////////////////
 //! COOKIE REFRESH
-///////////////////////////////
-///////////////////////////////
+
 router.get("/token", async (req, res) => {
     const { cookies } = req;
     if (!cookies) {

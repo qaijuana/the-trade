@@ -2,18 +2,34 @@ import React, { useState, useEffect } from 'react';
 import { useParams } from "react-router-dom";
 import { useNavigate } from 'react-router';
 import { Form, Row, Col, InputGroup, Button, FloatingLabel, Image } from "react-bootstrap";
-import { Image as ImageCloud, Transformation } from "cloudinary-react";
 
 function EditProfile(props) {
-    const [validated, setValidated] = useState(false);
+    const currentUser = props.currentUser;
     const [status, setStatus] = useState("pending");
-    const [displayImage, setDisplayImage] = useState("");
-    const [userPhoto, setUserPhoto] = useState();
-    const [userInfo, setUserInfo] = useState({});
     const [Base64, setBase64] = useState("");
+    const [profile, setProfile] = useState([]);
     const { id } = useParams();
     const navigate = useNavigate();
-    const cloudinaryUrl = `https://api.cloudinary.com/v1_1/${process.env.REACT_APP_CLOUD_NAME}/image/upload/w_300,h_300`;
+
+    useEffect(() => {
+        setProfile([]);
+        async function getProfile() {
+            try {
+                setStatus("status")
+                const res = await fetch(`/api/user/${id}`)
+                const data = await res.json()
+                setProfile(data[0])
+                console.log(profile)
+                setStatus("resolved")
+            } catch (error) {
+                setStatus("failed")
+                console.error(error)
+            }
+
+        }
+        getProfile();
+    }, [currentUser, id])
+
 
 
     const handleSubmit = (event) => {
@@ -26,8 +42,11 @@ function EditProfile(props) {
         const about = event?.target?.about?.value;
         console.log(username, password, email, name, about)
 
+
+
         async function updateUser() {
             try {
+                setStatus("loading")
                 const res = await fetch(`/api/user/${id}/edit`, {
                     method: "POST",
                     headers: {
@@ -74,12 +93,8 @@ function EditProfile(props) {
         <Form onSubmit={handleSubmit} className="mt-5">
 
             <Form.Group controlId="formFile" className="mb-3">
-                {
-                    Base64 ?
-                        <Image src={Base64} roundedCircle />
-                        :
-                        <Image src={userInfo.user_photo} roundedCircle />
-                }
+
+                <Image src={Base64 ? Base64 : profile.user_photo} roundedCircle />
                 <InputGroup>
                     <Form.Control type="file"
                         onChange={handleFile} />
@@ -88,6 +103,7 @@ function EditProfile(props) {
                     </Button> */}
                 </InputGroup>
             </Form.Group>
+
             <Row className="mb-3">
                 <Form.Group as={Col} md="4" controlId="username">
                     <Form.Label>Username</Form.Label>
@@ -95,7 +111,7 @@ function EditProfile(props) {
                         <InputGroup.Text id="inputGroupPrepend">@</InputGroup.Text>
                         <Form.Control
                             type="text"
-                            placeholder="username"
+                            placeholder={profile && profile.username}
                             aria-describedby="inputGroupPrepend"
                         />
                     </InputGroup>
@@ -104,7 +120,7 @@ function EditProfile(props) {
                     <Form.Label>Name</Form.Label>
                     <Form.Control
                         type="text"
-                        placeholder="Name"
+                        placeholder={profile && profile.name}
 
                     />
 
@@ -116,14 +132,15 @@ function EditProfile(props) {
                         placeholder="Password"
                         defaultValue=""
                         readOnly
+                        disabled
                     />
                 </Form.Group>
             </Row>
             <Row className="mb-3">
-                <FloatingLabel controlId="about" label="About me" className="text-muted">
+                <FloatingLabel controlId="about" label={profile && profile.about} className="text-muted">
                     <Form.Control
                         as="textarea"
-                        placeholder="Leave a comment here"
+                        placeholder={profile && profile.about}
                         style={{ height: '100px' }}
                     />
                 </FloatingLabel>

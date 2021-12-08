@@ -60,7 +60,7 @@ const ListCards = (props) => {
 
                     <ButtonGroup size="" className="mb-2">
                         <Button variant="secondary">Offer</Button>
-                        <Button variant="secondary" onClick={()=>{ navigate("/inbox")}}><BsFillChatSquareFill className="fs-3" /></Button>
+                        <Button variant="secondary" onClick={() => { navigate("/inbox") }}><BsFillChatSquareFill className="fs-3" /></Button>
                         <Button variant="secondary" onClick={() => { setLike(!like) }}>
                             {(!like) ?
                                 <BsHeart className="fs-4" />
@@ -68,7 +68,9 @@ const ListCards = (props) => {
                                 < BsHeartFill className="fs-4" />
                             }
                         </Button>
-                        <Button stretched-link variant="secondary" onClick={() => { navigate(`/list/${list_id}`) }}> More </Button>
+                        <Button stretched-link variant="secondary" onClick={() => { navigate(`/list/${list_id}`) }}>
+                            More
+                        </Button>
                     </ButtonGroup>
 
                     :

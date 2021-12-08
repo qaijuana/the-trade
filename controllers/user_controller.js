@@ -38,9 +38,22 @@ router.get("/:id", async (req, res) => {
     const { id } = req.params;
     try {
         const findUser = await pool.query(
+            "SELECT * FROM users WHERE users.id = $1", [id]
+        )
+        const results = await findUser.rows;
+        res.json(results);
+
+    } catch (error) {
+        res.sendStatus(400)
+    }
+})
+
+router.get("/:id/profile", async (req, res) => {
+    const { id } = req.params;
+    try {
+        const findUser = await pool.query(
             "SELECT about, category, condition, description, email, list_images, listings_id, name, price, public_id, sold, title, upload_date, url, user_id, user_photo, username FROM users FULL JOIN listings ON users.id = user_id FULL JOIN list_photos ON listings.id = list_photos.listings_id WHERE users.id = $1 ORDER BY listings.id DESC", [id]
         )
-        // findUser.rows[0].password = "lol suck on it"
         const results = await findUser.rows;
         res.json(results);
 
@@ -64,14 +77,7 @@ router.post("/:id/edit", async (req, res) => {
 
 
     try {
-        const cloudUpload = await cloudinary.uploader.upload(
-            files, (error, result) => {
-                // console.log(result, error);
-                if (error) return error;
-                return result;
-            });
-        const user_photo = await cloudUpload.url
-        console.log("Cloudi response:", cloudUpload, user_photo);
+
 
         if (name) {
             const updateName = await pool.query(
@@ -100,10 +106,18 @@ router.post("/:id/edit", async (req, res) => {
                 "UPDATE users SET password = $1 WHERE id = $2", [hashedPassword, id]
             )
         }
-        if (user_photo) {
+        if (files) {
+            const cloudUpload = await cloudinary.uploader.upload(
+                files, (error, result) => {
+                    // console.log(result, error);
+                    if (error) return error;
+                    return result;
+                });
+            const user_photo = await cloudUpload.url
+            console.log("Cloudi response:", cloudUpload, user_photo);
             const updateUserPhoto = await pool.query(
                 "UPDATE users SET user_photo = $1 WHERE id = $2", [user_photo, id]
-            )
+            );
         }
         res.send("updated");
     } catch (error) {
