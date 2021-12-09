@@ -3,7 +3,6 @@ import { useNavigate } from 'react-router';
 import { Container, Card, ButtonGroup, Button } from 'react-bootstrap';
 import { BsAt, BsHeart, BsHeartFill, BsFillChatSquareFill } from "react-icons/bs";
 import { useParams } from 'react-router';
-import ListCards from '../components/ListCards';
 
 const ShowList = (props) => {
     const { id } = useParams();
@@ -22,7 +21,7 @@ const ShowList = (props) => {
                 const res = await fetch(`/api/list/${id}`)
                 const data = await res.json();
                 setListInfo(data);
-                console.log(listInfo)
+                console.log(data)
             } catch (error) {
                 console.error(error);
                 navigate("/marketplace")
@@ -34,6 +33,7 @@ const ShowList = (props) => {
     if (listInfo.length === 0) return (
         <h1>LOADING</h1>
     )
+    
     return (
         <Container>
             <Card className="mt-4" >

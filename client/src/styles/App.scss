@@ -1,7 +1,6 @@
 @import "../../node_modules/bootstrap/scss/bootstrap";
 @import "./variables.scss";
 
-
 *,
 *::before,
 *::after {
@@ -20,11 +19,11 @@ body {
 }
 
 .noscroll {
-    -ms-overflow-style: none;  /* Internet Explorer 10+ */
-    scrollbar-width: none;  /* Firefox */
+    -ms-overflow-style: none; /* Internet Explorer 10+ */
+    scrollbar-width: none; /* Firefox */
 }
-.noscroll::-webkit-scrollbar { 
-    display: none;  /* Safari and Chrome */
+.noscroll::-webkit-scrollbar {
+    display: none; /* Safari and Chrome */
 }
 
 .wrapper {
@@ -35,7 +34,7 @@ body {
     justify-content: center;
 }
 
-
-
-
-
+.nav-duck {
+    height: 100vh;
+    padding-top: 56px;
+}

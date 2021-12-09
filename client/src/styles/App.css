@@ -12000,4 +12000,9 @@ body {
       -ms-flex-pack: center;
           justify-content: center;
 }
+
+.nav-duck {
+  height: 100vh;
+  padding-top: 56px;
+}
 /*# sourceMappingURL=App.css.map */

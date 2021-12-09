@@ -6,9 +6,8 @@ const cloudinary = require("cloudinary").v2;
 
 router.get("/", async (req, res) => {
     const allLists = await pool.query(
-        "SELECT listings.id, title, price, description, upload_date, category, condition, list_images, users.username, user_id, list_photos.url, list_photos.id AS photo_id FROM listings FULL JOIN users ON user_id = users.id FULL JOIN list_photos ON list_photos.listings_id = listings.id ORDER BY listings.id DESC"
+        "SELECT listings.id AS listings_id, users.username, title, price, description, upload_date, category, condition, list_images, user_id, list_photos.url, list_photos.id AS photo_id FROM listings FULL JOIN users ON user_id = users.id FULL JOIN list_photos ON list_photos.listings_id = listings.id ORDER BY listings.id DESC"
     )
-    console.log(allLists.rows)
     res.json(allLists.rows)
 })
 
@@ -17,10 +16,9 @@ router.get("/:id", async (req, res) => {
     const { id } = req.params;
     console.log("id", id)
     const oneList = await pool.query(
-        "SELECT listings.id , title, price, description, upload_date, category, condition, list_images, users.username, user_id, list_photos.url, list_photos.id AS photo_id FROM listings FULL JOIN users ON user_id = users.id FULL JOIN list_photos ON list_photos.listings_id = listings.id WHERE listings.id = $1",
+        "SELECT listings.id, users.username, title, price, description, upload_date, category, condition, list_images, user_id, list_photos.url FROM listings FULL JOIN users ON user_id = users.id FULL JOIN list_photos ON list_photos.listings_id = listings.id WHERE listings.id = $1",
         [id]
     )
-    console.log(oneList.rows)
     res.json(oneList.rows[0])
 })
 
@@ -31,9 +29,7 @@ router.post("/new", async (req, res) => {
     const {
         title, price, description, category, condition, user_id, files
     } = req.body;
-
     const upload_date = Date.now()
-    console.log("req.body", req.body, upload_date);
 
     try {
         try {
@@ -58,8 +54,6 @@ router.post("/new", async (req, res) => {
                     if (error) return console.log(error);
                     return result;
                 });
-            console.log("Cloudi response:", cloudUpload)
-            // res.json(cloudUpload);
             try {
                 const updateList_photo = await pool.query(
                     "INSERT INTO list_photos (url, public_id, listings_id) VALUES ($1, $2, $3) RETURNING id",
@@ -67,8 +61,6 @@ router.post("/new", async (req, res) => {
                         cloudUpload?.url, cloudUpload?.public_id, id
                     ]
                 )
-                console.log("list_image update", updateList_photo)
-
                 res.sendStatus(200);
 
             } catch (error) {
@@ -89,12 +81,11 @@ router.post("/new", async (req, res) => {
 
 
 //! EDIT LIST
-router.post("/:id/edit", authToken, async (req, res) => {
+router.post("/:id/edit", async (req, res) => {
     const { id } = req.params;
     const {
-        title, price, description, list_images, category, condition
+        title, price, description, category, condition, user_id, files
     } = req.body;
-
     console.log("we are editing lists", req.body)
     try {
         if (title) {
@@ -112,22 +103,32 @@ router.post("/:id/edit", authToken, async (req, res) => {
                 "UPDATE listings SET description = $1 WHERE id = $2", [description, id]
             )
         }
-        if (list_images) {
-            const updatelist_images = await pool.query(
-                "UPDATE listings SET list_images = $1 WHERE id = $2", [list_images, id]
-            )
-        }
         if (category) {
             const updatecategory = await pool.query(
                 "UPDATE listings SET category = $1 WHERE id = $2", [category, id]
             )
         }
         if (condition) {
-            const updatelist_images = await pool.query(
+            const updatelistcondition = await pool.query(
                 "UPDATE listings SET condition = $1 WHERE id = $2", [condition, id]
             )
         }
-        res.json({ msg: "all good" })
+        if (files) {
+            const cloudUpload = await cloudinary.uploader.upload(
+                files, (error, result) => {
+                    if (error) return error;
+                    return result;
+                });
+            const list_photo = await cloudUpload.url
+            console.log("Cloudi response:", cloudUpload, list_photo);
+            const updateList_photo = await pool.query(
+                "INSERT INTO list_photos (url, public_id, listings_id) VALUES ($1, $2, $3) RETURNING id",
+                [
+                    cloudUpload?.url, cloudUpload?.public_id, id
+                ]
+            )
+            console.log("Updated list_photos", updateList_photo.rows[0]);
+        }
         res.sendStatus(200);
     } catch (error) {
         console.error(error);

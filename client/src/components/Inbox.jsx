@@ -75,41 +75,41 @@ function Inbox(props) {
                 <div
                     className="col-3 overflow-scroll noscroll"
                     style={{
-                        "height": "700px",
+                        "height": "75vh",
                         "width": "300px"
                     }} >
                     <ListGroup as="ul" >
-                    <ChatList/>
-                    <ChatList/>
-                    <ChatList/>
-                    <ChatList/>
-                    <ChatList/>
-                    <ChatList/>
-                    <ChatList/>
-                    <ChatList/>
-                    <ChatList/>
-                    <ChatList/>
-                    <ChatList/>
-                    <ChatList/>
-                    <ChatList/>
-                    <ChatList/>
-                    <ChatList/>
-                    <ChatList/>
-                    <ChatList/>
-                    <ChatList/>
-                    <ChatList/>
-                    <ChatList/>
-                    <ChatList/>
-                    <ChatList/>
-                    <ChatList/>
-                    <ChatList/>
-                    <ChatList/>
-                    <ChatList/>
-                    <ChatList/>
-                    <ChatList/>
-                    <ChatList/>
-                    <ChatList/>
-                    <ChatList/>
+                        <ChatList />
+                        <ChatList />
+                        <ChatList />
+                        <ChatList />
+                        <ChatList />
+                        <ChatList />
+                        <ChatList />
+                        <ChatList />
+                        <ChatList />
+                        <ChatList />
+                        <ChatList />
+                        <ChatList />
+                        <ChatList />
+                        <ChatList />
+                        <ChatList />
+                        <ChatList />
+                        <ChatList />
+                        <ChatList />
+                        <ChatList />
+                        <ChatList />
+                        <ChatList />
+                        <ChatList />
+                        <ChatList />
+                        <ChatList />
+                        <ChatList />
+                        <ChatList />
+                        <ChatList />
+                        <ChatList />
+                        <ChatList />
+                        <ChatList />
+                        <ChatList />
                     </ListGroup>
                 </div>
 
@@ -117,32 +117,41 @@ function Inbox(props) {
 
                     <div className="border overflow-auto noscroll " style={{ "height": "600px" }}>
                         <div
-                            className=" position-fixed bg-light w-auto "
+                            className="bg-light d-flex"
                             style={{
-                                "z-index": "1"
+                                "z-index": "1",
+                                height: "50px"
                             }}
                         >
-                            <h3 className="">
+                            <h5 className="">
                                 Item name
-                            </h3>
+                            </h5>
+
                         </div>
-                        <MessageReceiver />
-                        <MessageSender />
-                        <MessageReceiver />
-                        <MessageSender />
-                        <MessageReceiver />
-                        <MessageSender />
-                        <MessageReceiver />
-                        <MessageSender />
-                        <MessageReceiver />
-                        <MessageSender />
-                        <MessageReceiver />
-                        <MessageSender />
-                        <MessageReceiver />
-                        <MessageSender />
-                        <MessageReceiver />
-                        <MessageSender />
-                        <MessageSender />
+                        <div
+                            style={
+                                {
+                                    height: "calc(100vh - 40px)",
+                                    "padding-top": "40px"
+                                }}>
+                            <MessageReceiver />
+                            <MessageSender />
+                            <MessageReceiver />
+                            <MessageSender />
+                            <MessageReceiver />
+                            <MessageSender />
+                            <MessageReceiver />
+                            <MessageSender />
+                            <MessageReceiver />
+                            <MessageSender />
+                            <MessageReceiver />
+                            <MessageSender />
+                            <MessageReceiver />
+                            <MessageSender />
+                            <MessageReceiver />
+                            <MessageSender />
+                            <MessageSender />
+                        </div>
                     </div>
 
                     <Form onSubmit={handleSubmit}>

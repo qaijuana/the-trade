@@ -33,26 +33,35 @@ const Marketplace = (props) => {
     }
     if (allList.length !== 0)
         return (
-            <>
+            <div
+                className=''>
                 <h1 className="text-center">
                     Marketplace
                 </h1>
-                <Row className="d-flex flex-row mt-3">
+                <div className="d-flex flex-wrap mt-3 overflow-scroll noscroll ">
 
                     {
                         allList.map((e, i) => {
+                            console.log(e)
                             if (e.price)
                                 return (
-                                    <ListCards img={e.list_images} title={e.title}
-                                        category={e.category} price={e.price} author={e.username} date={e.upload_date}
-                                        user_id={e.user_id} list_id={e.id} url={e.url}
+                                    <ListCards
+                                        img={e.list_images}
+                                        title={e.title}
+                                        category={e.category}
+                                        price={e.price}
+                                        username={e.username}
+                                        date={e.upload_date}
+                                        user_id={e.user_id}
+                                        list_id={e.listings_id}
+                                        url={e.url}
                                     />
                                 )
 
                         })
                     }
-                </Row>
-            </>
+                </div>
+            </div>
         )
 }
 

@@ -6,17 +6,10 @@ import { useNavigate } from 'react-router'
 
 const ListCards = (props) => {
     const [like, setLike] = useState(false);
-    const img = props.img;
-    const title = props.title;
-    const category = props.category;
-    const price = props.price;
-    const author = props.author;
-    const date = props.date;
-    const list_id = props.list_id;
-    const user_id = props.user_id;
-    const url = props.url;
-    const currentUser = props.currentUser;
+
+    const { img, title, category, price, username, date, list_id, user_id, url, currentUser } = props;
     const navigate = useNavigate();
+
 
     function handleDelete(event, list_id) {
         event.preventDefault();
@@ -25,7 +18,7 @@ const ListCards = (props) => {
                 const delete_list = fetch(`/api/list/${list_id}`, {
                     method: "DELETE"
                 })
-                delete_list.json();
+                console.log(delete_list);
                 navigate(`/user/${user_id}`)
             } catch (error) {
                 console.error(error);
@@ -41,7 +34,7 @@ const ListCards = (props) => {
             <Card.Header className="d-flex justify-content-between">
                 <Card.Text className="fs-4">
                     <Button variant="secondary" className="d-flex" onClick={() => { navigate(`/user/${user_id}`) }}>
-                        <BsAt /> {author}
+                        <BsAt /> {username}
                     </Button>
 
                 </Card.Text>
@@ -76,11 +69,15 @@ const ListCards = (props) => {
                     :
 
                     <ButtonGroup size="" className="mb-2">
-                        <Button variant="secondary" onClick={() => { navigate(`/list/${list_id}`) }}> More </Button>
+                        <Button variant="secondary" onClick={() => { navigate(`/list/${list_id}/`) }}>
+                            More
+                        </Button>
                         <Button onClick={() => { navigate(`/list/${list_id}/edit`) }} variant="secondary">
                             Edit
                         </Button>
-                        <Button onClick={(event) => { handleDelete(event, list_id) }} variant="secondary">
+                        <Button
+                            onClick={(event) => { handleDelete(event, list_id) }}
+                            variant="secondary">
                             Delete
                         </Button>
                     </ButtonGroup>

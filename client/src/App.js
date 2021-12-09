@@ -35,15 +35,16 @@ function App() {
   useEffect(() => {
     const cookieCheck = async () => {
       const res = await fetch("/api/login/token")
-      const data = await res.json();
+      console.log("res cookie", res)
       const ok = await res.ok
       if (ok) {
-        setCurrentUser(data.id);
-        // navigate("/marketplace")
-      } else {
-        navigate("/login");
-        console.log("res.ok is not ok")
+        const data = await res.json();
+        const id = await data.id;
+        setCurrentUser(id);
       }
+      console.log("res.ok is not ok, please login")
+      navigate("/login");
+      // navigate("/marketplace")
     }
     cookieCheck();
   }, [])
@@ -60,10 +61,10 @@ function App() {
   return (
 
 
-    <div className="App">
+    <div className="App overflow-auto noscroll ">
       <AppBar currentUser={currentUser} logout={logout} />
 
-      <Container>
+      <Container className="nav-duck ">
         <Routes>
           <Route index element={<Layout title={"home"} />} />
           <Route path="/marketplace" element={<Marketplace />} />

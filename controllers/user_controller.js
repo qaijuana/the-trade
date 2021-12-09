@@ -49,10 +49,11 @@ router.get("/:id", async (req, res) => {
 })
 
 router.get("/:id/profile", async (req, res) => {
+
     const { id } = req.params;
     try {
         const findUser = await pool.query(
-            "SELECT about, category, condition, description, email, list_images, listings_id, name, price, public_id, sold, title, upload_date, url, user_id, user_photo, username FROM users FULL JOIN listings ON users.id = user_id FULL JOIN list_photos ON listings.id = list_photos.listings_id WHERE users.id = $1 ORDER BY listings.id DESC", [id]
+            "SELECT user_id, listings.id AS listings_id, about, category, condition, description, email, list_images,  name, price, public_id, sold, title, upload_date, url,  user_photo, username FROM users FULL JOIN listings ON users.id = user_id FULL JOIN list_photos ON listings.id = list_photos.listings_id WHERE users.id = $1 ORDER BY listings.id DESC", [id]
         )
         const results = await findUser.rows;
         res.json(results);

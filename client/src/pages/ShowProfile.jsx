@@ -8,7 +8,6 @@ const ShowProfile = (props) => {
     const { id } = useParams();
     const [profile, setProfile] = useState("");
     const [status, setStatus] = useState("pending");
-    // const navigate = useNavigate();
     const currentUser = props.currentUser;
     //! reset
 
@@ -17,11 +16,13 @@ const ShowProfile = (props) => {
         setProfile([]);
         async function getProfile() {
             try {
+                console.log("id", id)
                 setStatus("status")
                 const res = await fetch(`/api/user/${id}/profile`)
                 const data = await res.json()
+                console.log("getProfile data", data)
                 setProfile(data)
-                // console.log(profile, data)
+                console.log(profile)
                 setStatus("resolved")
             } catch (error) {
                 setStatus("failed")
@@ -32,13 +33,19 @@ const ShowProfile = (props) => {
         getProfile();
     }, [currentUser, id])
 
-    // console.log(profile)
+    console.log(profile)
 
 
     if (profile.length > 0)
         return (
-            <Col className="d-flex"  >
-                <Row className=" my-auto position-relative"
+
+            <Col
+                className="d-flex "
+                style={{
+                    height: "calc(100vh - 56px)",
+                }}
+            >
+                <Row className="position-sticky "
                 >
                     <UserCard
                         img={profile[0].user_photo}
@@ -52,7 +59,7 @@ const ShowProfile = (props) => {
                     />
                 </Row>
 
-                <Row className=" d-flex flex-row mt-3 mx-auto ">
+                <Row className=" d-flex flex-row mt-3 mx-auto overflow-scroll noscroll ">
 
                     {(profile[0].price) ?
                         profile.map((e, i) => {
@@ -60,11 +67,11 @@ const ShowProfile = (props) => {
                                 <ListCards
                                     img={e.list_images}
                                     title={e.title}
-                                    list_id={e.id}
+                                    list_id={e.listings_id}
                                     user_id={e.user_id}
                                     category={e.category}
                                     price={e.price}
-                                    author={e.username}
+                                    username={e.username}
                                     date={e.upload_date}
                                     currentUser={currentUser}
                                     url={e.url}

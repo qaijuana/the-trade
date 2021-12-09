@@ -96,33 +96,25 @@ const NewList = (props) => {
 
                 {/* //! IMAGE PREVIEW */}
                 {
-                    (Base64) ?
+                    Base64 ?
                         <div
                             className="mx-auto"
                             style={{
                                 position: "relative",
                                 height: "200px",
                                 width: "200px",
-                                overflow: "hidden"
+                                overflow: 'hidden'
                             }}>
                             <Image
                                 src={Base64}
                                 className=""
                                 style={{
-                                    position: "absolute",
-                                    left: "50 %",
-                                    top: "50 %",
-                                    height: "100 %",
-                                    width: "auto",
-                                    "- webkit - transform": "translate(-50%,-50%)",
-                                    "-ms-transform": "translate(-50%,-50%)",
-                                    transform: "translate(-50%,-50%)",
+                                    position: 'absolute',
+                                    height: "100%",
                                 }}
-
                             />
                         </div>
-                        :
-                        ""
+                        : ""
                 }
 
                 <Form.Group controlId="list_images" className="mb-3">

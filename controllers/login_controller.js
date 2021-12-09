@@ -13,6 +13,7 @@ function genToken(user) {
 }
 
 //! COOKIE REFRESH
+//? Move into Second Backend Surver (Authentication Server)
 
 router.get("/token", async (req, res) => {
     const { cookies } = req;
@@ -27,14 +28,15 @@ router.get("/token", async (req, res) => {
     }
     const refreshToken = await findRefreshToken.rows?.[0]?.refresh_token
     if (refreshToken) {
+
         //! VERIFY TOKEN
         jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET,
             async (err, user) => {
                 if (err) {
-                    res.sendStatus(403);
                     console.log("error in jwt")
+                    res.sendStatus(403);
                 }
-                console.log(user);
+                // console.log(user);
                 //! If refreshtoken verified, generate new access token
                 const accessToken = genToken({ id: cookies.id })
                 const refreshToken = jwt.sign({ id: cookies.id }, process.env.REFRESH_TOKEN_SECRET)

@@ -12,7 +12,8 @@ function TheInbox(props) {
     }
 
     return (
-        <div className="inbox">
+        <div
+            className="inbox h-100">
             <Inbox
                 messages={messages}
                 handleSubmit={handleSubmit}

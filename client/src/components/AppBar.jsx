@@ -6,30 +6,15 @@ import { Navbar, Container, Nav, NavDropdown } from "react-bootstrap";
 const AppBar = (props) => {
     const currentUser = props.currentUser;
     const logout = props.logout;
-    
-    function RefreshToken(props2) {
 
-        async function handleRefresh() {
-            const res = await fetch("/api/login/token", {
-                method: "POST",
-                header: {
-                    "Content-Type": "application/json"
-                }
-            });
-            const data = res.json();
-        };
-        // handleRefresh();
-        
-
-        return (
-            <div className="refresh">
-                <button onClick={handleRefresh}>click me</button>
-            </div>
-        )
-    }
 
     return (
-        <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
+        <Navbar
+            collapseOnSelect expand="lg" bg="dark" variant="dark"
+            className="position-fixed w-100"
+            style={{
+                "z-index": "1"
+            }}>
             <Container>
                 <Navbar.Brand as={Link} to="/">Tips</Navbar.Brand>
                 <Navbar.Toggle aria-controls="responsive-navbar-nav" />

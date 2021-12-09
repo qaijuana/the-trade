@@ -1,14 +1,35 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useParams } from "react-router-dom";
 import { useNavigate } from 'react-router';
-import { Form, Col, Row, FloatingLabel, InputGroup, Button } from "react-bootstrap";
+import { Form, Col, Row, FloatingLabel, InputGroup, Button, Image } from "react-bootstrap";
 
 
 function EditList(props) {
     const [status, setStatus] = useState("pending");
+    const [Base64, setBase64] = useState("");
+    const [list, setList] = useState([]);
     const navigate = useNavigate();
     const { id } = useParams();
     const currentUser = props.currentUser;
+    console.log("id, currentUser", id, currentUser)
+
+    useEffect(() => {
+        async function getList() {
+            setStatus("loading");
+            try {
+                const res = await fetch(`/api/list/${id}`);
+                const data = await res.json();
+                setList(data);
+                console.log("list state", list);
+                setStatus("resolved");
+
+            } catch (error) {
+                setStatus("failed");
+                console.error(error);
+            }
+        }
+        getList();
+    }, [])
 
     function handleSubmit(event) {
         event.preventDefault();
@@ -36,20 +57,36 @@ function EditList(props) {
                         condition: condition,
                         description: description,
                         user_id: currentUser,
+                        files: Base64,
                     })
                 })
-                const dataDb = resDb.json();
                 const statusDb = resDb.ok;
-                console.log(dataDb, statusDb)
-                setStatus("resolved");
-                navigate(`/user/${currentUser}`)
-
+                if (statusDb) {
+                    setStatus("resolved");
+                    navigate(`/user/${currentUser}`)
+                }
             } catch (error) {
                 //! Catching errors for database
+                console.log("Edit list failed")
                 console.error(error);
             }
         }
         updateList();
+    }
+
+    function handleFile(event) {
+        event.preventDefault();
+        const files = event.target.files
+        const file = files[0];
+        //! Convert to Base64 String
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onloadend = () => {
+            setBase64(reader.result)
+        }
+        reader.onerror = () => {
+            console.error("error")
+        }
     }
 
 
@@ -59,20 +96,30 @@ function EditList(props) {
                 edit
             </h1>
             <Form noValidate onSubmit={handleSubmit} >
-                {/* <Form.Group controlId="list_images" className="mb-3"> */}
-                {/* {displayImage ? */}
-                {/* // <Image as={CloudinaryDisplay} roundedCircle /> */}
-                {/* // : */}
-                {/* // <Image src="" roundedCircle />} */}
-                {/* <Form.Label>Select Photos</Form.Label> */}
-                {/* <InputGroup> */}
-                {/* <Form.Control type="file" */}
-                {/* // onChange={(event) => { setListPhoto(event.target.files[0]) }} /> */}
-                {/* <Button variant="outline-secondary" id="button-addon2" onClick={handleUpload}>
-                            Upload
-                        </Button> */}
-                {/* </InputGroup> */}
-                {/* </Form.Group> */}
+
+                <Form.Group controlId="list_images" className="mb-3">
+                    <div
+                        className="mx-auto"
+                        style={{
+                            position: "relative",
+                            height: "200px",
+                            width: "200px",
+                            overflow: 'hidden',
+                        }}>
+                        <Image
+                            src={Base64 ? Base64 : list.url}
+                            className=""
+                            style={{
+                                position: 'absolute',
+                                height: "100%",
+                            }}
+                        />
+                    </div>
+                    <InputGroup>
+                        <Form.Control type="file"
+                            onChange={handleFile} />
+                    </InputGroup>
+                </Form.Group>
 
                 <Row className="g-2 mb-3">
                     <Col md>

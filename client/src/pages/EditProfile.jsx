@@ -14,9 +14,10 @@ function EditProfile(props) {
     useEffect(() => {
         setProfile([]);
         async function getProfile() {
+            console.log("id", id)
             try {
-                setStatus("status")
-                const res = await fetch(`/api/user/${id}`)
+                setStatus("loading")
+                const res = await fetch(`/api/user/${id}/profile`)
                 const data = await res.json()
                 setProfile(data[0])
                 console.log(profile)
@@ -61,8 +62,9 @@ function EditProfile(props) {
                         files: Base64
                     })
                 })
+                console.log("Update Response", res)
                 navigate(`/user/${id}`);
-                const data = await res.json();
+                // const data = await res.json();
             } catch (error) {
                 console.error(error)
             }
@@ -81,7 +83,6 @@ function EditProfile(props) {
         reader.readAsDataURL(file);
         reader.onloadend = () => {
             setBase64(reader.result)
-            console.log(Base64);
         }
         reader.onerror = () => {
             console.error("error")
@@ -90,17 +91,34 @@ function EditProfile(props) {
 
     return (
 
-        <Form onSubmit={handleSubmit} className="mt-5">
+        <Form onSubmit={handleSubmit} className="mt-5 nav-duck">
 
-            <Form.Group controlId="formFile" className="mb-3">
+            <Form.Group controlId="formFile" className="mb-3 mx-auto">
 
-                <Image src={Base64 ? Base64 : profile.user_photo} roundedCircle />
+                {/* <Image src={Base64 ? Base64 : profile.user_photo} roundedCircle /> */}
+
+
+                <div
+                    className="mx-auto"
+                    style={{
+                        position: "relative",
+                        height: "200px",
+                        width: "200px",
+                        overflow: 'hidden',
+                    }}>
+                    <Image
+                        src={Base64 ? Base64 : profile.user_photo}
+                        className=""
+                        style={{
+                            position: 'absolute',
+                            height: "100%",
+                        }}
+                    />
+                </div>
+
                 <InputGroup>
                     <Form.Control type="file"
                         onChange={handleFile} />
-                    {/* <Button variant="primary" id="button-addon2" onClick={handleUpload}>
-                        Upload
-                    </Button> */}
                 </InputGroup>
             </Form.Group>
 
@@ -111,7 +129,7 @@ function EditProfile(props) {
                         <InputGroup.Text id="inputGroupPrepend">@</InputGroup.Text>
                         <Form.Control
                             type="text"
-                            placeholder={profile && profile.username}
+                            placeholder={profile.username ? profile.username : "Username"}
                             aria-describedby="inputGroupPrepend"
                         />
                     </InputGroup>
@@ -120,7 +138,7 @@ function EditProfile(props) {
                     <Form.Label>Name</Form.Label>
                     <Form.Control
                         type="text"
-                        placeholder={profile && profile.name}
+                        placeholder={profile.name ? profile.name : "Name"}
 
                     />
 
@@ -137,10 +155,10 @@ function EditProfile(props) {
                 </Form.Group>
             </Row>
             <Row className="mb-3">
-                <FloatingLabel controlId="about" label={profile && profile.about} className="text-muted">
+                <FloatingLabel controlId="about" label={profile.about ? profile.about : "About"} className="text-muted">
                     <Form.Control
                         as="textarea"
-                        placeholder={profile && profile.about}
+                        placeholder={profile.about ? profile.about : "About"}
                         style={{ height: '100px' }}
                     />
                 </FloatingLabel>
