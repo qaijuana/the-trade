@@ -6,7 +6,7 @@ const cloudinary = require("cloudinary").v2;
 
 router.get("/", async (req, res) => {
     const allLists = await pool.query(
-        "SELECT listings.id AS listings_id, users.username, title, price, description, upload_date, category, condition, list_images, user_id, list_photos.url, list_photos.id AS photo_id FROM listings FULL JOIN users ON user_id = users.id FULL JOIN list_photos ON list_photos.listings_id = listings.id ORDER BY listings.id DESC"
+        "SELECT listings.id AS listings_id, users.username, title, price, description, upload_date, category, condition, list_images, user_id FROM listings FULL JOIN users ON user_id = users.id ORDER BY listings.id DESC"
     )
     res.json(allLists.rows)
 })

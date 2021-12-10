@@ -38,11 +38,10 @@ const AppBar = (props) => {
                                 {/* <RefreshToken/> */}
                                 <NavDropdown title="Tools" id="collasible-nav-dropdown">
                                     <NavDropdown.Item as={Link} to="/create">New Item</NavDropdown.Item>
-                                    <NavDropdown.Item as={Link} to="/inbox">Inbox</NavDropdown.Item>
                                     <NavDropdown.Divider />
                                     <NavDropdown.Item as={Link} to="/learn">Learn</NavDropdown.Item>
                                 </NavDropdown>
-                                {/* <Nav.Link as={RefreshToken} >Refresh</Nav.Link> */}
+                                <Nav.Link as={Link} to="/inbox">Inbox</Nav.Link>
                                 <Nav.Link as={Link} to={"/user/" + currentUser}>Profile</Nav.Link>
                                 <Nav.Link eventKey={2} as={Link} to="/" onClick={logout}>
                                     Logout

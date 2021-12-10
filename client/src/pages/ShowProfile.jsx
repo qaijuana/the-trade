@@ -20,7 +20,6 @@ const ShowProfile = (props) => {
                 setStatus("status")
                 const res = await fetch(`/api/user/${id}/profile`)
                 const data = await res.json()
-                console.log("getProfile data", data)
                 setProfile(data)
                 console.log(profile)
                 setStatus("resolved")
@@ -63,6 +62,7 @@ const ShowProfile = (props) => {
 
                     {(profile[0].price) ?
                         profile.map((e, i) => {
+
                             return (
                                 <ListCards
                                     img={e.list_images}

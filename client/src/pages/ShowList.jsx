@@ -30,14 +30,19 @@ const ShowList = (props) => {
         getList();
     }, [])
 
-    if (listInfo.length === 0) return (
-        <h1>LOADING</h1>
-    )
-    
+    if (listInfo.length === 0)
+        return (
+            <h1>LOADING</h1>
+        )
+
     return (
         <Container>
+
+
+            <Card.Img variant="top" src={listInfo && listInfo.url ? listInfo.url : listInfo.list_images} />
+
+
             <Card className="mt-4" >
-                <Card.Img variant="top" src={listInfo && listInfo.url ? listInfo.url : listInfo.list_images} />
                 <Card.Header className="d-flex justify-content-between">
                     <Card.Text className="fs-4">
                         <Button variant="secondary" className="d-flex" onClick={handleUser}>

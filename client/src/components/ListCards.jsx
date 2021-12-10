@@ -1,14 +1,29 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Card, Button, ButtonGroup } from "react-bootstrap";
 import { BsAt, BsHeart, BsHeartFill, BsFillChatSquareFill } from "react-icons/bs";
 import { useNavigate } from 'react-router'
 
+import ImageCarousel from './ImageCarousel';
 
 const ListCards = (props) => {
     const [like, setLike] = useState(false);
-
+    const [photos, setPhotos] = useState("");
     const { img, title, category, price, username, date, list_id, user_id, url, currentUser } = props;
     const navigate = useNavigate();
+
+    useEffect(() => {
+        async function getPhotos() {
+            const res = await fetch(`/api/image/${list_id}`);
+            const data = await res.json();
+            const result = await data.rows
+            if (result.length !== 0) {
+                setPhotos(result)
+                console.log("result", result)
+            }
+        }
+        getPhotos();
+    }, [])
+
 
 
     function handleDelete(event, list_id) {
@@ -18,7 +33,6 @@ const ListCards = (props) => {
                 const delete_list = fetch(`/api/list/${list_id}`, {
                     method: "DELETE"
                 })
-                console.log(delete_list);
                 navigate(`/user/${user_id}`)
             } catch (error) {
                 console.error(error);
@@ -28,9 +42,15 @@ const ListCards = (props) => {
 
     }
 
+
     return (
+
         <Card style={{ width: '18rem', border: "none" }} className="m-2" >
-            <Card.Img variant="top" src={(url) ? url : img} />
+            {/* <Card.Img variant="top" src={(photos) ? photos[0].url : img} /> */}
+
+            <ImageCarousel photos={photos} defaultPhoto={img} />
+
+
             <Card.Header className="d-flex justify-content-between">
                 <Card.Text className="fs-4">
                     <Button variant="secondary" className="d-flex" onClick={() => { navigate(`/user/${user_id}`) }}>
