@@ -6,22 +6,29 @@ import { useNavigate } from 'react-router'
 import ImageCarousel from './ImageCarousel';
 
 const ListCards = (props) => {
+    const {
+        img, title, category,
+        price, username, date,
+        list_id, user_id, currentUser
+    } = props;
     const [like, setLike] = useState(false);
     const [photos, setPhotos] = useState("");
-    const { img, title, category, price, username, date, list_id, user_id, url, currentUser } = props;
     const navigate = useNavigate();
 
     useEffect(() => {
-        async function getPhotos() {
-            const res = await fetch(`/api/image/${list_id}`);
-            const data = await res.json();
-            const result = await data.rows
-            if (result.length !== 0) {
-                setPhotos(result)
-                console.log("result", result)
+        try {
+            async function getPhotos() {
+                const res = await fetch(`/api/image/${list_id}`);
+                const data = await res.json();
+                const result = await data.rows
+                if (result.length !== 0) {
+                    setPhotos(result)
+                }
             }
+            getPhotos();
+        } catch (error) {
+            console.error(error);
         }
-        getPhotos();
     }, [])
 
 
@@ -73,7 +80,16 @@ const ListCards = (props) => {
 
                     <ButtonGroup size="" className="mb-2">
                         <Button variant="secondary">Offer</Button>
-                        <Button variant="secondary" onClick={() => { navigate("/inbox") }}><BsFillChatSquareFill className="fs-3" /></Button>
+                        <Button
+                            variant="secondary"
+                            onClick={() => {
+                                if (currentUser) {
+                                    navigate("/inbox")
+                                }
+                                navigate("/login")
+                            }} >
+                            <BsFillChatSquareFill className="fs-3" />
+                        </Button>
                         <Button variant="secondary" onClick={() => { setLike(!like) }}>
                             {(!like) ?
                                 <BsHeart className="fs-4" />

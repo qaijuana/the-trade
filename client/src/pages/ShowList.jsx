@@ -3,10 +3,12 @@ import { useNavigate } from 'react-router';
 import { Container, Card, ButtonGroup, Button } from 'react-bootstrap';
 import { BsAt, BsHeart, BsHeartFill, BsFillChatSquareFill } from "react-icons/bs";
 import { useParams } from 'react-router';
+import ImageCarousel from '../components/ImageCarousel';
 
 const ShowList = (props) => {
     const { id } = useParams();
     const [listInfo, setListInfo] = useState([])
+    const [photos, setPhotos] = useState("");
     const navigate = useNavigate();
     const [like, setLike] = useState(false);
 
@@ -20,8 +22,21 @@ const ShowList = (props) => {
             try {
                 const res = await fetch(`/api/list/${id}`)
                 const data = await res.json();
-                setListInfo(data);
                 console.log(data)
+                setListInfo(data);
+                try {
+                    async function getPhotos() {
+                        const res = await fetch(`/api/image/${id}`);
+                        const data = await res.json();
+                        const result = await data.rows
+                        if (result.length !== 0) {
+                            setPhotos(result)
+                        }
+                    }
+                    getPhotos();
+                } catch (error) {
+                    console.error(error)
+                }
             } catch (error) {
                 console.error(error);
                 navigate("/marketplace")
@@ -36,11 +51,15 @@ const ShowList = (props) => {
         )
 
     return (
+
         <Container>
 
 
-            <Card.Img variant="top" src={listInfo && listInfo.url ? listInfo.url : listInfo.list_images} />
+            {/* <Card.Img variant="top" src={listInfo && listInfo.url ? listInfo.url : listInfo.list_images} /> */}
 
+            <ImageCarousel
+                photos={photos}
+                defaultPhoto={listInfo.list_images} />
 
             <Card className="mt-4" >
                 <Card.Header className="d-flex justify-content-between">

@@ -16,7 +16,7 @@ router.get("/:id", async (req, res) => {
     const { id } = req.params;
     console.log("id", id)
     const oneList = await pool.query(
-        "SELECT listings.id, users.username, title, price, description, upload_date, category, condition, list_images, user_id, list_photos.url FROM listings FULL JOIN users ON user_id = users.id FULL JOIN list_photos ON list_photos.listings_id = listings.id WHERE listings.id = $1",
+        "SELECT listings.id AS listings_id, users.username, title, price, description, upload_date, category, condition, list_images, user_id FROM listings FULL JOIN users ON user_id = users.id WHERE listings.id = $1",
         [id]
     )
     res.json(oneList.rows[0])

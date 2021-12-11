@@ -14,7 +14,11 @@ function ImageCarousel(props) {
 
 
     return (
-        <Carousel activeIndex={index} onSelect={handleSelect}>
+        <Carousel
+            activeIndex={index}
+            onSelect={handleSelect}
+            interval={null}
+        >
 
             {
                 photos ?

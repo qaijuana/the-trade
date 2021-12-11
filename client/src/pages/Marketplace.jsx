@@ -54,9 +54,7 @@ const Marketplace = (props) => {
 
                     {
                         allList.map((e, i) => {
-                            let urls = [e.url];
                             if (e.price) {
-
                                 return (
                                     <ListCards
                                         img={e.list_images}
@@ -67,7 +65,6 @@ const Marketplace = (props) => {
                                         date={e.upload_date}
                                         user_id={e.user_id}
                                         list_id={e.listings_id}
-                                        url={urls}
                                     />
                                 )
                             }
