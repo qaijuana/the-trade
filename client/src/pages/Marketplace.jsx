@@ -5,6 +5,7 @@ import ListCards from '../components/ListCards';
 
 const Marketplace = (props) => {
     // const navigate = useNavigate();
+    const { currentUser } = props;
     const [allList, setAllList] = useState([]);
     const [list_item, setList_item] = useState([])
 
@@ -65,6 +66,8 @@ const Marketplace = (props) => {
                                         date={e.upload_date}
                                         user_id={e.user_id}
                                         list_id={e.listings_id}
+                                        currentUser={currentUser}
+
                                     />
                                 )
                             }

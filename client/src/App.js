@@ -30,21 +30,25 @@ function App() {
     !currentUser, setCurrentUser, currentUser
   );
 
+  useEffect(() => {
+    console.log("Current User", currentUser)
+  }, [currentUser])
+
+
   //! RELOGIN IF REFRESHED
   //! ADD FETCH FOR MARKETPLACE
   useEffect(() => {
     const cookieCheck = async () => {
       const res = await fetch("/api/login/token")
-      console.log("res cookie", res)
       const ok = await res.ok
       if (ok) {
         const data = await res.json();
         const id = await data.id;
         setCurrentUser(id);
+      } else {
+        console.log("res.ok is not ok, please login")
+        navigate("/login");
       }
-      console.log("res.ok is not ok, please login")
-      navigate("/login");
-      // navigate("/marketplace")
     }
     cookieCheck();
   }, [])
@@ -67,7 +71,7 @@ function App() {
       <Container className="nav-duck ">
         <Routes>
           <Route index element={<Layout title={"home"} />} />
-          <Route path="/marketplace" element={<Marketplace />} />
+          <Route path="/marketplace" element={<Marketplace currentUser={currentUser} />} />
 
           <Route path="/user" element={<Layout />}>
             < Route path=":id" element={<ShowProfile currentUser={currentUser} />} />

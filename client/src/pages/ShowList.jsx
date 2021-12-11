@@ -22,7 +22,6 @@ const ShowList = (props) => {
             try {
                 const res = await fetch(`/api/list/${id}`)
                 const data = await res.json();
-                console.log(data)
                 setListInfo(data);
                 try {
                     async function getPhotos() {

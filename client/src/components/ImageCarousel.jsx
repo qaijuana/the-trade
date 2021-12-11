@@ -3,8 +3,7 @@ import { Carousel } from "react-bootstrap";
 
 
 function ImageCarousel(props) {
-    const photos = props.photos
-    const defaultPhoto = props.defaultPhoto;
+    const { photos, defaultPhoto, list_id, title } = props;
     const [index, setIndex] = useState(0);
 
     const handleSelect = (selectedIndex, e) => {
@@ -22,28 +21,26 @@ function ImageCarousel(props) {
 
             {
                 photos ?
-
                     photos.map((e, i) => {
                         return (
                             <Carousel.Item>
                                 <img
                                     className="d-block w-100"
                                     src={e.url}
-                                    alt=""
+                                    alt={`TIPS marketplace: ${title}`}
+                                    key={list_id}
                                 />
 
                             </Carousel.Item>
                         )
                     })
-
                     :
                     <Carousel.Item>
                         <img
                             className="d-block w-100"
                             src={defaultPhoto}
-                            alt=""
+                            alt={`TIPS marketplace: ${title}`}
                         />
-
                     </Carousel.Item>
 
 

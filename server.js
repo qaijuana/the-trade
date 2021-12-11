@@ -15,6 +15,7 @@ const upload_controller = require("./controllers/upload_controller")
 const list_controller = require("./controllers/list_controller")
 const image_controller = require("./controllers/image_controller");
 const inbox_controller = require("./controllers/inbox_controller")
+const likes_controller = require("./controllers/likes_controller");
 const authToken = require("./controllers/authToken");
 
 cloudinary.config({
@@ -49,7 +50,8 @@ app.use("/api/user", user_controller);
 app.use("/api/list", list_controller);
 app.use("/api/upload", upload_controller);
 app.use("/api/image", image_controller);
-app.use("api/inbox", inbox_controller);
+app.use("/api/inbox", inbox_controller);
+app.use("/api/likes", likes_controller);
 
 app.get("/*", (req, res) => {
     res.sendFile(path.join(__dirname, "./client/build", "index.html"));
