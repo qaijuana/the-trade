@@ -1,6 +1,7 @@
 import React from 'react'
 import { Link } from "react-router-dom"
-import { Navbar, Container, Nav, NavDropdown } from "react-bootstrap";
+import { Navbar, Container, Nav } from "react-bootstrap";
+import { BsHeartFill } from "react-icons/bs";
 
 
 const AppBar = (props) => {
@@ -35,12 +36,12 @@ const AppBar = (props) => {
                             </Nav>
                             :
                             <Nav>
-                                {/* <RefreshToken/> */}
-                                <NavDropdown title="Tools" id="collasible-nav-dropdown">
+                                {/* <NavDropdown title="Tools" id="collasible-nav-dropdown">
                                     <NavDropdown.Item as={Link} to="/create">New Item</NavDropdown.Item>
                                     <NavDropdown.Divider />
                                     <NavDropdown.Item as={Link} to="/learn">Learn</NavDropdown.Item>
-                                </NavDropdown>
+                                </NavDropdown> */}
+                                <Nav.Link as={Link} to="/likes"><BsHeartFill className="fs-5" /></Nav.Link>
                                 <Nav.Link as={Link} to="/inbox">Inbox</Nav.Link>
                                 <Nav.Link as={Link} to={"/user/" + currentUser}>Profile</Nav.Link>
                                 <Nav.Link eventKey={2} as={Link} to="/" onClick={logout}>

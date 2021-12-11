@@ -15,6 +15,7 @@ import Marketplace from "./pages/Marketplace";
 import NewList from "./pages/NewList";
 import EditList from "./pages/EditList";
 import TheInbox from "./pages/TheInbox";
+import ShowLikes from "./pages/ShowLikes";
 
 //! CSS
 import "./styles/App.css";
@@ -70,6 +71,7 @@ function App() {
 
       <Container className="nav-duck ">
         <Routes>
+
           <Route index element={<Layout title={"home"} />} />
           <Route path="/marketplace" element={<Marketplace currentUser={currentUser} />} />
 
@@ -89,6 +91,8 @@ function App() {
           <Route path="/inbox" element={<TheInbox />} />
           <Route path="/learn" element={<LearnReact />} />
           <Route path="/create" element={<NewList currentUser={currentUser} />} />
+          <Route path="/likes" element={<ShowLikes currentUser={currentUser} />} />
+
         </Routes>
       </Container>
     </div >

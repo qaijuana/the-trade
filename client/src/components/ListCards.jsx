@@ -1,6 +1,7 @@
+import { set } from 'express/lib/application';
 import React, { useState, useEffect } from 'react';
 import { Card, Button, ButtonGroup } from "react-bootstrap";
-import { BsAt, BsHeart, BsHeartFill, BsFillChatSquareFill } from "react-icons/bs";
+import { BsHeart, BsHeartFill, BsFillChatSquareFill } from "react-icons/bs";
 import { useNavigate } from 'react-router'
 
 import ImageCarousel from './ImageCarousel';
@@ -12,6 +13,7 @@ const ListCards = (props) => {
         list_id, user_id, currentUser
     } = props;
     const [like, setLike] = useState(false);
+    const [like_data, setLike_data] = useState([]);
     const [photos, setPhotos] = useState("");
     const navigate = useNavigate();
 
@@ -31,10 +33,14 @@ const ListCards = (props) => {
             if (currentUser) {
                 try {
                     async function isLiked() {
-                        const res = await fetch(`/api/likes/${list_id}/${currentUser}`)
-                        const data = await res.json();
-                        if (data[0]) {
-                            setLike(true);
+                        const res = await fetch(`/api/likes/${list_id}`)
+                        if (res) {
+                            const data = await res.json();
+                            console.log(data, "getlikes")
+                            if (data.length > 0) {
+                                setLike(true);
+                                setLike_data(data)
+                            }
                         }
                     }
                     isLiked();
@@ -45,15 +51,28 @@ const ListCards = (props) => {
         } catch (error) {
             console.error(error);
         }
-    }, [currentUser, list_id])
+    }, [currentUser])
 
     function handleLike(event) {
         event.preventDefault();
         if (like) {
-            //! delete like
-        } else if (currentUser) {
-            console.log("logged in assured");
-            // setLike(!like);
+            console.log("deleting")
+            async function removeLike() {
+                try {
+                    const res = await fetch(`/api/likes/${like_data[0].likes_id}`,
+                        {
+                            method: "DELETE"
+                        })
+                    console.log(res);
+                    setLike(false);
+                    console.log("deleted");
+
+                } catch (error) {
+                    console.error(error);
+                }
+            }
+            removeLike();
+        } else if (!like) {
             try {
                 console.log("trying to send db")
                 async function addLike() {
@@ -61,22 +80,19 @@ const ListCards = (props) => {
                         method: "POST",
                         headers: {
                             "Content-Type": "application/json"
-                        },
-                        body: JSON.stringify({
-                            users_id: currentUser
-                        })
+                        }
                     })
                     const data = await res.json();
                     console.log(data)
+                    setLike(true);
                 }
                 addLike();
                 console.log("resolved")
-                setLike(true);
             } catch (error) {
                 console.log("failed")
                 console.error(error);
             }
-        } else {
+        } else if (!currentUser) {
             navigate("/login");
         }
     }

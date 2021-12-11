@@ -60,24 +60,25 @@ const ShowProfile = (props) => {
 
                 <Row className=" d-flex flex-row mt-3 mx-auto overflow-scroll noscroll ">
 
-                    {(profile[0].price) ?
-                        profile.map((e, i) => {
+                    {
+                        (profile[0].price) ?
+                            profile.map((e, i) => {
 
-                            return (
-                                <ListCards
-                                    img={e.list_images}
-                                    title={e.title}
-                                    list_id={e.listings_id}
-                                    user_id={e.user_id}
-                                    category={e.category}
-                                    price={e.price}
-                                    username={e.username}
-                                    date={e.upload_date}
-                                    currentUser={currentUser}
-                                    url={e.url}
-                                />
-                            )
-                        }) : <h1>Much Empty</h1>
+                                return (
+                                    <ListCards
+                                        img={e.list_images}
+                                        title={e.title}
+                                        list_id={e.listings_id}
+                                        user_id={e.user_id}
+                                        category={e.category}
+                                        price={e.price}
+                                        username={e.username}
+                                        date={e.upload_date}
+                                        currentUser={currentUser}
+                                        url={e.url}
+                                    />
+                                )
+                            }) : <h1>Much Empty</h1>
                     }
                 </Row>
             </Col>

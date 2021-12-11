@@ -1,33 +1,20 @@
 import React, { useEffect, useState } from 'react';
-import ListCards from '../components/ListCards';
-// import { useNavigate } from 'react-router';
 
+import ListCards from '../components/ListCards'
 
-const Marketplace = (props) => {
-    // const navigate = useNavigate();
+function ShowLikes(props) {
+    const [like_list, setLike_list] = useState();
     const { currentUser } = props;
-    const [allList, setAllList] = useState([]);
-    const [list_item, setList_item] = useState([])
 
     useEffect(() => {
-        setList_item([]);
-        allList.forEach((element) => {
-            const listings_id = element.listings_id
-            if (listings_id !== null) {
-                list_item.push(listings_id);
-                const noRepeat = [...new Set(list_item)];
-                setList_item(noRepeat)
-            }
-        })
-    }, [allList]);
-
-
-    useEffect(() => {
+        console.log("using effects")
         const getLists = async () => {
             try {
-                const res = await fetch("/api/list");
+                console.log("getting lists")
+                const res = await fetch("/api/likes");
                 const data = await res.json();
-                setAllList(data);
+                setLike_list(data);
+
             } catch (error) {
                 console.error(error);
             }
@@ -35,25 +22,17 @@ const Marketplace = (props) => {
         getLists();
     }, [])
 
-
-    if (allList.length === 0) {
-        return (
+    return (
+        <div
+            className=''>
             <h1 className="text-center">
-                Loading
+                Likes
             </h1>
-        )
-    }
-    if (allList.length !== 0)
-        return (
-            <div
-                className=''>
-                <h1 className="text-center">
-                    Marketplace
-                </h1>
-                <div className="d-flex flex-wrap mt-3 overflow-scroll noscroll ">
+            <div className="d-flex flex-wrap mt-3 overflow-scroll noscroll ">
 
-                    {
-                        allList.map((e, i) => {
+                {
+                    like_list && like_list.length > 0 ?
+                        like_list.map((e, i) => {
                             if (e.price) {
                                 return (
                                     <ListCards
@@ -73,10 +52,12 @@ const Marketplace = (props) => {
 
                             return null;
                         })
-                    }
-                </div>
+                        :
+                        <h1 className="text-center">Much Empty</h1>
+                }
             </div>
-        )
+        </div>
+    )
 }
 
-export default Marketplace;
+export default ShowLikes
