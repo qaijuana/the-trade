@@ -11,7 +11,8 @@ router.get("/", authToken, async (req, res) => {
     const allUsers = await pool.query(
         "SELECT * FROM users;"
     )
-    res.json(allUsers.rows)
+    const resutls = allUsers.rows;
+    res.json(result)
 })
 
 //! CREATE USER
@@ -49,7 +50,6 @@ router.get("/:id", async (req, res) => {
 })
 
 router.get("/:id/profile", async (req, res) => {
-
     const { id } = req.params;
     try {
         const findUser = await pool.query(
@@ -72,14 +72,11 @@ router.post("/:id/edit", async (req, res) => {
         about,
         files
     } = req.body;
+
     const username = req.body.username && (req.body.username).split(" ").join("");
     const email = req.body.email && (req.body.email).split(" ").join("");
 
-
-
     try {
-
-
         if (name) {
             const updateName = await pool.query(
                 "UPDATE users SET name = $1 WHERE id = $2", [name, id]
@@ -124,8 +121,6 @@ router.post("/:id/edit", async (req, res) => {
     } catch (error) {
         console.error(error);
     }
-
-
 });
 
 //! DELETE

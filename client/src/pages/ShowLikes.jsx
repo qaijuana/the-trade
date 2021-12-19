@@ -4,18 +4,20 @@ import ListCards from '../components/ListCards'
 
 function ShowLikes(props) {
     const [like_list, setLike_list] = useState();
+    const [status, setStatus] = useState("pending")
     const { currentUser } = props;
 
     useEffect(() => {
-        console.log("using effects")
         const getLists = async () => {
+            setStatus("loading")
             try {
                 console.log("getting lists")
                 const res = await fetch("/api/likes");
                 const data = await res.json();
                 setLike_list(data);
-
+                setStatus("resolved")
             } catch (error) {
+                setStatus("resolved")
                 console.error(error);
             }
         }
@@ -23,18 +25,17 @@ function ShowLikes(props) {
     }, [])
 
     return (
-        <div
-            className=''>
+        <div>
             <h1 className="text-center">
                 Likes
             </h1>
-            <div className="d-flex flex-wrap mt-3 overflow-scroll noscroll ">
 
-                {
-                    like_list && like_list.length > 0 ?
-                        like_list.map((e, i) => {
-                            if (e.price) {
-                                return (
+            {
+                like_list && like_list.length > 0 ?
+                    like_list.map((e, i) => {
+                        if (e.price) {
+                            return (
+                                <div className="d-flex flex-wrap mt-3 overflow-scroll noscroll ">
                                     <ListCards
                                         img={e.list_images}
                                         title={e.title}
@@ -47,15 +48,22 @@ function ShowLikes(props) {
                                         currentUser={currentUser}
 
                                     />
-                                )
-                            }
+                                </div>
+                            )
+                        }
 
-                            return null;
-                        })
-                        :
-                        <h1 className="text-center">Much Empty</h1>
-                }
-            </div>
+                        return null;
+                    })
+                    :
+                    like_list && like_list.length === 0 ?
+                        <h1 className="text-center">Much Empty</h1> :
+                        <div className="text-center">
+                            <div class="spinner-border" role="status">
+                                <span class="visually-hidden">Loading...</span>
+                            </div>
+                        </div>
+            }
+
         </div>
     )
 }

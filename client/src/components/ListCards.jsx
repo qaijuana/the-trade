@@ -36,7 +36,6 @@ const ListCards = (props) => {
                         const res = await fetch(`/api/likes/${list_id}`)
                         if (res) {
                             const data = await res.json();
-                            console.log(data, "getlikes")
                             if (data.length > 0) {
                                 setLike(true);
                                 setLike_data(data)
@@ -55,7 +54,9 @@ const ListCards = (props) => {
 
     function handleLike(event) {
         event.preventDefault();
-        if (like) {
+        if (!currentUser) {
+            navigate("/login");
+        } else if (like) {
             console.log("deleting")
             async function removeLike() {
                 try {
@@ -82,6 +83,7 @@ const ListCards = (props) => {
                             "Content-Type": "application/json"
                         }
                     })
+
                     const data = await res.json();
                     console.log(data)
                     setLike(true);
@@ -92,11 +94,8 @@ const ListCards = (props) => {
                 console.log("failed")
                 console.error(error);
             }
-        } else if (!currentUser) {
-            navigate("/login");
         }
     }
-
 
 
     function handleDelete(event, list_id) {
@@ -115,29 +114,70 @@ const ListCards = (props) => {
 
     }
 
+    function handleDate(upload_date) {
+        const date_time = upload_date.split("T");
+        const now = Date.now();
+        const uploaded = (new Date(upload_date)).getTime();
+        const difference_seconds = Math.floor((now - uploaded) / 1000)
+        const difference_minutes = Math.floor(difference_seconds / 60);
+        const difference_hours = Math.floor(difference_minutes / 60);
+        const difference_days = Math.floor(difference_hours / 24);
+        const difference_weeks = Math.floor(difference_days / 7);
+        const difference_years = Math.floor(difference_weeks / 12);
+
+        return (
+            <>
+                {
+                    difference_years ? `${difference_years}y` :
+                        difference_weeks ? `${difference_weeks}w` :
+                            difference_days ? `${difference_days}w` :
+                                difference_hours ? `${difference_hours}h` :
+                                    difference_minutes ? `${difference_minutes}m` :
+                                        difference_seconds ? `${difference_seconds}s` :
+                                            "moments ago"
+
+                }
+            </>
+        )
+    }
+
     return (
 
         <Card style={{ width: '18rem', border: "none" }} className="m-2" >
             {/* <Card.Img variant="top" src={(photos) ? photos[0].url : img} /> */}
 
-            <ImageCarousel photos={photos} defaultPhoto={img} list_id={list_id} title={title} />
 
 
             <Card.Header className="d-flex justify-content-between">
                 <Card.Text className="fs-4">
-                    <Button variant="secondary" className="d-flex" onClick={
-                        () => {
-                            navigate(`/user/${user_id}`)
-                        }
-                    } >
+                    <Button
+                        variant="secondary"
+                        className="d-flex"
+                        onClick={
+                            () => {
+                                navigate(`/user/${user_id}`)
+                            }
+                        } >
                         {username}
                     </Button>
 
                 </Card.Text>
-                <Card.Text>
-                    {date}
+
+                <Card.Text className="text-end">
+                    {handleDate(date)}
+                    <br />
+
                 </Card.Text>
+
             </Card.Header>
+
+            <ImageCarousel
+                photos={photos}
+                defaultPhoto={img}
+                list_id={list_id}
+                title={title}
+            />
+
             <Card.Body className="d-flex justify-content-between">
                 <Card.Title>
                     {title}
@@ -146,61 +186,73 @@ const ListCards = (props) => {
                     {price}
                 </Card.Text>
             </Card.Body >
-            <Card.Footer>
-                {(currentUser !== user_id) ?
+            <Card.Footer className="">
 
-                    <ButtonGroup size="" className="mb-2">
-                        <Button variant="secondary">Offer</Button>
-                        <Button
-                            variant="secondary"
-                            onClick={
-                                () => {
-                                    if (currentUser) {
-                                        navigate("/inbox")
+                {
+                    (currentUser !== user_id) ?
+
+                        <ButtonGroup className="mb-2">
+                            <Button variant="secondary">Offer</Button>
+                            <Button
+                                variant="secondary"
+                                onClick={
+                                    () => {
+                                        if (currentUser) {
+                                            navigate("/inbox");
+                                        } else {
+                                            navigate("/login");
+                                        }
                                     }
+                                } >
+                                <BsFillChatSquareFill className="fs-3" />
+                            </Button>
+
+                            <Button
+                                variant="secondary"
+                                onClick={handleLike} >
+                                {
+                                    (!like) ?
+                                        <BsHeart className="fs-4" />
+                                        :
+                                        < BsHeartFill className="fs-4" />
                                 }
-                            } >
-                            <BsFillChatSquareFill className="fs-3" />
-                        </Button>
+                            </Button>
 
-                        <Button
-                            variant="secondary"
-                            onClick={handleLike} >
-                            {(!like) ?
-                                <BsHeart className="fs-4" />
-                                :
-                                < BsHeartFill className="fs-4" />
-                            }
-                        </Button>
+                            <Button
+                                variant="secondary"
+                                onClick={() => {
+                                    navigate(`/list/${list_id}`)
+                                }}>
+                                More
+                            </Button>
+                        </ButtonGroup>
 
-                        <Button
-                            stretched-link
-                            variant="secondary"
-                            onClick={() => { navigate(`/list/${list_id}`) }}>
-                            More
-                        </Button>
-                    </ButtonGroup>
+                        :
 
-                    :
-
-                    <ButtonGroup size="" className="mb-2">
-                        <Button variant="secondary" onClick={() => { navigate(`/list/${list_id}/`) }}>
-                            More
-                        </Button>
-                        <Button
-                            onClick={
-                                () => {
-                                    navigate(`/list/${list_id}/edit`)
-                                }}
-                            variant="secondary" >
-                            Edit
-                        </Button>
-                        <Button
-                            onClick={(event) => { handleDelete(event, list_id) }}
-                            variant="secondary">
-                            Delete
-                        </Button>
-                    </ButtonGroup>
+                        <ButtonGroup className="mb-2">
+                            <Button
+                                variant="secondary"
+                                onClick={() => {
+                                    navigate(`/list/${list_id}`)
+                                }}>
+                                More
+                            </Button>
+                            <Button
+                                variant="secondary"
+                                onClick={
+                                    () => {
+                                        navigate(`/list/${list_id}/edit`)
+                                    }}>
+                                Edit
+                            </Button>
+                            <Button
+                                variant="secondary"
+                                onClick={(event) => {
+                                    handleDelete(event, list_id)
+                                }}>
+                                Delete
+                            </Button>
+                        </ButtonGroup>
 
                 }
             </Card.Footer>

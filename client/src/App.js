@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router";
 import { Routes, Route, Outlet } from "react-router-dom";
 import { Container } from "react-bootstrap"
+
 //! COMPONENTS
 import LearnReact from "./components/LearnReact";
 import useAuth from "./components/useAuth";
@@ -31,9 +32,9 @@ function App() {
     !currentUser, setCurrentUser, currentUser
   );
 
-  useEffect(() => {
-    console.log("Current User", currentUser)
-  }, [currentUser])
+  // useEffect(() => {
+  //   console.log("Current User", currentUser)
+  // }, [currentUser])
 
 
   //! RELOGIN IF REFRESHED

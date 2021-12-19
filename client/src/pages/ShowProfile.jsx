@@ -21,7 +21,6 @@ const ShowProfile = (props) => {
                 const res = await fetch(`/api/user/${id}/profile`)
                 const data = await res.json()
                 setProfile(data)
-                console.log(profile)
                 setStatus("resolved")
             } catch (error) {
                 setStatus("failed")
@@ -32,8 +31,10 @@ const ShowProfile = (props) => {
         getProfile();
     }, [currentUser, id])
 
-    console.log(profile)
 
+    useEffect(() => {
+        console.log("profile", profile)
+    })
 
     if (profile.length > 0)
         return (
