@@ -10,7 +10,6 @@ function Inbox(props) {
     // const messages = props.messages;
 
     function MessageReceiver(props) {
-
         return (
             <div className="">
                 <div className="card text-start primary w-75 float-start mt-3">
@@ -24,23 +23,16 @@ function Inbox(props) {
                     </div>
                 </div>
             </div>
-
         )
     }
     function MessageSender(props) {
         return (
             <div className="">
                 <div className="card w-75 float-end mt-3 ">
-
-
                     <div className="card-header">
-
-
-
                         <h6 className="text-end">
                             You
                         </h6>
-
                     </div>
                     <div className="card-body">
                         <p className="card-text">
@@ -76,7 +68,7 @@ function Inbox(props) {
                     className="col-3 overflow-scroll noscroll"
                     style={{
                         "height": "75vh",
-                        "width": "300px"
+                        "min-width": "300px"
                     }} >
                     <ListGroup as="ul" >
                         <ChatList />
@@ -115,7 +107,7 @@ function Inbox(props) {
 
                 <div className="col ">
 
-                    <div className="border overflow-auto noscroll " style={{ "height": "600px" }}>
+                    <div className="border overflow-auto noscroll " style={{ "height": "600px", "min-width": "600px" }}>
                         <div
                             className="bg-light d-flex"
                             style={{
@@ -163,7 +155,7 @@ function Inbox(props) {
                                 aria-label="Say Something"
                                 aria-describedby="basic-addon2"
                                 style={{
-                                    "height": "100px",
+                                    "height": "50px",
                                     "resize": "none"
                                 }}
                             />

@@ -80,13 +80,6 @@ const NewList = (props) => {
         }
     }
 
-
-
-
-
-
-
-
     return (
         <div>
             <h1>
@@ -166,7 +159,7 @@ const NewList = (props) => {
                     <Col md>
                         <FloatingLabel controlId="condition" label="Select Condition">
                             <Form.Select aria-label="condition">
-                                <option></option>
+                                <option/>
                                 <option value="1">New</option>
                                 <option value="2">Mint</option>
                                 <option value="3">Well Used</option>
@@ -178,7 +171,7 @@ const NewList = (props) => {
                     <Col md>
                         <FloatingLabel controlId="category" label="Select Category">
                             <Form.Select aria-label="category">
-                                <option></option>
+                                <option/>
                                 <option value="1">Home & Living</option>
                                 <option value="2">Electronics</option>
                                 <option value="3">Music</option>

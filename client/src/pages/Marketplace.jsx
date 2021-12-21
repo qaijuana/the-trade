@@ -1,25 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import ListCards from '../components/ListCards';
-// import { useNavigate } from 'react-router';
+
+
+
 
 
 const Marketplace = (props) => {
-    // const navigate = useNavigate();
     const { currentUser } = props;
     const [allList, setAllList] = useState([]);
-    const [list_item, setList_item] = useState([])
-
-    useEffect(() => {
-        setList_item([]);
-        allList.forEach((element) => {
-            const listings_id = element.listings_id
-            if (listings_id !== null) {
-                list_item.push(listings_id);
-                const noRepeat = [...new Set(list_item)];
-                setList_item(noRepeat)
-            }
-        })
-    }, [allList]);
 
 
     useEffect(() => {
@@ -35,7 +23,6 @@ const Marketplace = (props) => {
         getLists();
     }, [])
 
-
     if (allList.length === 0) {
         return (
             <h1 className="text-center">
@@ -43,7 +30,6 @@ const Marketplace = (props) => {
             </h1>
         )
     }
-    if (allList.length !== 0)
         return (
             <div
                 className=''>
@@ -66,6 +52,7 @@ const Marketplace = (props) => {
                                         user_id={e.user_id}
                                         list_id={e.listings_id}
                                         currentUser={currentUser}
+                                        // setModalShow={setModalShow}
 
                                     />
                                 )
@@ -75,6 +62,9 @@ const Marketplace = (props) => {
                         })
                     }
                 </div>
+                {/* <Modal
+                show={modalShow}
+                onHide={() => setModalShow(false)}/> */}
             </div>
         )
 }

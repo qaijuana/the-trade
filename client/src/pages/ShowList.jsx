@@ -44,6 +44,31 @@ const ShowList = (props) => {
         getList();
     }, [])
 
+    function handleDate(upload_date) {
+        const now = Date.now();
+        const uploaded = (new Date(upload_date)).getTime();
+        const difference_seconds = Math.floor((now - uploaded) / 1000)
+        const difference_minutes = Math.floor(difference_seconds / 60);
+        const difference_hours = Math.floor(difference_minutes / 60);
+        const difference_days = Math.floor(difference_hours / 24);
+        const difference_weeks = Math.floor(difference_days / 7);
+        const difference_years = Math.floor(difference_weeks / 12);
+
+        return (
+            <>
+                {
+                    difference_weeks >= 52 ? `${difference_years}y` :
+                        difference_days >= 7 ? `${difference_weeks}w` :
+                            difference_hours >= 24 ? `${difference_days}d` :
+                                difference_minutes >= 60 ? `${difference_hours}h` :
+                                    difference_seconds >= 60 ? `${difference_minutes}m` :
+                                        "moments ago"
+
+                }
+            </>
+        )
+    }
+
     if (listInfo.length === 0)
         return (
             <h1>LOADING</h1>
@@ -70,7 +95,7 @@ const ShowList = (props) => {
 
                     </Card.Text>
                     <Card.Text>
-                        {listInfo.upload_date}
+                        {handleDate(listInfo.upload_date)}
                     </Card.Text>
                 </Card.Header>
                 <Card.Body className="d-flex justify-content-between">

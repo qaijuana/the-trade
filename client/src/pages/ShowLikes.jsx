@@ -32,28 +32,29 @@ function ShowLikes(props) {
 
             {
                 like_list && like_list.length > 0 ?
-                    like_list.map((e, i) => {
-                        if (e.price) {
-                            return (
-                                <div className="d-flex flex-wrap mt-3 overflow-scroll noscroll ">
-                                    <ListCards
-                                        img={e.list_images}
-                                        title={e.title}
-                                        category={e.category}
-                                        price={e.price}
-                                        username={e.username}
-                                        date={e.upload_date}
-                                        user_id={e.user_id}
-                                        list_id={e.listings_id}
-                                        currentUser={currentUser}
+                    <div className="d-flex flex-wrap mt-3 overflow-scroll noscroll ">
+                        {
+                            like_list.map((e, i) => {
+                                if (e.price) {
+                                    return (
+                                        <ListCards
+                                            img={e.list_images}
+                                            title={e.title}
+                                            category={e.category}
+                                            price={e.price}
+                                            username={e.username}
+                                            date={e.upload_date}
+                                            user_id={e.user_id}
+                                            list_id={e.listings_id}
+                                            currentUser={currentUser}
 
-                                    />
-                                </div>
-                            )
-                        }
+                                        />
+                                    )
+                                }
 
-                        return null;
-                    })
+                                return null;
+                            })}
+                    </div>
                     :
                     like_list && like_list.length === 0 ?
                         <h1 className="text-center">Much Empty</h1> :

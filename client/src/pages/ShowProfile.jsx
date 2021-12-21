@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from "react-router-dom";
-import { Col, Row } from 'react-bootstrap';
 import ListCards from '../components/ListCards';
 import UserCard from '../components/UserCard';
 
@@ -39,13 +38,13 @@ const ShowProfile = (props) => {
     if (profile.length > 0)
         return (
 
-            <Col
+            <div
                 className="d-flex "
                 style={{
                     height: "calc(100vh - 56px)",
                 }}
             >
-                <Row className="position-sticky "
+                <div className="position-sticky "
                 >
                     <UserCard
                         img={profile[0].user_photo}
@@ -57,9 +56,9 @@ const ShowProfile = (props) => {
                         currentUser={currentUser}
 
                     />
-                </Row>
+                </div>
 
-                <Row className=" d-flex flex-row mt-3 mx-auto overflow-scroll noscroll ">
+                <div className="d-flex flex-wrap mt-3 mx-auto overflow-scroll noscroll ">
 
                     {
                         (profile[0].price) ?
@@ -81,8 +80,8 @@ const ShowProfile = (props) => {
                                 )
                             }) : <h1>Much Empty</h1>
                     }
-                </Row>
-            </Col>
+                </div>
+            </div>
 
         )
     return (

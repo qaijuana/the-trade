@@ -12,16 +12,15 @@ const AppBar = (props) => {
     return (
         <Navbar
             collapseOnSelect expand="lg" bg="dark" variant="dark"
-            className="position-fixed w-100"
+            className="position-fixed w-100 "
             style={{
                 "z-index": "5"
             }}>
-            <Container>
+            <Container className="">
                 <Navbar.Brand as={Link} to="/">Tips</Navbar.Brand>
                 <Navbar.Toggle aria-controls="responsive-navbar-nav" />
                 <Navbar.Collapse id="responsive-navbar-nav">
                     <Nav className="me-auto">
-
                         <Nav.Link as={Link} to="/marketplace">Marketplace</Nav.Link>
                     </Nav>
                     {
@@ -45,7 +44,7 @@ const AppBar = (props) => {
                                 <Nav.Link as={Link} to="/inbox">
                                     <BsFillEnvelopeFill className="fs-5" />
                                 </Nav.Link>
-                                <NavDropdown title={<BsPersonSquare className="fs-5"/>} >
+                                <NavDropdown title={<BsPersonSquare className="fs-5" />} >
                                     <NavDropdown.Item as={Link} to={"/user/" + currentUser}>
                                         Profile
                                     </NavDropdown.Item>

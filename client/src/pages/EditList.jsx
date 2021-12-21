@@ -7,6 +7,7 @@ import { Form, Col, Row, FloatingLabel, InputGroup, Button, Image } from "react-
 function EditList(props) {
     const [status, setStatus] = useState("pending");
     const [Base64, setBase64] = useState("");
+    const [photos, setPhotos] = useState([])
     const [list, setList] = useState([]);
     const navigate = useNavigate();
     const { id } = useParams();
@@ -17,9 +18,17 @@ function EditList(props) {
         async function getList() {
             setStatus("loading");
             try {
+
                 const res = await fetch(`/api/list/${id}`);
                 const data = await res.json();
                 setList(data);
+                const image_res = await fetch(`/api/image/${id}`);
+                const image_data = await image_res.json();
+                const result = await image_data.rows
+                console.log("result", result, "data", data)
+                if (result.length !== 0) {
+                    setPhotos(result)
+                }
                 console.log("list state", list);
                 setStatus("resolved");
 
@@ -92,31 +101,60 @@ function EditList(props) {
 
     return (
         <div>
-            <h1>
+            <h1 className="text-center">
                 edit
             </h1>
             <Form noValidate onSubmit={handleSubmit} >
 
                 <Form.Group controlId="list_images" className="mb-3">
-                    <div
-                        className="mx-auto"
-                        style={{
-                            position: "relative",
-                            height: "200px",
-                            width: "200px",
-                            overflow: 'hidden',
-                        }}>
-                        <Image
-                            src={Base64 ? Base64 : list.url}
-                            className=""
-                            style={{
-                                position: 'absolute',
-                                height: "100%",
-                            }}
-                        />
-                    </div>
+                    {
+                        !Base64 ?
+                            <div className="d-flex justify-content-center my-2">
+                                {
+                                    photos.map((e, i) => {
+                                        return (
+                                            <div
+                                                className="mx-2"
+                                                style={{
+                                                    position: "relative",
+                                                    height: "200px",
+                                                    width: "200px",
+                                                    overflow: 'hidden',
+                                                }}>
+                                                <img
+                                                    className="d-block w-100"
+                                                    src={e.url}
+                                                    alt={`TIPS marketplace: ${list && list.title}`}
+                                                    key={id}
+                                                />
+                                            </div>
+                                        )
+                                    })
+                                }
+                            </div>
+                            :
+                            <div
+                                className="mx-auto"
+                                style={{
+                                    position: "relative",
+                                    height: "200px",
+                                    width: "200px",
+                                    overflow: 'hidden',
+                                }}>
+                                <Image
+                                    src={Base64 ? Base64 : list.url}
+                                    className=""
+                                    style={{
+                                        position: 'absolute',
+                                        height: "100%",
+                                    }}
+                                />
+
+                            </div>
+                    }
                     <InputGroup>
-                        <Form.Control type="file"
+                        <Form.Control
+                            type="file"
                             onChange={handleFile} />
                     </InputGroup>
                 </Form.Group>

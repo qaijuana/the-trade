@@ -5,6 +5,7 @@ import { BsHeart, BsHeartFill, BsFillChatSquareFill } from "react-icons/bs";
 import { useNavigate } from 'react-router'
 
 import ImageCarousel from './ImageCarousel';
+import Modal from './Modal';
 
 const ListCards = (props) => {
     const {
@@ -15,9 +16,8 @@ const ListCards = (props) => {
     const [like, setLike] = useState(false);
     const [like_data, setLike_data] = useState([]);
     const [photos, setPhotos] = useState("");
+    const [modalShow, setModalShow] = useState(false);
     const navigate = useNavigate();
-
-
 
     useEffect(() => {
         try {
@@ -97,7 +97,6 @@ const ListCards = (props) => {
         }
     }
 
-
     function handleDelete(event, list_id) {
         event.preventDefault();
         async function deleteList() {
@@ -128,135 +127,146 @@ const ListCards = (props) => {
         return (
             <>
                 {
-                    difference_years ? `${difference_years}y` :
-                        difference_weeks ? `${difference_weeks}w` :
-                            difference_days ? `${difference_days}w` :
-                                difference_hours ? `${difference_hours}h` :
-                                    difference_minutes ? `${difference_minutes}m` :
-                                        difference_seconds ? `${difference_seconds}s` :
-                                            "moments ago"
+                    difference_weeks >= 52 ? `${difference_years}y` :
+                        difference_days >= 7 ? `${difference_weeks}w` :
+                            difference_hours >= 24 ? `${difference_days}d` :
+                                difference_minutes >= 60 ? `${difference_hours}h` :
+                                    difference_seconds >= 60 ? `${difference_minutes}m` :
+                                        "moments ago"
+
 
                 }
             </>
         )
     }
 
+    function handleOffer() {
+        setModalShow(true);
+    }
     return (
+        <>
+            <Card style={{ width: '18rem', border: "none" }} className="m-2" >
+                {/* <Card.Img variant="top" src={(photos) ? photos[0].url : img} /> */}
 
-        <Card style={{ width: '18rem', border: "none" }} className="m-2" >
-            {/* <Card.Img variant="top" src={(photos) ? photos[0].url : img} /> */}
+                <Card.Header className="d-flex justify-content-between">
+                    <Card.Text className="fs-4">
+                        <Button
+                            variant="secondary"
+                            className="d-flex"
+                            onClick={
+                                () => {
+                                    navigate(`/user/${user_id}`)
+                                }
+                            } >
+                            {username}
+                        </Button>
 
+                    </Card.Text>
 
+                    <Card.Text className="text-end">
+                        {handleDate(date)}
+                        <br />
 
-            <Card.Header className="d-flex justify-content-between">
-                <Card.Text className="fs-4">
-                    <Button
-                        variant="secondary"
-                        className="d-flex"
-                        onClick={
-                            () => {
-                                navigate(`/user/${user_id}`)
-                            }
-                        } >
-                        {username}
-                    </Button>
+                    </Card.Text>
 
-                </Card.Text>
+                </Card.Header>
 
-                <Card.Text className="text-end">
-                    {handleDate(date)}
-                    <br />
+                <ImageCarousel
+                    photos={photos}
+                    defaultPhoto={img}
+                    list_id={list_id}
+                    title={title}
+                />
 
-                </Card.Text>
+                <Card.Body className="d-flex justify-content-between">
+                    <Card.Title>
+                        {title}
+                    </Card.Title>
+                    <Card.Text className="fs-4" >
+                        {price}
+                    </Card.Text>
+                </Card.Body >
+                <Card.Footer className="">
 
-            </Card.Header>
+                    {
+                        (currentUser !== user_id) ?
+                            <ButtonGroup className="mb-2">
+                                <Button
+                                    variant="secondary"
+                                    onClick={handleOffer}>
+                                    Offer
+                                </Button>
+                                <Button
+                                    variant="secondary"
+                                    onClick={
+                                        () => {
+                                            if (currentUser) {
+                                                navigate("/inbox");
+                                            } else {
+                                                navigate("/login");
+                                            }
+                                        }
+                                    } >
+                                    <BsFillChatSquareFill className="fs-3" />
+                                </Button>
 
-            <ImageCarousel
-                photos={photos}
-                defaultPhoto={img}
-                list_id={list_id}
-                title={title}
+                                <Button
+                                    variant="secondary"
+                                    onClick={handleLike} >
+                                    {
+                                        (!like) ?
+                                            <BsHeart className="fs-4" />
+                                            :
+                                            < BsHeartFill className="fs-4" />
+                                    }
+                                </Button>
+
+                                <Button
+                                    variant="secondary"
+                                    onClick={() => {
+                                        navigate(`/list/${list_id}`)
+                                    }}>
+                                    More
+                                </Button>
+                            </ButtonGroup>
+
+                            :
+
+                            <ButtonGroup className="mb-2">
+                                <Button
+                                    variant="secondary"
+                                    onClick={() => {
+                                        navigate(`/list/${list_id}`)
+                                    }}>
+                                    More
+                                </Button>
+                                <Button
+                                    variant="secondary"
+                                    onClick={
+                                        () => {
+                                            navigate(`/list/${list_id}/edit`)
+                                        }}>
+                                    Edit
+                                </Button>
+                                <Button
+                                    variant="secondary"
+                                    onClick={(event) => {
+                                        handleDelete(event, list_id)
+                                    }}>
+                                    Delete
+                                </Button>
+                            </ButtonGroup>
+
+                    }
+                </Card.Footer>
+            </Card >
+            <Modal
+                show={modalShow}
+                onHide={() => setModalShow(false)}
+                photos={photos} data={props}
             />
 
-            <Card.Body className="d-flex justify-content-between">
-                <Card.Title>
-                    {title}
-                </Card.Title>
-                <Card.Text className="fs-4" >
-                    {price}
-                </Card.Text>
-            </Card.Body >
-            <Card.Footer className="">
-
-                {
-                    (currentUser !== user_id) ?
-
-                        <ButtonGroup className="mb-2">
-                            <Button variant="secondary">Offer</Button>
-                            <Button
-                                variant="secondary"
-                                onClick={
-                                    () => {
-                                        if (currentUser) {
-                                            navigate("/inbox");
-                                        } else {
-                                            navigate("/login");
-                                        }
-                                    }
-                                } >
-                                <BsFillChatSquareFill className="fs-3" />
-                            </Button>
-
-                            <Button
-                                variant="secondary"
-                                onClick={handleLike} >
-                                {
-                                    (!like) ?
-                                        <BsHeart className="fs-4" />
-                                        :
-                                        < BsHeartFill className="fs-4" />
-                                }
-                            </Button>
-
-                            <Button
-                                variant="secondary"
-                                onClick={() => {
-                                    navigate(`/list/${list_id}`)
-                                }}>
-                                More
-                            </Button>
-                        </ButtonGroup>
-
-                        :
-
-                        <ButtonGroup className="mb-2">
-                            <Button
-                                variant="secondary"
-                                onClick={() => {
-                                    navigate(`/list/${list_id}`)
-                                }}>
-                                More
-                            </Button>
-                            <Button
-                                variant="secondary"
-                                onClick={
-                                    () => {
-                                        navigate(`/list/${list_id}/edit`)
-                                    }}>
-                                Edit
-                            </Button>
-                            <Button
-                                variant="secondary"
-                                onClick={(event) => {
-                                    handleDelete(event, list_id)
-                                }}>
-                                Delete
-                            </Button>
-                        </ButtonGroup>
-
-                }
-            </Card.Footer>
-        </Card >
+        </>
     )
 }
 

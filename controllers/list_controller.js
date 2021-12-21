@@ -47,7 +47,6 @@ router.post("/new", async (req, res) => {
             );
             console.log("add list", addList.rows);
             const id = addList.rows[0].id
-
             const cloudUpload = await cloudinary.uploader.upload(
                 files, (error, result) => {
                     // console.log(result, error);
