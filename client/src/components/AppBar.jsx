@@ -16,8 +16,8 @@ const AppBar = (props) => {
             style={{
                 "z-index": "5"
             }}>
-            <Container className="">
-                <Navbar.Brand as={Link} to="/">Tips</Navbar.Brand>
+            <Container className="px-5">
+                <Navbar.Brand className="fs-2" as={Link} to="/">Tips</Navbar.Brand>
                 <Navbar.Toggle aria-controls="responsive-navbar-nav" />
                 <Navbar.Collapse id="responsive-navbar-nav">
                     <Nav className="me-auto">
@@ -34,17 +34,17 @@ const AppBar = (props) => {
                                 </Nav.Link>
                             </Nav>
                             :
-                            <Nav>
+                            <Nav className="">
                                 <Nav.Link as={Link} to="/likes">
-                                    <BsHeartFill className="fs-5" />
+                                    <BsHeartFill className="fs-5 m-1" />
                                 </Nav.Link>
                                 <Nav.Link as={Link} to="/create">
-                                    <BsPlusCircleFill className="fs-5" />
+                                    <BsPlusCircleFill className="fs-5 m-1" />
                                 </Nav.Link>
                                 <Nav.Link as={Link} to="/inbox">
-                                    <BsFillEnvelopeFill className="fs-5" />
+                                    <BsFillEnvelopeFill className="fs-5 m-1" />
                                 </Nav.Link>
-                                <NavDropdown title={<BsPersonSquare className="fs-5" />} >
+                                <NavDropdown title={<BsPersonSquare className="fs-5 m-1" />} >
                                     <NavDropdown.Item as={Link} to={"/user/" + currentUser}>
                                         Profile
                                     </NavDropdown.Item>
@@ -52,15 +52,6 @@ const AppBar = (props) => {
                                         Logout
                                     </NavDropdown.Item>
                                 </NavDropdown>
-                                {/* <Nav.Link as={Link} to={"/user/" + currentUser}>Profile</Nav.Link>
-                                <Nav.Link eventKey={2} as={Link} to="/" onClick={logout}>
-                                    Logout
-                                </Nav.Link> */}
-                                {/* <NavDropdown title="Tools" id="collasible-nav-dropdown">
-                                    <NavDropdown.Item as={Link} to="/create">New Item</NavDropdown.Item>
-                                    <NavDropdown.Divider />
-                                    <NavDropdown.Item as={Link} to="/learn">Learn</NavDropdown.Item>
-                                </NavDropdown> */}
                             </Nav>
                     }
                 </Navbar.Collapse>
